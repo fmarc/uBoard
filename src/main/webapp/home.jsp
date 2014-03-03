@@ -11,6 +11,7 @@
         <title>{{page}} - uBoard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
+        <link rel="icon" type="image/png" href="/favicon.png">
         <link href='http://fonts.googleapis.com/css?family=Concert+One' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="styles/master.css">
         <script src="scripts/angular.min.js"></script>
