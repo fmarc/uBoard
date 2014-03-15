@@ -1,7 +1,9 @@
 <%-- 
     Document   : home
     Created on : Mar 2, 2014, 8:17:21 PM
-    Author     : Franco
+    Author     : Maylem Gonzalez
+                 Cory McAn
+                 Francisco Marcano
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -21,7 +23,7 @@
         
             <div id="banner">
                 <div id="top_banner">
-                    <img class="logo" src="images/logos/uboard_logo_full.png" alt="images/logos/uboard_logo.png" />
+                    <a href="/home.jsp""><img class="logo" src="images/logos/uboard_logo_full.png" alt="images/logos/uboard_logo.png" /></a>
                 </div>
                 <div id="top_banner_bottom"></div>
             </div>
