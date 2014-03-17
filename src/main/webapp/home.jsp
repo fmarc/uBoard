@@ -14,7 +14,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" type="image/png" href="/favicon.png">
+<<<<<<< HEAD
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+=======
+        <link href='http://fonts.googleapis.com/css?family=Concert+One' rel='stylesheet' type='text/css'>
+>>>>>>> e19efb47ed8f8151759131ea23c58ee723d3d877
         <link rel="stylesheet" type="text/css" href="styles/master.css">
         <script src="scripts/angular.min.js"></script>
         <script src="scripts/home.js"></script>
