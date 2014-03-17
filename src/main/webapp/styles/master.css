@@ -142,7 +142,7 @@ body {
 
 #login:hover {
     transition: 0.3s;
-    color: #0d0020;
+    color: whitesmoke;
     background-color: #429ade;
     box-shadow: inset 0px -2px 1px #444444;
 }
