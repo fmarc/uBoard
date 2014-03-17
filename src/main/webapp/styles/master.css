@@ -29,7 +29,7 @@ body {
     z-index: 5;
 }
 
-<<<<<<< HEAD
+
 #top {
     color: #DE8642;
     position: relative;
@@ -37,17 +37,14 @@ body {
     margin: 0 auto;
     min-width: 1015px;
     max-width: 1200px;
-=======
+}
+
 #banner {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 5;
-<<<<<<< HEAD
->>>>>>> e19efb47ed8f8151759131ea23c58ee723d3d877
-=======
->>>>>>> e19efb47ed8f8151759131ea23c58ee723d3d877
 }
 
 .logo {
@@ -160,16 +157,10 @@ body {
 #content {
     position: relative;
     display: block;
-<<<<<<< HEAD
     height: 1500px;
-=======
     height: 500px;
     margin: 30px;
     margin-top: 145px;
-<<<<<<< HEAD
->>>>>>> e19efb47ed8f8151759131ea23c58ee723d3d877
-=======
->>>>>>> e19efb47ed8f8151759131ea23c58ee723d3d877
     border-radius: 10px;
     background-color: #D0CABF;
     margin: 100px auto 30px auto;
