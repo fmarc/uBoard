@@ -29,7 +29,6 @@ body {
     z-index: 5;
 }
 
-
 #top {
     color: #DE8642;
     position: relative;
@@ -139,17 +138,17 @@ body {
     box-shadow: inset 0px -2px 1px #444444;
 }
 
-#login:focus {
-    transition: 0s;
-    color: whitesmoke;
-    outline: none;
-    background-color: #DE0046;
+.display-modal {
+    transition: 0s!important;
+    color: whitesmoke!important;
+    outline: none!important;
+    background-color: #DE0046!important;
 }
 
-#login:focus + #login-modal {
+.display-modal + #login-modal {
     transition: 0.3s;
     display: block;
-    height: 179px;
+    height: 103px;
 }
 
 #login-modal {
@@ -157,13 +156,13 @@ body {
     color: whitesmoke;
     z-index: 500;
     position: absolute;
-    width: 447px;
+    width: 493px;
     height: 0px;
     background-color: #DE0046;
     border: 5px solid #DE0042;
-    border-radius: 6px;
+    border-radius: 17px;
     top: 73px;
-    left: -257px;
+    left: -293px;
     box-shadow: -2px 5px 10px #444444;
 }
 
@@ -174,7 +173,66 @@ body {
     height: 37px;
     background-color: #DE0042;
     top: -37px;
-    left: 384px;
+    left: 420px;
+}
+
+#login-user {
+    background-color: whitesmoke;
+}
+
+#login-pass {
+    background-color: whitesmoke;
+}
+
+.text-input {
+    width: 180px;
+    border-radius: 50px;
+    font-family: 'Open Sans', cursive;
+    color: #0d0020;
+    border: 4px solid #0d0020;
+    background-color: whitesmoke;
+    padding: 5px;
+    padding-left: 35px;
+    margin-top: 7px;
+    margin-left: 10px;
+    
+    outline: none;
+}
+
+#login-user-pic, #login-pass-pic {
+    position: absolute;
+    height: 16px;
+    top: 10px;
+    left: 2px;
+    padding: 7px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 13px;
+    background-color: #0d0020;
+    
+    margin-left: 10px;
+}
+
+#login-user-pic {
+    content: url("/images/icons/user.png");
+}
+
+#login-pass-pic {
+    content: url("/images/icons/lock.png");
+    left: 244px;
+}
+
+.button{
+    display: inline-block;
+    width: 223px;
+    height: 30px;
+    margin: 10px;
+    color: whitesmoke;
+    background-color: #0d0020;
+    border: 0px;
+    border-radius: 10px;
+    font-size: 12px;
+    
+    cursor: pointer;
 }
 
 #bottom {

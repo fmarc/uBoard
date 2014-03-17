@@ -8,19 +8,18 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html ng-app="uBoardApp">
-    <head ng-controller="uBoardCtrl">
-        <title>{{page}} - uBoard</title>
+<html>
+    <head>
+        <title>uBoard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" type="image/png" href="/favicon.png">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link href='http://fonts.googleapis.com/css?family=Concert+One' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="styles/master.css">
-        <script src="scripts/angular.min.js"></script>
+        <script src="scripts/jquery1.11.0.min.js"></script>
         <script src="scripts/home.js"></script>
     </head>
-    <body ng-controller="uBoardCtrl">
+    <body>
         <div id="container">
         
             <div id="top-banner">
@@ -37,11 +36,18 @@
                     </a>
                     
                     <div id="user-auth">
-                        <div tabindex="3" id="login">
+                        <div id="login">
                             <p>LOG IN</p>
                         </div>
                         <div id="login-modal">
-                            <p>Login Goes Here...</p>
+                            <form>
+                                <input type="text" id="login-user" class="text-input">
+                                <span id="login-user-pic"></span>
+                                <input type="password" id="login-pass" class="text-input">
+                                <span id="login-pass-pic"></span>
+                                <input id="login-button" class="button" type="submit" value="LOG IN">
+                                <input id="register-button" class="button" type="button" value="REGISTER">
+                            </form>
                         </div>
                     </div>
                 </div>
