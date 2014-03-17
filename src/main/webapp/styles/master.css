@@ -1,55 +1,160 @@
+html {
+    min-width: 1015px;
+}
+
 body {
     margin: 0px;
     padding: 0px;
     background-color: #7C7F87;
     color: #0d0020;
-    font-family: 'Concert One', cursive;
+    font-family: 'Open Sans', cursive;
 }
 
 #container {
-    display: block;
-    width: 100%;
+    height: auto!important;
+    min-height:100%;
+    margin: 0 0 -77px;
     background-color: #7C7F87;
 }
 
-#banner {
+#top-banner {
     position: fixed;
+    display: block;
+    height: 60px;
+    width: 100%;
+    background-color: #0d0020;
+    
     top: 0;
     left: 0;
-    width: 100%;
     z-index: 5;
 }
 
-#top_banner {
-    display: block;
-    background-color: #0d0020;
-    height: 95px;
-    width: 100%;
-}
-
-#top_banner_bottom {
-    height: 20px;
-    background-color: #DE8642;
-    box-shadow: 0px 5px 5px #444444;
+#top {
+    color: #DE8642;
+    position: relative;
+    height: 50px;
+    margin: 0 auto;
+    min-width: 1015px;
+    max-width: 1200px;
 }
 
 .logo {
     display: inline-block;
-    height: 80px;
-    margin-top: 9px;
-    margin-left: 30px;
-    vertical-align: middle;
+    position: relative;
+    height: 50px;
+    width: 135px;
+    left: 44%;
 }
+
+.logo img {
+    height: 50px;
+    width: 135px;
+    margin-top: 1px;
+}
+
+#search-box {
+    position: absolute;
+    display: inline-block;
+    height: 50px;
+}
+
+#content-search {
+    width: 180px;
+    border-radius: 50px;
+    font-family: 'Open Sans', cursive;
+    color: #0d0020;
+    border: 4px solid #DE8642;
+    background-color: whitesmoke;
+    padding: 5px;
+    padding-left: 35px;
+    margin-top: 7px;
+    
+    outline: none;
+}
+
+#content-search:before {
+    content: url("/images/icons/magnifying_glass.png");
+    position: absolute;
+    height: 20px;
+    top: 10px;
+    left: 2px;
+    padding: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: #DE8642;
+    cursor: pointer;
+}
+
+#content-search:focus {
+    transition: 0.3s;
+    border: 4px solid #429ade;
+}
+
+#content-search:focus + #mag-glass {
+    transition: 0.3s;
+    background-color: #429ade;
+}
+
+#mag-glass {
+    content: url("/images/icons/magnifying_glass.png");
+    position: absolute;
+    height: 20px;
+    top: 10px;
+    left: 2px;
+    padding: 5px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-color: #DE8642;
+    cursor: pointer;
+}
+
+#mag-glass:hover {
+    content: url("/images/icons/magnifying_glass-hover.png");
+}
+
+#user-auth {
+    position: absolute;
+    height: 50px;
+    width: 200px;
+    top: 0px;
+    right: 0px;
+}
+
+#login {
+    position: absolute;
+    display: inline-block;
+    right: 0;
+    height: 50px;
+    padding: 0px 8px 0px 8px;
+    background-color: #0d0020;
+    text-align: center;
+    cursor: pointer;
+}
+
+#login:hover {
+    transition: 0.3s;
+    color: #0d0020;
+    background-color: #429ade;
+    box-shadow: inset 0px -2px 1px #444444;
+}
+
+#bottom {
+    height: 10px;
+    background-color: #DE8642;
+    box-shadow: 0px 5px 5px #444444;
+}
+
 
 #content {
     position: relative;
     display: block;
-    height: 500px;
-    margin: 30px;
-    margin-top: 145px;
+    height: 1500px;
     border-radius: 10px;
     background-color: #D0CABF;
+    margin: 100px auto 30px auto;
     box-shadow: -2px 5px 5px #444444;
+    min-width: 1015px;
+    max-width: 1200px;
 }
 
 .message {
@@ -59,4 +164,11 @@ body {
     display: block;
     margin: 0 auto;
     padding-bottom: 150px;
+}
+
+
+//Media Queries!
+@media (max-width: 1015px){
+    #content-search { margin-left: 10px; }
+    #mag-glass { left: 13px; }
 }
