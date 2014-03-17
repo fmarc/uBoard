@@ -77,31 +77,19 @@ body {
     padding: 5px;
     padding-left: 35px;
     margin-top: 7px;
+    margin-left: 10px;
     
     outline: none;
 }
 
-#content-search:before {
-    content: url("/images/icons/magnifying_glass.png");
-    position: absolute;
-    height: 20px;
-    top: 10px;
-    left: 2px;
-    padding: 5px;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-    background-color: #DE8642;
-    cursor: pointer;
-}
-
 #content-search:focus {
     transition: 0.3s;
-    border: 4px solid #429ade;
+    border: 4px solid #DE0042;
 }
 
 #content-search:focus + #mag-glass {
     transition: 0.3s;
-    background-color: #429ade;
+    background-color: #DE0042;
 }
 
 #mag-glass {
@@ -115,6 +103,8 @@ body {
     border-bottom-left-radius: 15px;
     background-color: #DE8642;
     cursor: pointer;
+    
+    margin-left: 10px;
 }
 
 #mag-glass:hover {
@@ -127,6 +117,8 @@ body {
     width: 200px;
     top: 0px;
     right: 0px;
+    
+    margin-right: 10px;
 }
 
 #login {
@@ -147,6 +139,44 @@ body {
     box-shadow: inset 0px -2px 1px #444444;
 }
 
+#login:focus {
+    transition: 0s;
+    color: whitesmoke;
+    outline: none;
+    background-color: #DE0046;
+}
+
+#login:focus + #login-modal {
+    transition: 0.3s;
+    display: block;
+    height: 179px;
+}
+
+#login-modal {
+    display: none;
+    color: whitesmoke;
+    z-index: 500;
+    position: absolute;
+    width: 447px;
+    height: 0px;
+    background-color: #DE0046;
+    border: 5px solid #DE0042;
+    border-radius: 6px;
+    top: 73px;
+    left: -257px;
+    box-shadow: -2px 5px 10px #444444;
+}
+
+#login-modal:after {
+    content: "";
+    position: absolute;
+    width: 68px;
+    height: 37px;
+    background-color: #DE0042;
+    top: -37px;
+    left: 384px;
+}
+
 #bottom {
     height: 10px;
     background-color: #DE8642;
@@ -158,7 +188,6 @@ body {
     position: relative;
     display: block;
     height: 1500px;
-    height: 500px;
     margin: 30px;
     margin-top: 145px;
     border-radius: 10px;

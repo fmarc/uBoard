@@ -37,9 +37,11 @@
                     </a>
                     
                     <div id="user-auth">
-                        <div id="login">
+                        <div tabindex="3" id="login">
                             <p>LOG IN</p>
-                            <div></div>
+                        </div>
+                        <div id="login-modal">
+                            <p>Login Goes Here...</p>
                         </div>
                     </div>
                 </div>
