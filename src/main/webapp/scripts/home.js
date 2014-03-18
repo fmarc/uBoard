@@ -19,7 +19,24 @@ $(document).ready(function() {
     //Displays the Login Modal when the LOG IN button is pressed
     $('#login').click(function() { 
         $('#login').toggleClass('display-modal');
+        
+        if($('#login').hasClass('display-modal')){
+            $('#login-user').focus();
+        }
     });
+    
+    //********************************************************
+    //Hides the login modal when the user clicks outside of it
+    $('html').click(function() {
+        $('#login').removeClass('display-modal');
+    });
+    
+    //Prevents the above function from attaching the click event
+    //to the specified elements
+    $('#login-modal, #login').click(function(e){
+        e.stopPropagation();
+    });
+    //********************************************************
     
 });
 
