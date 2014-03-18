@@ -148,7 +148,7 @@ body {
 }
 
 .display-modal:hover {
-    box-shadow: 0px -2px 8px #DADADA!important;
+    box-shadow: 0px -2px 10px #FF4C82!important;
 }
 
 .display-modal + #login-modal {
