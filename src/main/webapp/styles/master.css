@@ -17,6 +17,7 @@ body {
     background-color: #7C7F87;
 }
 
+/*----TOP BAR START-------------------*/
 #top-banner {
     position: fixed;
     display: block;
@@ -253,21 +254,51 @@ body {
     background-color: #DE8642;
     box-shadow: 0px 5px 5px #444444;
 }
+/*---TOP BAR END---------------------*/
 
 
+/*--CONTENT START--------------------*/
+/*--SIDE BAR START-------------------*/
+#sidebar {
+    background-color: #0d0020;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 450px;
+    padding: 10px;
+    margin-top: 110px;
+    z-index: 500;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#sidebar:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #0d0020;
+}
+/*--SIDE BAR END---------------------*/
+
+
+/*--CONTENT-DATA START---------------*/
 #content {
     position: relative;
     display: block;
     height: 1500px;
-    margin: 30px;
-    margin-top: 145px;
     border-radius: 10px;
     background-color: #D0CABF;
-    margin: 100px auto 30px auto;
+    margin: 95px auto 30px 210px;
     box-shadow: -2px 5px 5px #444444;
-    min-width: 1015px;
-    max-width: 1200px;
+    min-width: 1030px;
+    max-width: 1100px;
 }
+
+
 
 .message {
     font-size: xx-large;
@@ -277,10 +308,5 @@ body {
     margin: 0 auto;
     padding-bottom: 150px;
 }
-
-
-//Media Queries!
-@media (max-width: 1015px){
-    #content-search { margin-left: 10px; }
-    #mag-glass { left: 13px; }
-}
+/*--CONTENT-DATA END----------------*/
+/*--CONTENT END---------------------*/

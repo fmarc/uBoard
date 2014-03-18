@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>uBoard</title>
+        <title>Home - uBoard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" type="image/png" href="/favicon.png">
@@ -21,7 +21,6 @@
     </head>
     <body>
         <div id="container">
-        
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
@@ -36,9 +35,9 @@
                     </a>
                     
                     <div id="user-auth">
-                        <div id="login">
-                            <p>LOG IN</p>
-                        </div>
+                            <div id="login">
+                                <p>LOG IN</p>
+                            </div>
                         <div id="login-modal">
                             <form>
                                 <input type="text" id="login-user" class="text-input" placeholder="Username">
@@ -53,7 +52,9 @@
                 </div>
                 <div id="bottom"></div>
             </div>
-        
+            
+            <div id="sidebar"></div>
+            
             <div id="content">
                 <span class="message" style="padding-top: 100px; padding-bottom: 50px;"> <iframe width="560" height="315" src="//www.youtube.com/embed/QHs_2-pB_6c" frameborder="0" allowfullscreen></iframe><img src="images/logos/uboard_logo.png" alt="images/logos/uboard_logo.png" /></span><span class="message">IN DEVELOPMENT</span> 
             </div>
