@@ -41,8 +41,15 @@ $(document).ready(function() {
     
     //********************************************************
     //Toggles the side bar on and off
-    //$().click
+    $('#sidebar-click-area, #sidebar-handle').click(function() {
+        $('#sidebar').toggleClass('hidden');
+        $('#content').css('width', $(window).width() - 270);
+    });
+
     //********************************************************
+    
+    
+    //--------------------Event Handlers END------------------
 });
 
 
