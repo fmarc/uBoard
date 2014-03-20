@@ -26,8 +26,7 @@
         <script src="scripts/create-class.js"></script>
     </head>
     <body>
-        <%
-            /*
+            <!--
                 JSP IMPLEMENTATION PSEUDOCODE
                 
                 Is the user logged in? {
@@ -35,8 +34,7 @@
                         Redirect the user to search location (with no parameters, showing recent lessons/classes and highest rated lessons/classes)
                     }
                 }
-           */
-        %>
+            -->
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
@@ -46,7 +44,7 @@
                         </form>
                     </div>
                     
-                    <a class="logo" title="Take me to the Home Page!" href="/"">
+                    <a class="logo" title="Take me to the Home Page!" href="/">
                         <img src="/images/logos/uboard_logo_side.png" />
                     </a>
                     

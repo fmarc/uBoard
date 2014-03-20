@@ -30,7 +30,7 @@
         
     </head>
     <body>
-        <%
+        <!--
             /*
                 JSP IMPLEMENTATION PSEUDOCODE
                 
@@ -40,7 +40,7 @@
                     }
                 }
            */
-        %>
+        -->
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
@@ -50,7 +50,7 @@
                         </form>
                     </div>
                     
-                    <a class="logo" title="Take me to the Home Page!" href="/"">
+                    <a class="logo" title="Take me to the Home Page!" href="/">
                         <img src="/images/logos/uboard_logo_side.png" />
                     </a>
                     
