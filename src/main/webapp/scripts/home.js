@@ -9,9 +9,6 @@
 //loads all assets and is ready for viewing.
 $(document).ready(function() {
     
-    
-    
-    
     //--------------------Event Handlers----------------------
     //      Below are all the events that run when the
     //      user interacts with the page.
@@ -38,18 +35,6 @@ $(document).ready(function() {
     });
     //********************************************************
     
-    
-    //********************************************************
-    //Toggles the side bar on and off
-    $('#sidebar-click-area, #sidebar-handle').click(function() {
-        $('#sidebar').toggleClass('hidden');
-        $('#content').css('width', $(window).width() - 270);
-    });
-
-    //********************************************************
-    
-    
-    //--------------------Event Handlers END------------------
 });
 
 

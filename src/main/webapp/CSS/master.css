@@ -21,14 +21,16 @@ body {
 
 /*----FONT STYLES---------------------*/
 h1 { 
-    color: #333; 
+    margin-bottom: -20px;
+    margin-top: 3px;
+    color: #0D0024; 
     /* text-shadow: 2px 1px #444444; */
     /* text-shadow: -1px 0 #333, 0 1px #333, 1px 0 #333, 0 -1px #333; */
     font-family: "Paytone One", "Open Sans", serif !important; 
     letter-spacing: 0px;
 }
 
-h2 {
+h2, h3 {
     color: #7A7A7A;
     letter-spacing: -1px;
 }
@@ -38,6 +40,8 @@ h1, p {
 }
 
 p { 
+    line-height: 29px;
+    font-size: 17px;
     color: #333;
 }
 
@@ -361,7 +365,7 @@ hr { border-color: #F3F3F3; }
     display: block;
     height: auto;
     border-radius: 10px;
-    background-color: #FFEFD3;
+    background-color: white;
     box-shadow: -2px 5px 10px #0E0E0E;
     padding: 30px 80px 30px 80px;
     box-sizing: border-box;

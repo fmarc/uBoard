@@ -1,0 +1,49 @@
+h1 {
+    color: #DE0042;
+    text-shadow: 2px 2px #333;
+    margin: 0 0 40px 0;
+}
+
+
+/*--FORM REGISTER START-------------*/
+#register input {
+    display: block;
+    padding: 5px;
+    margin: 0 auto 10px auto;
+    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 3px solid #FFFFFF;
+}
+
+#register input[type="submit"] {
+    margin-top: 55px;
+    height: 35px;
+    background-color: #DE0042;
+    border-color: #DE0042;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+#register p {
+    line-height: 0px;
+    color: whitesmoke;
+    text-shadow: 1px 1px #333;
+}
+/*--FORM REGISTER END---------------*/
+
+
+/*--CONTENT START-------------------*/
+#content {
+    width: 400px;
+    margin: 0 auto;
+    left: 0;
+}
+
+.content-box {
+    background-color: #0d0020;
+    width: 100%;
+    padding: 30px 70px 50px 70px;
+}
+/*--CONTENT END---------------------*/
+
