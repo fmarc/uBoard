@@ -1,5 +1,5 @@
 <%-- 
-    Document   : home
+    Document   : create_class
     Created on : Mar 2, 2014, 8:17:21 PM
     Author     : Maylem Gonzalez
                  Cory McAn
@@ -11,18 +11,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home - uBoard</title>
+        <title>Create Class - uBoard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" type="image/png" href="/favicon.png">
         <link href='http://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        
         <link rel="stylesheet" type="text/css" href="CSS/master.css">
+        <link rel="stylesheet" type="text/css" href="CSS/create-class.css">
+        
         <link rel="stylesheet" type="text/css" href="CSS/jquery-ui-1.10.4.min.css">
+        
         <script src="scripts/jquery-1.10.2.js"></script>
         <script src="scripts/jquery-ui-1.10.4.min.js"></script>
         <script src="scripts/home.js"></script>
+        <script src="scripts/create-class.js"></script>
     </head>
     <body>
         
@@ -67,8 +72,18 @@
                 <div id="bottom"></div>
             </div>
             
+        <div id="sidebar" class="hidden">
+            <div class="box title-box" title="Title"><img class="handle" /><img class="remove" /><h1 contenteditable="">Edit me!</h1></div>
+            <div class="box text-box" title="Text Box"><img class="handle" /><img class="remove" /><div contenteditable="">Edit Me!</div></div>
+            <div class="box image-box" title="Image Box"><img class="handle" /><img class="remove" /><div class="images"><img src="/images/blank.gif" /><img src="http://egh0t2b8t2s3nmhmh1owg24pcj.wpengine.netdna-cdn.com/wp-content/uploads/2013/11/Word-on-street-skate-600x337.jpg" /><img src="http://egh0t2b8t2s3nmhmh1owg24pcj.wpengine.netdna-cdn.com/wp-content/uploads/2013/11/Word-on-street-skate-600x337.jpg" /></div></div>
+            <div class="box video-box" title="Video Box"><img class="handle" /><img class="remove" /><iframe width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe></div>
+            <div id="sidebar-click-area"></div>
+            <div id="sidebar-handle"></div>
+        </div>
+            
             <div id="content">
-                <div class="content-box">
+                <div class="box text-box" title="Text Box">
+                    <img class="handle" /><img class="remove" />
                     <h1>U | BOARD - COMMUNITY LEARNING</h1>
                     <h2>A tool made for learning and teaching just about anything you want.</h2>
                     <hr>

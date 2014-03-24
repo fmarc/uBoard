@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home - uBoard</title>
+        <title>Register - uBoard</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" type="image/png" href="/favicon.png">
@@ -77,6 +77,8 @@
                 <div class="content-box">
                     <h1>REGISTER</h1>
                     <form id="register" actioin="register.jsp">
+                        <p>Username: </p>
+                        <input type="text" name="username" placeholder="Username" />
                         <p>First Name:</p>
                         <input type="text" name="fname" placeholder="First Name" />
                         <p>Last Name:</p>
@@ -89,5 +91,6 @@
                     </form>
                 </div>
             </div>
+        <img src="/images/logos/uboard_logo_side-hover.png" style="display: none;"/>
     </body>
 </html>

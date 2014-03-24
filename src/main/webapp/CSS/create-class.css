@@ -1,0 +1,206 @@
+/*--SIDE BAR START------------------*/
+.box {
+    display: block;
+    margin: 45px 0px 0px 25px;
+    width: 50px;
+    height: 50px;
+    cursor: url(/images/cursors/openhand.cur), move;
+}
+#content .box{
+    cursor: auto !important;
+}
+
+.invalid {
+    width: 50px!important;
+    height: 50px!important;
+    display: inline-block;
+}
+
+#sidebar .ui-sortable-helper{
+    width: 50px !important;
+    height: 50px !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+    background-color: black !important;
+    border: 5px dashed black !important;
+    margin: 10px!important;
+}
+
+.title-box.invalid, #sidebar .ui-sortable-helper.title-box{
+    content: url("/images/icons/lesson/title-box.png")!important;
+}
+.text-box.invalid, #sidebar .ui-sortable-helper.text-box{
+    content: url("/images/icons/lesson/text-box.png")!important;
+}
+.image-box.invalid, #sidebar .ui-sortable-helper.image-box {
+    content: url("/images/icons/lesson/image-box.png")!important;
+}
+.video-box.invalid, #sidebar .ui-sortable-helper.video-box{
+    content: url("/images/icons/lesson/video-box.png")!important;
+}
+
+
+#sidebar .title-box{
+    content: url("/images/icons/lesson/title-box.png");
+}
+#sidebar .text-box{
+    content: url("/images/icons/lesson/text-box.png");
+}
+#sidebar .image-box{
+    content: url("/images/icons/lesson/image-box.png");
+}
+#sidebar .video-box{
+    content: url("/images/icons/lesson/video-box.png");
+}
+
+
+#sidebar .title-box *{
+    display: none;
+}
+#sidebar .text-box *{
+    display: none;
+}
+#sidebar .image-box *{
+    display: none;
+}
+#sidebar .video-box *{
+    display: none;
+}
+
+
+.ui-sortable-helper, .ui-draggable-dragging {
+    transition: 0s;
+    cursor: url(/images/cursors/closedhand.cur), move !important;
+}
+/*--SIDE BAR END--------------------*/
+
+
+/*--CONTENT START-------------------*/
+#content {
+    left: 65px;
+}
+
+#content > * {
+    margin-bottom: 8px!important;
+    position: relative;
+}
+
+#content .box{
+    margin: 0;
+}
+
+#content .title-box > *, #content .text-box > div,
+#content .image-box > *, #content .video-box > * { 
+    display: block;
+    margin: 0 auto;
+}
+
+#content .image-box .images > *{
+    display: inline-block;
+    border-radius: 10px;
+    margin: 0;
+    height: 238px;
+    width: 31%;
+    margin: 15px;
+}
+
+#content .title-box {
+    width: 100%;
+    display: block;
+    height: auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 80px 30px 80px;
+    box-sizing: border-box;
+    box-shadow: -3px 3px 10px #111;
+    //margin-bottom: 30px;
+}
+
+#content .text-box {
+    width: 100%;
+    display: block;
+    height: auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 80px 30px 80px;
+    box-sizing: border-box;
+    box-shadow: -3px 3px 10px #111;
+    //margin-bottom: 30px;
+}
+
+#content .image-box {
+    width: 100%;
+    display: block;
+    height: auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 80px 30px 80px;
+    box-sizing: border-box;
+    box-shadow: -3px 3px 10px #111;
+    //margin-bottom: 30px;
+}
+
+#content .video-box{
+    width: 100%;
+    display: block;
+    height: auto;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 30px 30px 30px;
+    box-sizing: border-box;
+    box-shadow: -3px 3px 10px #111;
+    //margin-bottom: 30px;
+    /* margin: 0 21% 0 21%; */
+}
+
+#content .ui-sortable-helper{
+    overflow: hidden;
+    width: 50% !important;
+    height: 150px !important;
+    padding: 20px !important;
+    background-color: whitesmoke !important;
+    border: 5px dashed black !important;
+    margin: 10px!important;
+}
+
+.ui-sortable-placeholder{
+    opacity: 0.5;
+    margin: 10px 0px 10px -10px;
+    visibility: visible !important;
+    background-color: #DE0042 !important;
+    border: 10px dashed black;
+}
+
+.handle{
+    position: absolute;
+    display: inline-block;
+    height: 30px;
+    width: 30px !important;
+    top: 6px;
+    left: 6px;
+    cursor: url(/images/cursors/openhand.cur), move !important;
+    content: url("/images/icons/lesson/drag-box.png");
+}
+.handle:hover {
+    content: url("/images/icons/lesson/drag-box-hover.png");
+}
+
+.remove{
+    position: absolute;
+    display: inline-block;
+    height: 30px;
+    width: 30px !important;
+    top: 6px;
+    right: 6px;
+    cursor: pointer;
+    content: url("/images/icons/lesson/delete-box.png");
+}
+.remove:hover {
+    content: url("/images/icons/lesson/delete-box-hover.png");
+}
+
+.hidden + #content {
+    width: 80%!important;
+    left: 0;
+}
+/*--CONTENT END---------------------*/
