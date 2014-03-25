@@ -91,6 +91,5 @@
                     </form>
                 </div>
             </div>
-        <img src="/images/logos/uboard_logo_side-hover.png" style="display: none;"/>
     </body>
 </html>

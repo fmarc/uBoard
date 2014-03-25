@@ -25,6 +25,12 @@ h1 {
     cursor: pointer;
 }
 
+#regiser input[type="submit"]:hover {
+    background-color: #429ADB;
+    border-color: #429ADB;
+    box-shadow: 0px 0px 10px #A2A2A2;
+}
+
 #register p {
     line-height: 0px;
     color: whitesmoke;

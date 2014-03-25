@@ -40,7 +40,6 @@ $(document).ready(function() {
     //Initializes the sortable and droppable list of target elements
     //for the create a lesson.
     $('#content').sortable({
-        //axis: 'y',
         handle: '.handle',
         cursor: 'url("/images/cursors/closedhand.cur")!important',
         opacity: '0.5',
@@ -55,14 +54,8 @@ $(document).ready(function() {
             //********************************************************
             //Deletes the element when clicking on the remove button
             $('.remove').unbind('click').click( function() {
-                if($('#content > .box').length-1 <= 1){
-                    $(this).parent().remove();
-                    $('#content .remove').css('visibility', 'hidden');
-                } else {
-                    $(this).parent().remove();
-                }
+                $(this).parent().remove();
             });
-            $('#content .remove').css('visibility', 'visible');
             //********************************************************
             
         }
@@ -75,11 +68,6 @@ $(document).ready(function() {
     //});
     //********************************************************
     
-    if($('#content > .box').length === 1){
-        $('#content .remove').css('visibility', 'hidden');
-    } else {
-        $('#content .remove').css('visibility', 'visible');
-    }
     
     //********************************************************
     //Toggles the side bar on and off
@@ -92,3 +80,71 @@ $(document).ready(function() {
     
     //--------------------Event Handlers END------------------
 });
+
+//**********************************************************
+//                    CLICK EVENTS
+
+
+//--------------------------------------------------------
+//            IMAGE MODAL
+//Declaring the currently selected Image
+var $currentImageSelected;
+
+function openImageModal(element) {
+    //Initialize the current image src into the modal
+    $('#image-url').val($(element).attr('src'));
+    
+    //Shows the background Modal
+   $('#modal').show();
+   //Show the Change Image Modal
+   $('#img-box-modal').show();
+   
+   //Get the current image selected in order to change the
+   //image source.
+   $currentImageSelected = $(element);
+}
+
+function changeImage(){
+    var src = $('#image-url').val();
+    
+    if(src){
+        $currentImageSelected.attr('src', src);
+    } else {
+        $currentImageSelected.attr('src', "/images/blanked.png");
+    }
+    
+    hideModal();
+}
+//--------------------------------------------------------
+
+//--------------------------------------------------------
+//            VIDEO MODAL
+//Declaring the currently selected Image
+var $currentVideoSelected;
+
+function openVideoModal(element) {
+    //Initialize the current image src into the modal
+    $('#video-url').val($(element).siblings('.video').attr('src'));
+    
+    //Shows the background Modal
+   $('#modal').show();
+   //Show the Change Image Modal
+   $('#video-box-modal').show();
+   
+   //Get the current image selected in order to change the
+   //image source.
+   $currentVideoSelected = $(element).siblings('.video');
+}
+
+function changeVideo(){
+    var src = $('#video-url').val();
+    src = "//www.youtube.com/embed/" + src.substring(src.indexOf('v=')+2, src.length);
+    $currentVideoSelected.attr('src', src);
+    hideModal();
+}
+//--------------------------------------------------------
+
+function hideModal(){
+    $('.box-modal').hide();
+    $('#modal').hide();
+}
