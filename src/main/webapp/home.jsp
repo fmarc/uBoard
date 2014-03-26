@@ -77,7 +77,7 @@
                     <a href='profile.jsp'>Profile</a>
                     
                     <h1>U | BOARD - COMMUNITY LEARNING</h1>
-                    <h2>A tool made for learning and teaching just about anything you want.</h2>
+                    <h2>A tool made for learning and teaching just about anything you can imagine.</h2>
                     <hr>
                     <h3>Overview</h3>
                     <p>

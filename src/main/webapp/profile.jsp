@@ -85,6 +85,8 @@
                 <div id="bottom"></div>
             </div>
             
+            <div id="edit-save" class="edit-profile" onclick="saveUserData(this);"><p>Edit</p></div>
+            
             <div id="content">
                 <div id="user" class="box">
                     <div id="user-top">
@@ -96,52 +98,85 @@
                     </div>
                     <div id="user-bottom">
                         <h3>Name:</h3>
-                        <p>First_Name Last_Name</p>
+                        <p id="name" class="edit">First_Name Last_Name</p>
                         <h3>Email:</h3>
                         <p>Email@Email.com</p>
                         <h3>About:</h3>
-                        <textarea maxlength="500">Test</textarea>
+                        <textarea id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled></textarea>
                     </div>
                 </div>
                 
                 <div id="paypal" class="box">
                     <div class="box-header">
-                        <h1>Paypal</h1>
+                        <h1>PAYPAL</h1>
                     </div>
                     <div class="box-content">
-                        <p>Paypal goes here.
-                            Won't display if a user is looking at another user's profile
-                        </p>
+                        <h3>Paypal Registered Email:</h3>
+                        <p id="paypal-email" class="edit" placeholder="Paypal account email">Email@Email.com</p>
                     </div>
                     
                 </div>
                 
                 <div id="lessons-created" class="box">
                     <div class="box-header">
-                        <h1>Lessons Created</h1>
+                        <h1>LESSONS CREATED</h1>
                     </div>
                     <div class="box-content">
-                        <p>Lessons Created go here</p>
+                        <div class="created-lesson">
+                            <div class="lesson-rating">
+                                <p class="positive-rating">501</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
+                        <div class="created-lesson">
+                            <div class="lesson-rating">
+                                <p class="negative-rating">-30</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
                     </div>
                 </div>
                 
                 <div id="classes-created" class="box">
                     <div class="box-header">
-                        <h1>Classes Created</h1>
+                        <h1>CLASSES CREATED</h1>
                     </div>
                     <div class="box-content">
-                        <p>Classes Created go here.
-                            Won't display if a user is looking at another user's profile
-                        </p>
+                        <div class="created-class">
+                            <div class="class-rating">
+                                <p class="positive-rating">15</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
+                        <div class="created-class">
+                            <div class="class-rating">
+                                <p class="negative-rating">-30</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
                     </div>
                 </div>
                 
                 <div id="classes-taken" class="box">
                     <div class="box-header">
-                        <h1>Classes Taken</h1>
+                        <h1>CLASSES TAKEN</h1>
                     </div>
                     <div class="box-content">
-                        <p>Classes Taken go here</p>
+                        <div class="class-taken">
+                            <div class="class-rating">
+                                <p class="positive-rating">15</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
+                        <div class="class-taken">
+                            <div class="class-rating">
+                                <p class="negative-rating">-30</p>
+                            </div>
+                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                        </div>
+                        <p>Classes Created go here.
+                            Won't display if a user is looking at another user's profile
+                        </p>
                     </div>
                 </div>
             </div>
