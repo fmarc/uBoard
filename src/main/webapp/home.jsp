@@ -69,6 +69,13 @@
             
             <div id="content">
                 <div class="content-box">
+                    
+                    <p>Pages done or work in progress:</p>
+                    <a href='home.jsp'>Home</a>
+                    <a href='register.jsp'>Register</a>
+                    <a href='create_lesson.jsp'>Create Lesson</a>
+                    <a href='profile.jsp'>Profile</a>
+                    
                     <h1>U | BOARD - COMMUNITY LEARNING</h1>
                     <h2>A tool made for learning and teaching just about anything you want.</h2>
                     <hr>

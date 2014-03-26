@@ -73,12 +73,12 @@
             </div>
             
         <div id="sidebar" class="hidden">
-            <div class="box title-box" title="Title"><img class="handle" /><img class="remove" /><h1 contenteditable="">Edit me!</h1></div>
-            <div class="box text-box" title="Text Box"><img class="handle" /><img class="remove" /><div contenteditable="">Edit Me!</div></div>
-            <div class="box image-box" title="Image Box"><img class="handle" /><img class="remove" /><div class="images"><img class="image" onclick="openImageModal(this);" src="/images/blank.png" /><img class="image" onclick="openImageModal(this);" src="/images/blank.png" /><img class="image" onclick="openImageModal(this);" src="/images/blank.png" /></div></div>
-            <div class="box video-box" title="Video Box"><img class="handle" /><img class="remove" /><iframe class="video" width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe><input type="button" class="change-video" onclick="openVideoModal(this);" value="Change Video"/></div>
-            <div id="sidebar-click-area"></div>
-            <div id="sidebar-handle"></div>
+            <div class="box title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 contenteditable="">Edit me!</h1></div>
+            <div class="box text-box" title="Text Box"><img class="handle edit" /><img class="remove edit" /><div contenteditable="">Edit Me!</div></div>
+            <div class="box image-box" title="Image Box"><img class="handle edit" /><img class="remove edit" /><div class="images"><img class="image"  src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /></div><div class="buttons edit"><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/></div></div>
+            <div class="box video-box" title="Video Box"><img class="handle edit" /><img class="remove edit" /><iframe class="video" width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe><input type="button" class="change-video edit" onclick="openVideoModal(this);" value="Change Video"/></div>
+            <div id="sidebar-click-area" onclick="toggleSideBar();"></div>
+            <div id="sidebar-handle" onclick="toggleSideBar();"></div>
         </div>
             
         <div id="content"></div>

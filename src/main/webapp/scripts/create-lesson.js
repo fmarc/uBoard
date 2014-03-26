@@ -68,16 +68,6 @@ $(document).ready(function() {
     //});
     //********************************************************
     
-    
-    //********************************************************
-    //Toggles the side bar on and off
-    $('#sidebar-click-area, #sidebar-handle').click(function() {
-        $('#sidebar').toggleClass('hidden');
-        $('#content').css('width', $(window).width() - 270);
-    });
-    //********************************************************
-    
-    
     //--------------------Event Handlers END------------------
 });
 
@@ -86,11 +76,28 @@ $(document).ready(function() {
 
 
 //--------------------------------------------------------
+//              SIDE BAR TOGGLE
+
+//Toggles the side bar on and off
+function toggleSideBar() {
+    $('#sidebar').toggleClass('hidden');
+    $('#content').css('width', $(window).width() - 270);
+    $('#content .box .edit').toggleClass('hide');
+};
+//--------------------------------------------------------
+
+
+//--------------------------------------------------------
 //            IMAGE MODAL
 //Declaring the currently selected Image
 var $currentImageSelected;
 
 function openImageModal(element) {
+    console.log($(element).parent().parent().find($('.image')).get($(element).index()));
+    
+    //Gets the right image matching it's button
+    var $image = $($(element).parent().parent().find($('.image')).get($(element).index()));
+    
     //Initialize the current image src into the modal
     $('#image-url').val($(element).attr('src'));
     
@@ -101,7 +108,7 @@ function openImageModal(element) {
    
    //Get the current image selected in order to change the
    //image source.
-   $currentImageSelected = $(element);
+   $currentImageSelected = $image;
 }
 
 function changeImage(){
