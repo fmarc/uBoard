@@ -1,6 +1,6 @@
 //------------------------------------------------------
 //      JavaScript File used to Handle events in
-//      create_class.jsp.
+//      lesson.jsp.
 //-------------------------------------------------------
 
 
@@ -152,6 +152,5 @@ function changeVideo(){
 //--------------------------------------------------------
 
 function hideModal(){
-    $('.box-modal').hide();
-    $('#modal').hide();
+    $('.box-modal, #modal').hide();
 }
