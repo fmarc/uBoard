@@ -8,8 +8,6 @@ h3 {
     line-height: 0px;
     font-size: 18px;
     margin-bottom: 21px;
-    text-shadow: 0px 1px 0px black;
-    color: #DE0042;
 }
 
 p {
@@ -78,6 +76,7 @@ textarea {
     outline: 0;
 }
 textarea:disabled {
+    background-color: transparent;
     border: 0px;
 }
 textarea:focus {
@@ -89,7 +88,7 @@ textarea:focus {
 /*-- CONTENT START----------------------------*/
 .box{
     position: relative;
-    width: 35%;
+    width: 45%;
     height: auto;
     background-color: whitesmoke;
     border-radius: 20px;
