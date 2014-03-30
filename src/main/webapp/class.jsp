@@ -73,18 +73,25 @@
             
             <div id="content">
                 <div id="enrolled">
-                    <h2>ENROLLED</h2>
+                    <h2>Enrolled</h2>
                     <p id="students-enrolled">20 / 40</p>
+                </div>
+                
+                <div id="price">
+                    <h2>Price</h2>
+                    <p>$<span id="class-price">32</span></p>
                 </div>
 
                 <div id="class-enroll" onclick="openEnrollModal();">
                     <p id="enroll">Enroll</p>
                 </div>
                 
+                <div id="edit-save" class="edit-profile" onclick="saveUserData(this);"><p>Edit</p></div>
+                
                 <div class="class-content">
                     <div id="class-top">
                         <div class="rating" title="Total rating from lessons">
-                            <p class="positive-rating">123</p>
+                            <p class="positive-rating">471</p>
                         </div>
                         <div class="class-title">
                             <h1 class="edit">TITLE GOES HERE</h1>

@@ -103,30 +103,31 @@
     padding: 20px;
     box-sizing: border-box;
 }
-#enrolled, #class-enroll {
+#enrolled, #class-enroll, #price {
     position: absolute;
     width: 11%;
     text-align: center;
-    top: 122px;
-    right: 0px;
+    top: 83px;
+    right: 8px;
     background-color: #DE0042;
     border-radius: 15px;
     padding: 10px;
     box-shadow: -1px 1px 5px #0d0020;
 }
-#enrolled h2 {
+#price { top: 0px; right: 8px;}
+#enrolled h2, #price h2 {
     color: rgb(107, 7, 7);
     font-size: 20px;
     margin: 0px;
 }
-#enrolled p {
+#enrolled p,#price p {
     color: rgb(107, 7, 7);
     margin: 0px;
 }
 #class-enroll { 
     background-color: #0d0020; 
-    top: 207px; 
-    right: 0px;
+    top: 167px; 
+    right: 8px;
     cursor: pointer;
 }
 #class-enroll:hover { 
@@ -218,10 +219,43 @@ textarea:disabled {
 }
 /*-- LESSONS CREATED END------------*/
 
+/*-- EDIT/SAVE START ---------------*/
+#edit-save {
+    position: fixed;
+    text-align: center;
+    left: 0;
+    top: 25%;
+    width: 100px;
+    height: 50px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 5px black;
+    text-shadow: -1px 1px 0px black; 
+    cursor: pointer;
+}
 
-/*--LESSONS CREATED START------------*/
+.edit-profile {
+    background-color: #0d0020;
+}
+.edit-profile:hover {
+    background-color: #429ADB;
+}
+.edit-profile p {  color: #DE8642!important; }
+.edit-profile:hover p {  color: whitesmoke!important; }
 
-/*-- LESSONS CREATED END ------------*/
+
+.save-profile {
+    background-color: #DE0042;
+}
+.save-profile:hover {
+    background-color: rgb(87, 150, 87);
+}
+.save-profile p {  color: whitesmoke!important}
+/*-- EDIT/SAVE END   ---------------*/
+
+/*-- CREATE LESSON START------------*/
+    
+/*-- CREATE LESSON END ------------*/
 
 
 /*--MODALS START--------------------*/
@@ -239,7 +273,6 @@ textarea:disabled {
 
 #enroll-modal h2 {
     color: #DE0042;
-    text-shadow: 2px 2px #333;
     margin: 0 0 18px 0;
 }
 
