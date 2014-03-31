@@ -135,13 +135,13 @@
                                 <div class="lesson-rating">
                                     <p class="positive-rating">501</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                                <a class="content-title" href="home.jsp">LESSON - Piano Lesson: How to play the piano with your feet!</a>
                             </div>
                             <div class="class">
                                 <div class="class-rating">
                                     <p class="negative-rating">-30</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                                <a class="content-title" href="home.jsp">CLASS - Everything you need to know about Pianos.</a>
                             </div>
                         </div>
                     </div>
@@ -154,15 +154,15 @@
                     <div class="box-content">
                         <div class="lesson">
                             <div class="lesson-rating">
-                                <p class="positive-rating">501</p>
+                                <p class="positive-rating">580</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">LESSON - How to bring the hous down!</a>
                         </div>
                         <div class="lesson">
                             <div class="lesson-rating">
-                                <p class="negative-rating">-30</p>
+                                <p class="positive-rating">541</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">LESSON - What are things I should do when bored?</a>
                         </div>
                     </div>
                 </div>
