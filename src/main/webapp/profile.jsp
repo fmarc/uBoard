@@ -117,19 +117,19 @@
                     <div id="user-top">
                         <img width="80" id="student-image" src="/images/profile/user.png" />
                         <div id="user-info-top">
-                            <h2 id="username">USERNAME</h2>
-                            <div id="rating-box">rating here</div>
+                            <h2 id="username"><%=id%></h2>
+                            <div id="rating-box"><p class="positive-rating">15</p></div>
                         </div>
                     </div>
                     <div id="user-bottom">
                         <h3>Name:</h3>
-                        <p id="name" class="edit">First_Name Last_Name</p>
+                        <p id="name" class="edit">Maylem Gonzalez</p>
                         <%if(user) {%>
                             <h3>Email:</h3>
-                            <p>Email@Email.com</p>
+                            <p>mgonz108@gmail.com</p>
                         <%}%>
                         <h3>About:</h3>
-                        <textarea id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled></textarea>
+                        <textarea id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled>I love things!</textarea>
                     </div>
                 </div>
             
@@ -140,7 +140,7 @@
                         </div>
                         <div class="box-content">
                             <h3>Paypal Registered Email:</h3>
-                            <p id="paypal-email" class="edit" placeholder="Paypal account email">Email@Email.com</p>
+                            <p id="paypal-email" class="edit" placeholder="Paypal account email">mgonz108@gmail.com</p>
                         </div>
 
                     </div>
@@ -155,13 +155,13 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">501</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">LESSON - How to make tea</a>
                         </div>
                         <div class="created-lesson">
                             <div class="lesson-rating">
                                 <p class="negative-rating">-30</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">LESSON - How to curse at people</a>
                         </div>
                     </div>
                 </div>
@@ -175,13 +175,13 @@
                             <div class="class-rating">
                                 <p class="positive-rating">15</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">CLASS - Complete series on how to be a better person</a>
                         </div>
                         <div class="created-class">
                             <div class="class-rating">
                                 <p class="negative-rating">-30</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="home.jsp">CLASS - How to be a good person</a>
                         </div>
                     </div>
                 </div>
@@ -196,17 +196,14 @@
                                 <div class="class-rating">
                                     <p class="positive-rating">15</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                                <a class="content-title" href="home.jsp">CLASS - How to cross-stitch</a>
                             </div>
                             <div class="class-taken">
                                 <div class="class-rating">
                                     <p class="negative-rating">-30</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                                <a class="content-title" href="home.jsp">CLASS - How to break into someone's house.</a>
                             </div>
-                            <p>Classes Created go here.
-                                Won't display if a user is looking at another user's profile
-                            </p>
                         </div>
                     </div>
                 <%}%>
