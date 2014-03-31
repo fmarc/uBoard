@@ -116,9 +116,9 @@ textarea:focus {
 
 #user-info-top {
     position: absolute;
-    width: 60%;
+    width: 45%;
     top: 6px;
-    right: 10%;
+    right: 15%;
 }
 #user-info-top * {
     text-align: center;
