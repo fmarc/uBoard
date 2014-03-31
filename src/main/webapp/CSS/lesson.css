@@ -80,7 +80,7 @@
     left: 65px;
     height: auto;
 }
-#content #sort{
+#content #sort {
     min-height: 500px;
     height: auto;
 }
@@ -101,6 +101,7 @@
 }
 
 #content .box{
+    width:  100%;
     margin: 0;
 }
 
@@ -394,3 +395,4 @@ input[type="button"]:hover {
     background-color: #DE0042 !important;
 }
 /*-- RATING END -----------------------*/
+

@@ -82,6 +82,7 @@ p {
 /*-- CONTENT TOP END----------------*/
 
 /*-- CONTENT BOTTOM START-----------*/
+
 #content h2 {
     margin: 0px;
     font-size: 22px;
@@ -277,5 +278,9 @@ textarea:disabled {
 }
 /*-- CREATE LESSON END ------------*/
 
+
+#comments.box {
+    width: 70%;
+}
 
 /*--CONTENT END---------------------*/

@@ -149,7 +149,32 @@
             <div class="box title-box" title="Title"><h1 contenteditable="false">Overview</h1></div>
             <div class="box text-box" title="Text Box"><div contenteditable="false">In this lesson we are going to be atalking about all the different things you must do in order to bring the house down! Please make sure to read through the entire lesson in order to truly be regarded as a force to be reckoned with whenever you decided to embark in the amazing feat that is the bringing of the house down!</div></div>
             <div class="box image-box" title="Image Box"><div class="images"><img class="image"  src="http://static.tumblr.com/zlyygir/SBgll7q5e/bthd.jpg" /><img class="image" src="http://seangilliganproductions.com/wp-content/uploads/2012/09/Bring-the-House-Down-80s-v2-01-540x405.jpg" /><img class="image" src="http://a2.mzstatic.com/us/r30/Music/91/c4/34/mzi.ggbthkpb.170x170-75.jpg" /></div></div>
+            <div id="comments" class="box">
+                <div class="box-header">
+                    <h1>COMMENTS</h1>
+                </div>
+                <div class="box-content" id="comment-section">
+                    <div style="width: 100%; text-align: center;"><div id="post-comment" onclick="toggleModal('post-comment-modal');">Comment</div></div>
+                    <div class="comment">
+                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                        <div class="comment-text"><p class="user">mgonz108</p><p class="text">This is an awesome lesson! Woohoo!</p></div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                        <div class="comment-text"><p class="user">fmarc011</p><p class="text">I agree! This lesson is so cool!</p></div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                        <div class="comment-text"><p class="user">CoryG</p><p class="text">Yo man this thing is pretty cool</p></div>
+                    </div>
+                    <div class="comment">
+                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                        <div class="comment-text"><p class="user">LauraP</p><p class="text">I have become an expert in Bringing the House Down! Thank you!!</p></div>
+                    </div>
+                </div>
+            </div>
         </div>
+        
     <%}%>
         <div id="create-lesson-modal" class="box-modal">
             <h2>Create New Lesson</h2>
@@ -161,15 +186,24 @@
         </div>
 
         <div id="create-class-modal" class="box-modal">
-                <h2>Create New Class</h2>
-                <p>Please fill out the following information to create a new class.</p>
-                <h4>Title</h4>
-                <input type="text" id="class-title" placeholder="Class Title">
-                <h4>Price ($):</h4>
-                <input type="text" id="class-price" placeholder="Class Price">
-                <input type="button" onclick="createNewLesson();" value="Create">
-                <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
-            </div>
+            <h2>Create New Class</h2>
+            <p>Please fill out the following information to create a new class.</p>
+            <h4>Title</h4>
+            <input type="text" id="class-title" placeholder="Class Title">
+            <h4>Price ($):</h4>
+            <input type="text" id="class-price" placeholder="Class Price">
+            <input type="button" onclick="createNewLesson();" value="Create">
+            <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+        </div>
+        
+        <div id="post-comment-modal" class="box-modal" style="top: 25%;">
+            <h2>Post New Comment</h2>
+            <p>Please fill out the following information to post a new comment.</p>
+            <h4>Text</h4>
+            <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
+            <input type="button" onclick="postNewComment('mgonz108');" value="Create">
+            <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
+        </div>
         
         <div id="modal"></div>
     </body>

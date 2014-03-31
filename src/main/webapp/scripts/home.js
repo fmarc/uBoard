@@ -65,6 +65,43 @@ function toggleModal(id){
 }
 
 
+function postNewComment(user) {
+    var comment = $('#text-comment').val();
+    
+    if(comment.length === 0){
+        alert("Comment text cannot be empty. Please type in your comment.");
+        return false;
+    }
+    
+    var json = {"user": user, "comment" : comment};
+    alert('Data sent: ' + JSON.stringify(json));
+    
+    $.ajax({
+        url: '',
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert('Ajax success!');
+            postComment(user, comment);
+            toggleModal('post-comment-modal');
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            postComment(user, comment);
+            toggleModal('post-comment-modal');
+        }
+    });
+    
+    function postComment(user, comment){
+        var commentHtml = '<div class="comment">' +
+                            '<div class="comment-user"><img src="/images/comments/user-comment.png"></div>' +
+                            '<div class="comment-text"><p class="user">'+ user +'</p><p class="text">'+ comment +'</p></div>' +
+                            '</div>';
+                    
+        $('#comment-section').append(commentHtml);
+    }
+}
+
 
 
     

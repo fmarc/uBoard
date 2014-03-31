@@ -86,15 +86,6 @@ textarea:focus {
 
 
 /*-- CONTENT START----------------------------*/
-.box{
-    position: relative;
-    width: 45%;
-    height: auto;
-    background-color: whitesmoke;
-    border-radius: 20px;
-    margin: 0 auto 20px auto;
-    box-shadow: -3px 3px 19px black;
-}
 
 /*--USER TOP START-----------------------------*/
 #user-top {
@@ -142,6 +133,16 @@ textarea:focus {
 /*--USER BOTTOM END----------------------------*/
 
 /*--BOX CONTENT START--------------------------*/
+.box{
+    position: relative;
+    width: 45%;
+    height: auto;
+    background-color: whitesmoke;
+    border-radius: 20px;
+    margin: 0 auto 20px auto;
+    box-shadow: -3px 3px 19px black;
+}
+
 .box-header {
     position: relative;
     width: 100%;

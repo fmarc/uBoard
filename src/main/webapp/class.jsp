@@ -165,6 +165,33 @@
                     </div>
                 </div>
                 
+                <div id="comments" class="box">
+                    <div class="box-header">
+                        <h1>COMMENTS</h1>
+                    </div>
+                    <div class="box-content" id="comment-section">
+                        <%if(user){%>
+                        <div style="width: 100%; text-align: center;"><div id="post-comment" onclick="toggleModal('post-comment-modal');">Comment</div></div>
+                        <%}%>
+                        <div class="comment">
+                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p class="user">mgonz108</p><p class="text">This is an awesome class! Woohoo!</p></div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p class="user">fmarc011</p><p class="text">I agree! This class is so cool!</p></div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p class="user">CoryG</p><p class="text">Yo man this thing is pretty cool</p></div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p class="user">LauraP</p><p class="text">I have become an expert in Pianos! Thank you!!</p></div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             
             <div id="enroll-modal" class="box-modal">
@@ -211,6 +238,15 @@
                 <input type="text" id="class-price" placeholder="Class Price">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+            </div>
+               
+            <div id="post-comment-modal" class="box-modal" style="top: 25%;">
+                <h2>Post New Comment</h2>
+                <p>Please fill out the following information to post a new comment.</p>
+                <h4>Text</h4>
+                <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
+                <input type="button" onclick="postNewComment('mgonz108');" value="Create">
+                <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
             </div>
             
             <div id="modal"></div>
