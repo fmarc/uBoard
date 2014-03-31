@@ -82,10 +82,10 @@
                             </div>
                             <div id="login-modal">
                                 <form id="login-form">
-                                    <input name="username" type="text" id="login-user" class="text-input" placeholder="Username">
+                                    <input name="id" type="text" id="login-user" class="text-input" placeholder="Username">
                                     <span id="login-user-pic"></span>
                                     <input type="password" id="login-pass" class="text-input" placeholder="Password">
-                                    <span name="password" id="login-pass-pic"></span>
+                                    <span id="login-pass-pic"></span>
                                     <input id="login-button" class="button" type="submit" value="LOG IN">
                                     <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
                                 </form>

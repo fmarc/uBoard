@@ -35,21 +35,21 @@ $(document).ready(function() {
     });
     //********************************************************
     
-    $("#login-form").submit(function(e){
-        var form = JSON.stringify($(this).serializeArray());
-        
-        window.location = "?id=" + form.username;
-
-        return false;
-    });
-    
-    $("#search").submit(function(e){
-        var form = JSON.stringify($(this).serializeArray());
-        
-        window.location = "?search=" + form.username;
-
-        return false;
-    });
+//    $("#login-form").submit(function(e){
+//        var form = JSON.stringify($(this).serializeArray());
+//        
+//        window.location = "?id=" + form.username;
+//
+//        return false;
+//    });
+//    
+//    $("#search").submit(function(e){
+//        var form = JSON.stringify($(this).serializeArray());
+//        
+//        window.location = "?search=" + form.username;
+//
+//        return false;
+//    });
     
 });
 
