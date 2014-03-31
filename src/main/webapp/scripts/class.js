@@ -26,7 +26,7 @@ function openEnrollModal(element) {
    //Show the Change Image Modal
    //$('#enroll-modal').show();
    
-   toggleModal();
+   toggleModal('enroll-modal');
    //Get the current image selected in order to change the
    //image source.
    //$currentVideoSelected = $(element).siblings('.video');
@@ -42,12 +42,74 @@ function changeVideo(){
 
 var num = 0;
 
-function toggleModal(){
+function toggleModal(id){
     num++;
     if(num%2 === 0) {
-        $('.box-modal, #modal').hide();
+        $('#'+ id +', #modal').hide();
     } else {
-        $('.box-modal, #modal').show();
+        $('#'+ id +', #modal').show();
     }
+}
+
+
+function saveClassData(element){
+    if($('#edit-save').hasClass('edit-class')){
+        $('#edit-save p').html('Save');
         
+        $('#class-desc').attr('disabled', false);
+
+        changeSide();
+    } else {
+        var classDesc   = $('#class-desc').val();
+
+        var json = {"desc" : classDesc};
+        
+        alert('Data sent: ' + JSON.stringify(json));
+        
+        $.ajax({
+            url: '',
+            data: json, 
+            dataType: 'json', 
+            success: function(data) {
+                alert('Ajax success!');
+                changeSide();
+            }, 
+            error: function(data) {
+                alert('Ajax error');
+                changeSide();
+            }
+        });
+        
+        $('#class-desc').attr('disabled', true);
+        $('#edit-save p').html('Edit');
+    }
+    
+    function changeSide() {
+        $('#edit-save').toggleClass('edit-class').toggleClass('save-class');
+    }
+}
+
+
+function createNewLesson(element){
+    var lessonTitle   = $('#lesson-title').val();
+
+    var json = {"lesson-title" : lessonTitle};
+
+    alert('Data sent: ' + JSON.stringify(json));
+
+    $.ajax({
+        url: 'lesson.jsp',
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert('Ajax success!');
+            window.location('lesson.jsp');
+            changeSide();
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            window.location = 'lesson.jsp';
+            changeSide();
+        }
+    });
 }

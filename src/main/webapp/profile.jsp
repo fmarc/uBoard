@@ -53,6 +53,17 @@
                     }
                 }
             -->
+            
+            <%
+                String id = "";
+                boolean user = false;
+                
+                if (request.getParameter("id") != null){
+                    id = request.getParameter("id");
+                    user = true;
+                }
+            %>
+            
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
@@ -67,25 +78,39 @@
                     </a>
                     
                     <div id="user-auth">
+                        <%if(user) {%>
+                            <div id="login">
+                                <img id="user-hover" src="/images/login/user-img.png"><span style="position:relative; top:15px;"><%=id%></span>
+                            </div>
+                            <div id="logged-in">
+                                <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
+                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
+                                <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <div onclick="window.location = '/home.jsp'"><img src="/images/login/logout.png"><p>Log Out</p></div>
+                            </div>
+                        <%} else {%>
                             <div id="login">
                                 <span style="position:relative; top:15px;">LOG IN</span>
                             </div>
-                        <div id="login-modal">
-                            <form>
-                                <input type="text" id="login-user" class="text-input" placeholder="Username">
-                                <span id="login-user-pic"></span>
-                                <input type="password" id="login-pass" class="text-input" placeholder="Password">
-                                <span id="login-pass-pic"></span>
-                                <input id="login-button" class="button" type="submit" value="LOG IN">
-                                <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
-                            </form>
-                        </div>
+                            <div id="login-modal">
+                                <form id="login-form">
+                                    <input name="username" type="text" id="login-user" class="text-input" placeholder="Username">
+                                    <span id="login-user-pic"></span>
+                                    <input type="password" id="login-pass" class="text-input" placeholder="Password">
+                                    <span name="password" id="login-pass-pic"></span>
+                                    <input id="login-button" class="button" type="submit" value="LOG IN">
+                                    <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
+                                </form>
+                            </div>
+                        <%}%>
                     </div>
                 </div>
                 <div id="bottom"></div>
             </div>
             
-            <div id="edit-save" class="edit-profile" onclick="saveUserData(this);"><p>Edit</p></div>
+            <%if(user) {%>
+                <div id="edit-save" class="edit-profile" onclick="saveUserData(this);"><p>Edit</p></div>
+            <%}%>
             
             <div id="content">
                 <div id="user" class="box">
@@ -99,23 +124,27 @@
                     <div id="user-bottom">
                         <h3>Name:</h3>
                         <p id="name" class="edit">First_Name Last_Name</p>
-                        <h3>Email:</h3>
-                        <p>Email@Email.com</p>
+                        <%if(user) {%>
+                            <h3>Email:</h3>
+                            <p>Email@Email.com</p>
+                        <%}%>
                         <h3>About:</h3>
                         <textarea id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled></textarea>
                     </div>
                 </div>
-                
-                <div id="paypal" class="box">
-                    <div class="box-header">
-                        <h1>PAYPAL</h1>
+            
+                <%if(user) {%>
+                    <div id="paypal" class="box">
+                        <div class="box-header">
+                            <h1>PAYPAL</h1>
+                        </div>
+                        <div class="box-content">
+                            <h3>Paypal Registered Email:</h3>
+                            <p id="paypal-email" class="edit" placeholder="Paypal account email">Email@Email.com</p>
+                        </div>
+
                     </div>
-                    <div class="box-content">
-                        <h3>Paypal Registered Email:</h3>
-                        <p id="paypal-email" class="edit" placeholder="Paypal account email">Email@Email.com</p>
-                    </div>
-                    
-                </div>
+                <%}%>
                 
                 <div id="lessons-created" class="box">
                     <div class="box-header">
@@ -157,28 +186,50 @@
                     </div>
                 </div>
                 
-                <div id="classes-taken" class="box">
-                    <div class="box-header">
-                        <h1>CLASSES TAKEN</h1>
-                    </div>
-                    <div class="box-content">
-                        <div class="class-taken">
-                            <div class="class-rating">
-                                <p class="positive-rating">15</p>
-                            </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                <%if(user) {%>
+                    <div id="classes-taken" class="box">
+                        <div class="box-header">
+                            <h1>CLASSES TAKEN</h1>
                         </div>
-                        <div class="class-taken">
-                            <div class="class-rating">
-                                <p class="negative-rating">-30</p>
+                        <div class="box-content">
+                            <div class="class-taken">
+                                <div class="class-rating">
+                                    <p class="positive-rating">15</p>
+                                </div>
+                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <div class="class-taken">
+                                <div class="class-rating">
+                                    <p class="negative-rating">-30</p>
+                                </div>
+                                <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            </div>
+                            <p>Classes Created go here.
+                                Won't display if a user is looking at another user's profile
+                            </p>
                         </div>
-                        <p>Classes Created go here.
-                            Won't display if a user is looking at another user's profile
-                        </p>
                     </div>
-                </div>
+                <%}%>
             </div>
+            
+            <div id="create-lesson-modal" class="box-modal">
+                <h2>Create New Lesson</h2>
+                <p>Please fill out the following information to create a new lesson.</p>
+                <h4>Title</h4>
+                <input type="text" id="lesson-title" placeholder="Lesson Title">
+                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
+            </div>
+
+            <div id="create-class-modal" class="box-modal">
+                <h2>Create New Class</h2>
+                <p>Please fill out the following information to create a new class.</p>
+                <h4>Title</h4>
+                <input type="text" id="class-title" placeholder="Class Title">
+                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+            </div>
+
+            <div id="modal"></div>
     </body>
 </html>

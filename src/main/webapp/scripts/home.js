@@ -35,7 +35,34 @@ $(document).ready(function() {
     });
     //********************************************************
     
+    $("#login-form").submit(function(e){
+        var form = JSON.stringify($(this).serializeArray());
+        
+        window.location = "?id=" + form.username;
+
+        return false;
+    });
+    
+    $("#search").submit(function(e){
+        var form = JSON.stringify($(this).serializeArray());
+        
+        window.location = "?search=" + form.username;
+
+        return false;
+    });
+    
 });
+
+
+var num = 0;
+function toggleModal(id){
+    num++;
+    if(num%2 === 0) {
+        $('#'+ id +', #modal').hide();
+    } else {
+        $('#'+ id +', #modal').show();
+    }
+}
 
 
 

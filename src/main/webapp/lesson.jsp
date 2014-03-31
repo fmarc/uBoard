@@ -40,6 +40,17 @@
                     }
                 }
             -->
+            
+            <%
+                String id = "";
+                boolean user = false;
+                
+                if (request.getParameter("id") != null){
+                    id = request.getParameter("id");
+                    user = true;
+                }
+            %>
+            
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
@@ -54,19 +65,31 @@
                     </a>
                     
                     <div id="user-auth">
+                        <%if(user) {%>
+                            <div id="login">
+                                <img id="user-hover" src="/images/login/user-img.png"><span style="position:relative; top:15px;"><%=id%></span>
+                            </div>
+                            <div id="logged-in">
+                                <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
+                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
+                                <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <div onclick="window.location = '/home.jsp'"><img src="/images/login/logout.png"><p>Log Out</p></div>
+                            </div>
+                        <%} else {%>
                             <div id="login">
                                 <span style="position:relative; top:15px;">LOG IN</span>
                             </div>
-                        <div id="login-modal">
-                            <form>
-                                <input type="text" id="login-user" class="text-input" placeholder="Username">
-                                <span id="login-user-pic"></span>
-                                <input type="password" id="login-pass" class="text-input" placeholder="Password">
-                                <span id="login-pass-pic"></span>
-                                <input id="login-button" class="button" type="submit" value="LOG IN">
-                                <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
-                            </form>
-                        </div>
+                            <div id="login-modal">
+                                <form id="login-form">
+                                    <input name="username" type="text" id="login-user" class="text-input" placeholder="Username">
+                                    <span id="login-user-pic"></span>
+                                    <input type="password" id="login-pass" class="text-input" placeholder="Password">
+                                    <span name="password" id="login-pass-pic"></span>
+                                    <input id="login-button" class="button" type="submit" value="LOG IN">
+                                    <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
+                                </form>
+                            </div>
+                        <%}%>
                     </div>
                 </div>
                 <div id="bottom"></div>
@@ -98,6 +121,24 @@
             <input type="text" id="video-url" placeholder="Video Url">
             <input type="button" onclick="changeVideo();" value="Save">
             <input type="button" onclick="hideModal();" value="Cancel">
+        </div>
+        
+        <div id="create-lesson-modal" class="box-modal">
+            <h2>Create New Lesson</h2>
+            <p>Please fill out the following information to create a new lesson.</p>
+            <h4>Title</h4>
+            <input type="text" id="lesson-title" placeholder="Lesson Title">
+            <input type="button" onclick="createNewLesson();" value="Create">
+            <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
+        </div>
+
+        <div id="create-class-modal" class="box-modal">
+            <h2>Create New Class</h2>
+            <p>Please fill out the following information to create a new class.</p>
+            <h4>Title</h4>
+            <input type="text" id="class-title" placeholder="Class Title">
+            <input type="button" onclick="createNewLesson();" value="Create">
+            <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
         </div>
         
         <div id="modal"></div>
