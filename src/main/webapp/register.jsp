@@ -129,6 +129,8 @@
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
                 <input type="text" id="class-title" placeholder="Class Title">
+                <h4>Price ($):</h4>
+                <input type="text" id="class-price" placeholder="Class Price">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>

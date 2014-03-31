@@ -117,7 +117,7 @@
                     <div id="user-top">
                         <img width="80" id="student-image" src="/images/profile/user.png" />
                         <div id="user-info-top">
-                            <h2 id="username"><%=id%></h2>
+                            <h2 id="username">mgonz108</h2>
                             <div id="rating-box"><p class="positive-rating">15</p></div>
                         </div>
                     </div>
@@ -155,13 +155,13 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">501</p>
                             </div>
-                            <a class="content-title" href="home.jsp">LESSON - How to make tea</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - How To Bring The House Down!</a>
                         </div>
                         <div class="created-lesson">
                             <div class="lesson-rating">
                                 <p class="negative-rating">-30</p>
                             </div>
-                            <a class="content-title" href="home.jsp">LESSON - How to curse at people</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - How to curse at people</a>
                         </div>
                     </div>
                 </div>
@@ -175,13 +175,13 @@
                             <div class="class-rating">
                                 <p class="positive-rating">15</p>
                             </div>
-                            <a class="content-title" href="home.jsp">CLASS - Complete series on how to be a better person</a>
+                            <a class="content-title" href="class.jsp?lesson_id=123456789"">CLASS - Complete series on how to be a better person</a>
                         </div>
                         <div class="created-class">
                             <div class="class-rating">
                                 <p class="negative-rating">-30</p>
                             </div>
-                            <a class="content-title" href="home.jsp">CLASS - How to be a good person</a>
+                            <a class="content-title" href="class.jsp?lesson_id=123456789"">CLASS - How to be a good person</a>
                         </div>
                     </div>
                 </div>
@@ -196,13 +196,13 @@
                                 <div class="class-rating">
                                     <p class="positive-rating">15</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">CLASS - How to cross-stitch</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=123456789"">CLASS - How to cross-stitch</a>
                             </div>
                             <div class="class-taken">
                                 <div class="class-rating">
                                     <p class="negative-rating">-30</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">CLASS - How to break into someone's house.</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=123456789"">CLASS - How to break into someone's house.</a>
                             </div>
                         </div>
                     </div>
@@ -223,6 +223,8 @@
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
                 <input type="text" id="class-title" placeholder="Class Title">
+                <h4>Price ($):</h4>
+                <input type="text" id="class-price" placeholder="Class Price">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>

@@ -135,13 +135,13 @@
                                 <div class="lesson-rating">
                                     <p class="positive-rating">501</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">LESSON - Piano Lesson: How to play the piano with your feet!</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - Piano Lesson: How to play the piano with your feet!</a>
                             </div>
                             <div class="class">
                                 <div class="class-rating">
                                     <p class="negative-rating">-30</p>
                                 </div>
-                                <a class="content-title" href="home.jsp">CLASS - Everything you need to know about Pianos.</a>
+                                <a class="content-title" href="class.jsp?class_id=123456789">CLASS - Everything you need to know about Pianos.</a>
                             </div>
                         </div>
                     </div>
@@ -156,13 +156,13 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">580</p>
                             </div>
-                            <a class="content-title" href="home.jsp">LESSON - How to bring the hous down!</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - How To Bring The House Down!</a>
                         </div>
                         <div class="lesson">
                             <div class="lesson-rating">
                                 <p class="positive-rating">541</p>
                             </div>
-                            <a class="content-title" href="home.jsp">LESSON - What are things I should do when bored?</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - What are things I should do when bored?</a>
                         </div>
                     </div>
                 </div>
@@ -182,6 +182,8 @@
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
                 <input type="text" id="class-title" placeholder="Class Title">
+                <h4>Price ($):</h4>
+                <input type="text" id="class-price" placeholder="Class Price">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>

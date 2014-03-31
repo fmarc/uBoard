@@ -21,10 +21,10 @@ $(document).ready(function() {
     //********************************************************
     //Initializes the draggable elements to be used with the
     //droppable target list in create a lesson
-    $('.box').draggable({
+    $('.drag').draggable({
         revert: 'invalid',
         helper: 'clone',
-        connectToSortable: '#content',
+        connectToSortable: '#sort',
         scrollSensitivity: 200,
         scrollSpeed: 50,
         drag: function(event, ui) {
@@ -39,7 +39,7 @@ $(document).ready(function() {
     
     //Initializes the sortable and droppable list of target elements
     //for the create a lesson.
-    $('#content').sortable({
+    $('#sort').sortable({
         handle: '.handle',
         cursor: 'url("/images/cursors/closedhand.cur")!important',
         opacity: '0.5',
@@ -153,4 +153,88 @@ function changeVideo(){
 
 function hideModal(){
     $('.box-modal, #modal').hide();
+}
+
+
+function saveLessonData() {
+    var html = $('#sort').html();
+    
+    var json = {"html" : html};
+    alert('Data sent: ' + JSON.stringify(json));
+    
+    $.ajax({
+        url: '',
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert('Ajax success!');
+            toggleModal('save-confirm-modal');
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            toggleModal('save-confirm-modal');
+        }
+    });
+}
+
+
+var num = 0;
+
+function toggleModal(id){
+    num++;
+    if(num%2 === 0) {
+        $('#'+ id +', #modal').hide();
+    } else {
+        $('#'+ id +', #modal').show();
+    }
+}
+
+function rate(num){
+    $('.rate').prop('onclick', null);
+    
+    $('#rate-positive, #rate-negative').addClass('rated');
+    
+    var positive = false;
+    if(num > 0) {
+        positive = true;
+    }
+    
+    var json = {"rating" : num};
+    alert('Data sent: ' + JSON.stringify(json));
+    
+    $.ajax({
+        url: '',
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert('Ajax success!');
+            $('#rating p').html(parseInt($('#rating p').html()) + num);
+            if(positive){
+                $('#rate-positive').addClass('user-rated');
+            } else {
+                $('#rate-negative').addClass('user-rated');
+            }
+            checkRating();
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            $('#rating p').html(parseInt($('#rating p').html()) + num);
+            if(positive){
+                $('#rate-positive').addClass('user-rated');
+            } else {
+                $('#rate-negative').addClass('user-rated');
+            }
+            checkRating();
+        }
+    });
+    
+    function checkRating(){
+        if(parseInt($('#rating p').html()) < 0){
+            $('#rating p').removeClass('positive-rating');
+            $('#rating p').addClass('negative-rating');
+        } else {
+            $('#rating p').removeClass('negative-rating');
+            $('#rating p').addClass('positive-rating');
+        }
+    }
 }

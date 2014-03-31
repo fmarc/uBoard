@@ -43,11 +43,16 @@
             
             <%
                 String id = "";
-                boolean user = false;
+                String title = "";
+                boolean user    = false;
+                boolean lesson  = false; 
                 
-                if (request.getParameter("id") != null){
-                    id = request.getParameter("id");
+                if ((id = request.getParameter("id")) != null){
                     user = true;
+                }
+                
+                if((title = request.getParameter("lesson_id")) != null){
+                    lesson  = true;
                 }
             %>
             
@@ -94,35 +99,58 @@
                 </div>
                 <div id="bottom"></div>
             </div>
+                    
+    <%if(!lesson){%>
+            <div id="save" onclick="saveLessonData();"><p>Save</p></div>
             
-        <div id="sidebar" class="hidden">
-            <div class="box title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 contenteditable="">Edit me!</h1></div>
-            <div class="box text-box" title="Text Box"><img class="handle edit" /><img class="remove edit" /><div contenteditable="">Edit Me!</div></div>
-            <div class="box image-box" title="Image Box"><img class="handle edit" /><img class="remove edit" /><div class="images"><img class="image"  src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /></div><div class="buttons edit"><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/></div></div>
-            <div class="box video-box" title="Video Box"><img class="handle edit" /><img class="remove edit" /><iframe class="video" width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe><input type="button" class="change-video edit" onclick="openVideoModal(this);" value="Change Video"/></div>
-            <div id="sidebar-click-area" onclick="toggleSideBar();"></div>
-            <div id="sidebar-handle" onclick="toggleSideBar();"></div>
-        </div>
+            <div id="sidebar" class="hidden">
+                <div class="box drag title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 contenteditable="">Edit me!</h1></div>
+                <div class="box drag text-box" title="Text Box"><img class="handle edit" /><img class="remove edit" /><div contenteditable="">Edit Me!</div></div>
+                <div class="box drag image-box" title="Image Box"><img class="handle edit" /><img class="remove edit" /><div class="images"><img class="image"  src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /></div><div class="buttons edit"><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/></div></div>
+                <div class="box drag video-box" title="Video Box"><img class="handle edit" /><img class="remove edit" /><iframe class="video" width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe><input type="button" class="change-video edit" onclick="openVideoModal(this);" value="Change Video"/></div>
+                <div id="sidebar-click-area" onclick="toggleSideBar();"></div>
+                <div id="sidebar-handle" onclick="toggleSideBar();"></div>
+            </div>
+            <div id="content">
+                <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false">How To Bring The House Down!</h1><h2 id="username">mgonz108</h2></div>
+                <div id="sort"></div>
+            </div>
+
+
+            <div id="img-box-modal" class="box-modal">
+                <h2>Image Source</h2>
+                <p>Please copy and paste the URL for the picture you wish to display</p>
+                <input type="text" id="image-url" placeholder="Image Url">
+                <input type="button" onclick="changeImage();" value="Save">
+                <input type="button" onclick="hideModal();" value="Cancel">
+            </div>
+
+            <div id="video-box-modal" class="box-modal">
+                <h2>YouTube Video Source</h2>
+                <p>Please copy and paste the URL for the YouTube video you wish to display</p>
+                <input type="text" id="video-url" placeholder="Video Url">
+                <input type="button" onclick="changeVideo();" value="Save">
+                <input type="button" onclick="hideModal();" value="Cancel">
+            </div>
             
-        <div id="content"></div>
-
-
-        <div id="img-box-modal" class="box-modal">
-            <h2>Image Source</h2>
-            <p>Please copy and paste the URL for the picture you wish to display</p>
-            <input type="text" id="image-url" placeholder="Image Url">
-            <input type="button" onclick="changeImage();" value="Save">
-            <input type="button" onclick="hideModal();" value="Cancel">
+            <div id="save-confirm-modal" class="box-modal">
+                <h2>Lesson Saved Successfully!</h2>
+                <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
+            </div>
+    <%} else {%>
+        <div id="rating">
+            <div class="rate" id="rate-positive" onclick="rate(1);"><img src="/images/rating/pos-rate.png"></div>
+            <div class="lesson-rating"><p class="positive-rating">0</p></div>
+            <div class="rate" id="rate-negative" onclick="rate(-1);"><img src="/images/rating/neg-rate.png"></div>
         </div>
-
-        <div id="video-box-modal" class="box-modal">
-            <h2>YouTube Video Source</h2>
-            <p>Please copy and paste the URL for the YouTube video you wish to display</p>
-            <input type="text" id="video-url" placeholder="Video Url">
-            <input type="button" onclick="changeVideo();" value="Save">
-            <input type="button" onclick="hideModal();" value="Cancel">
+    
+        <div id="content" style="left: 0;">
+            <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false">How To Bring The House Down!</h1><h2 id="username">mgonz108</h2></div>
+            <div class="box title-box" title="Title"><h1 contenteditable="false">Overview</h1></div>
+            <div class="box text-box" title="Text Box"><div contenteditable="false">In this lesson we are going to be atalking about all the different things you must do in order to bring the house down! Please make sure to read through the entire lesson in order to truly be regarded as a force to be reckoned with whenever you decided to embark in the amazing feat that is the bringing of the house down!</div></div>
+            <div class="box image-box" title="Image Box"><div class="images"><img class="image"  src="http://static.tumblr.com/zlyygir/SBgll7q5e/bthd.jpg" /><img class="image" src="http://seangilliganproductions.com/wp-content/uploads/2012/09/Bring-the-House-Down-80s-v2-01-540x405.jpg" /><img class="image" src="http://a2.mzstatic.com/us/r30/Music/91/c4/34/mzi.ggbthkpb.170x170-75.jpg" /></div></div>
         </div>
-        
+    <%}%>
         <div id="create-lesson-modal" class="box-modal">
             <h2>Create New Lesson</h2>
             <p>Please fill out the following information to create a new lesson.</p>
@@ -133,13 +161,15 @@
         </div>
 
         <div id="create-class-modal" class="box-modal">
-            <h2>Create New Class</h2>
-            <p>Please fill out the following information to create a new class.</p>
-            <h4>Title</h4>
-            <input type="text" id="class-title" placeholder="Class Title">
-            <input type="button" onclick="createNewLesson();" value="Create">
-            <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
-        </div>
+                <h2>Create New Class</h2>
+                <p>Please fill out the following information to create a new class.</p>
+                <h4>Title</h4>
+                <input type="text" id="class-title" placeholder="Class Title">
+                <h4>Price ($):</h4>
+                <input type="text" id="class-price" placeholder="Class Price">
+                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+            </div>
         
         <div id="modal"></div>
     </body>

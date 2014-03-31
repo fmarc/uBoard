@@ -80,8 +80,22 @@
     left: 65px;
     height: auto;
 }
+#content #sort{
+    min-height: 500px;
+    height: auto;
+}
+#username {
+    position: relative;
+    color: #881527;
+    bottom: 0;
+    background-color: #DE0042;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-sizing: border-box;
+    padding: 8px;
+}
 
-#content > * {
+#content > *, #sort > *{
     margin-bottom: 8px!important;
     position: relative;
 }
@@ -292,7 +306,91 @@ input[type="button"]:hover {
 }
 /*--MODALS END----------------------*/
 
+#save {
+    position: fixed;
+    text-align: center;
+    left: 0;
+    top: 11%;
+    width: 100px;
+    height: 50px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 5px black;
+    text-shadow: -1px 1px 0px black; 
+    cursor: pointer;
+    background-color: #0d0020;
+}
+#save:hover {
+    background-color: rgb(87, 150, 87);
+}
+#save p {  color: whitesmoke!important; line-height: 16px;}
+
 /*----!IMPORTANTS-------------------*/
 .hide {
     display: none !important;
 }
+
+#main-lesson-title {
+    text-align: center;
+    height: auto;
+    width: 100%;
+    background-color: #0d0020;
+    border-radius: 20px;
+    box-shadow: -3px 3px 10px #111;
+    box-sizing: border-box;
+}
+#main-lesson-title h1{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 20px;
+    font-weight: normal;
+    color: whitesmoke;
+}
+
+/*-- RATING ---------------------------*/
+#rating {
+    text-align: center;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    width: 70px;
+    height: auto;
+    background-color: #0D0020;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+#rate-positive, #rate-negative { 
+    display: block; 
+    height: auto;
+    width: 100%;
+    cursor: pointer;
+}
+#rate-positive {
+    border-top-right-radius: 20px;
+}
+#rate-negative { 
+    border-bottom-right-radius: 20px;
+}
+#rate-positive img, #rate-negative img{
+    margin: 10px;
+}
+#rate-positive:hover {
+    background-color: #12A369;
+}
+#rate-negative:hover {
+    background-color: #DE0042;
+}
+.positive-rating, .negative-rating{
+    border-radius: 0px;
+}
+.rated, .rated:hover {
+    cursor: default !important;
+    background-color: #0D0020 !important;
+}
+#rate-positive.user-rated, #rate-positive:hover.user-rated {
+    background-color: #12A369 !important;
+}
+#rate-negative.user-rated, #rate-negative:hover.user-rated {
+    background-color: #DE0042 !important;
+}
+/*-- RATING END -----------------------*/

@@ -121,13 +121,13 @@
                             <p class="positive-rating">471</p>
                         </div>
                         <div class="class-title">
-                            <h1>TITLE GOES HERE</h1>
+                            <h1>Everything You Need To Know About Pianos</h1>
                         </div>
                     </div>
                     
                     <div id="class-banner">
                         <div id="teacher">
-                            <p id="teacher-name">ThisISaLongUsername</p>
+                            <p id="teacher-name">mgonz108</p>
                         </div>
                     </div>
                     
@@ -135,7 +135,7 @@
                     <div id="class-bottom">
                         <div id="description">
                             <h2>Class Description: </h2>
-                            <textarea disabled id="class-desc">This is where the description of the Class will be. It will contain all the information provided by the user who created this Class.</textarea>
+                            <textarea disabled id="class-desc">This class is aimed at those individuals who wish to learn all there is to do about pianos in a simple and easy way.</textarea>
                         </div>
                     </div>
                 </div>
@@ -149,13 +149,13 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">501</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">A Brief History On How Pianos Came About</a>
                         </div>
                         <div class="created-lesson">
                             <div class="lesson-rating">
                                 <p class="negative-rating">-30</p>
                             </div>
-                            <a class="content-title" href="home.jsp">Title of the Lesson goes in here (change to valid link)</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">Material Pianos are Made Out Of</a>
                         </div>
                         <%if(user) {%>
                             <div class="create-new-lesson" onclick="toggleModal('create-lesson-class-modal');">
@@ -207,6 +207,8 @@
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
                 <input type="text" id="class-title" placeholder="Class Title">
+                <h4>Price ($):</h4>
+                <input type="text" id="class-price" placeholder="Class Price">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
