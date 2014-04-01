@@ -119,9 +119,9 @@
                     <h2>Assignments</h2>
                     <div class="assignment">
                         <%if(!user) {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">1. House Bringing!</p>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">1. Bringing Down The House !</p>
                         <%} else {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">1. House Bringing!</p>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">1. Bringing Down The House !</p>
                         <%}%>
                         <%if(!user) {%>
                         <p class="assignment-title" onclick="window.location = 'assignment.jsp'">2. Piano History and its Roots</p>
