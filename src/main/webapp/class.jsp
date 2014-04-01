@@ -99,39 +99,60 @@
             <%}%>
             
             <div id="content">
-                <div id="enrolled">
-                    <h2>Enrolled</h2>
-                    <p id="students-enrolled">20 / 40</p>
-                </div>
-                
-                <div id="price">
-                    <h2>Price</h2>
-                    <p>$<span class="class-price">32</span></p>
-                </div>
-                
-                <%if(user) {%>
-                    <div id="class-enroll" onclick="openEnrollModal();">
-                        <p id="enroll">Enroll</p>
+                <div id="class-side-tools">
+                    
+                    <div class="tool">
+                        <div id="enrolled">
+                            <h2>Enrolled</h2>
+                            <p id="students-enrolled">20 / 40</p>
+                        </div>
                     </div>
-                <%}%>
-                
-                <div id="assignments">
-                    <h2>Assignments</h2>
-                    <div class="assignment">
+                    
+                    <div class="tool">
+                        <div id="price">
+                            <h2>Price</h2>
+                            <p>$<span class="class-price">32</span></p>
+                        </div>
+                    </div>
+
+                    <%if(user) {%>
+                    <div class="tool">
+                        <div id="class-enroll" onclick="openEnrollModal();">
+                            <p id="enroll">Enroll</p>
+                        </div>
+                    </div>
+                    <%}%>
+                    
+                    <div class="tool">
                         <%if(!user) {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">1. Bringing Down The House !</p>
+                        <div id="class-stream" onclick="window.location = 'stream.jsp';">
                         <%} else {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">1. Bringing Down The House !</p>
+                        <div id="class-stream" onclick="window.location = 'stream.jsp?id=mgonz108';">
                         <%}%>
-                        <%if(!user) {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">2. Piano History and its Roots</p>
-                        <%} else {%>
-                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">2. Piano History and its Roots</p>
-                        <%}%>
-                        <%if(user) {%>
-                        <div id="create-new-assignment" onclick="toggleModal('create-assignment-modal');">Create Assignment</div>
-                        <%}%>
-                        
+                            <p id="stream">Stream Page</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tool">
+                        <div id="assignments">
+                            <h2>Assignments</h2>
+                            <div class="assignment">
+                                <%if(!user) {%>
+                                <p class="assignment-title" onclick="window.location = 'assignment.jsp'">1. Bringing Down The House !</p>
+                                <%} else {%>
+                                <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">1. Bringing Down The House !</p>
+                                <%}%>
+                                <%if(!user) {%>
+                                <p class="assignment-title" onclick="window.location = 'assignment.jsp'">2. Piano History and its Roots</p>
+                                <%} else {%>
+                                <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">2. Piano History and its Roots</p>
+                                <%}%>
+                                <%if(user) {%>
+                                <div id="create-new-assignment" onclick="toggleModal('create-assignment-modal');">Create Assignment</div>
+                                <%}%>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                     

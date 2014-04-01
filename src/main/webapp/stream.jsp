@@ -1,5 +1,5 @@
 <%-- 
-    Document   : home
+    Document   : stream
     Created on : Mar 2, 2014, 8:17:21 PM
     Author     : Maylem Gonzalez
                  Cory McAn
@@ -18,11 +18,15 @@
         <link href='http://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="CSS/master.css">
         <link rel="stylesheet" type="text/css" href="CSS/jquery-ui-1.10.4.min.css">
         <script src="scripts/jquery-1.10.2.js"></script>
         <script src="scripts/jquery-ui-1.10.4.min.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="CSS/master.css">
+        <link rel="stylesheet" type="text/css" href="CSS/stream.css">
+        
         <script src="scripts/home.js"></script>
+        <script src="scripts/stream.js"></script>
     </head>
     <body>
         
@@ -89,85 +93,33 @@
                 </div>
                 <div id="bottom"></div>
             </div>
-            
+                    
+            <%if(user){%>
+            <div id="save" onclick="saveStream('123456');"><p>Save</p></div>
+            <%}%>
+                    
             <div id="content">
-                <%if(!user) {%>
-                    <div id="welcome-message" class="content-box">
-
-                        <p>Pages done or work in progress:</p>
-                        <a href='home.jsp'>Home</a>
-                        <a href='register.jsp'>Register</a>
-                        <a href='lesson.jsp'>Lesson</a>
-                        <a href='profile.jsp'>Profile</a>
-                        <a href='class.jsp'>Class</a>
-                        <a href='assignment.jsp'>Assignment</a>
-                        <a href='stream.jsp'>Stream</a>
-
-                        <h1>U | BOARD - COMMUNITY LEARNING</h1>
-                        <h2>A tool made for learning and teaching just about anything you can imagine.</h2>
-                        <hr>
-                        <h3>Overview</h3>
-                        <p>
-                            Welcome to Uboard, if you are here that means that you must also share the same passion for learning as we do. That same passion
-                            is what drove us to create this website. We, the Uboard team, wanted to be able to learn about many different subjects without having
-                            to pay for expensive classes. The problem then was how could we learn new things, in an organized fashion, without the difficulties that
-                            bring a physical class or browsing endlessly through the internet for information?
-                        </p>
-                        <p>
-                            After a lot of thinking, the Uboard team realized that by creating a medium in which users could both teach and learn in a smooth and
-                            organized manner, then learning about new subjects would be fun and painless. Many users in our community are both teaching and learning
-                            new things everyday; from how to cook a delicious dinner to the principals of quantum physics, all organized by community members that
-                            have experience with these topics.
-                        </p>
-                        <p>
-                            Think you have the same passion that drives our community? Become a member now and start your journey through a cybernetic land filled 
-                            with the passion for learning. Also, don't be discouraged! If you think you are great at a particular subject, create a lesson and
-                            contribute to the community's growing passion for knowledge.
-                        </p>
-                    </div>
-               <%}%>
-               
-               <%if(request.getParameter("search") != null){%>
-                    <div id="search-content">
-                        <div class="box-header">
-                            <h1>SEARCH: <span id="search-keyword" style="font-style: italic; font-weight: normal; font-family: Arial;"><%=request.getParameter("search")%></span></h1>
-                        </div>
-                        <div class="box-content">
-                            <div class="lesson">
-                                <div class="lesson-rating">
-                                    <p class="positive-rating">501</p>
-                                </div>
-                                <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - Piano Lesson: How to play the piano with your feet!</a>
-                            </div>
-                            <div class="class">
-                                <div class="class-rating">
-                                    <p class="negative-rating">-30</p>
-                                </div>
-                                <a class="content-title" href="class.jsp?class_id=123456789">CLASS - Everything you need to know about Pianos.</a>
-                            </div>
-                        </div>
-                    </div>
-                <%}%>
-               
-                <div id="high-rated" class="box">
-                    <div class="box-header">
-                        <h1>HIGHEST RATED CONTENT</h1>
-                    </div>
-                    <div class="box-content">
-                        <div class="lesson">
-                            <div class="lesson-rating">
-                                <p class="positive-rating">580</p>
-                            </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - How To Bring The House Down!</a>
-                        </div>
-                        <div class="lesson">
-                            <div class="lesson-rating">
-                                <p class="positive-rating">541</p>
-                            </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - What are things I should do when bored?</a>
-                        </div>
-                    </div>
+                <div class="class-title">
+                    <h1>Everything You Need To Know About Pianos</h1>
                 </div>
+                <div id="class-banner">
+                        <div id="teacher">
+                            <p id="teacher-name">mgonz108</p>
+                        </div>
+                    </div>
+                <div id="stream-container">
+                    <object id="stream-video" type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=datmodz" bgcolor="#000000">
+                        <param name="allowFullScreen" value="true" />
+                        <param name="allowScriptAccess" value="always" />
+                        <param name="allowNetworking" value="all" />
+                        <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+                        <param id="twitch-param" name="flashvars" value="hostname=www.twitch.tv&channel=datmodz&auto_play=true&start_volume=25" />
+                    </object>
+                    <iframe id="stream-chat" frameborder="0" scrolling="no" src="http://twitch.tv/datmodz/chat?popout=" height="500" width="350"></iframe>
+                </div>
+                <%if(user){%>
+                <input id="change-stream" type="button" onclick="toggleModal('change-stream-modal');" value="Change Stream Channel">
+                <%}%>
             </div>
                 
             <div id="create-lesson-modal" class="box-modal">
@@ -177,6 +129,15 @@
                 <input type="text" id="lesson-title" placeholder="Lesson Title">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
+            </div>
+            
+            <div id="change-stream-modal" class="box-modal">
+                <h2>Change Stream Channel</h2>
+                <p>Please fill out the following information to change the stream channel.</p>
+                <h4>Channel Name:</h4>
+                <input type="text" id="stream-channel" placeholder="Stream Channel Name">
+                <input type="button" onclick="changeStream();" value="Create">
+                <input type="button" onclick="toggleModal('change-stream-modal');" value="Cancel">
             </div>
 
              <div id="create-class-modal" class="box-modal">
@@ -190,6 +151,11 @@
                 <input type="text" id="class-limit" placeholder="Class Limit">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+            </div>
+            
+            <div id="save-confirm-modal" class="box-modal">
+                <h2>Stream Saved Successfully!</h2>
+                <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
 
             <div id="modal"></div>

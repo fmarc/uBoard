@@ -1,0 +1,78 @@
+#content {
+    background-color: whitesmoke;
+    border-radius: 20px;
+}
+.class-title {
+    text-align: center;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    width: 100%;
+    height:  auto;
+    padding: 10px;
+    background-color: #0D0020
+;
+    box-sizing: border-box;
+}
+.class-title h1{
+    color: #DE0042;
+    margin: 0;
+}
+
+#class-banner {
+    text-align: center;
+    background-color: #DE0042;
+}
+#class-banner p{
+    color: #3C051F;
+    margin: 0;
+}
+
+#stream-container {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+#stream-video {
+    height: 560px; 
+    width: 70%;
+}
+#stream-chat {
+    height: 560px; 
+    width: 29.5%;
+}
+
+#change-stream {
+    cursor: pointer;
+    color: whitesmoke;
+    font-size: 17px;
+    text-align: center;
+    width: 95%;
+    height: 40px;
+    margin-left: 2%;
+    background-color: #DE0042;
+    border: 0;
+    border-radius: 20px;
+}
+#change-stream:hover {
+    background-color: #429ADB;
+}
+
+
+#save {
+    position: fixed;
+    text-align: center;
+    left: 0;
+    top: 11%;
+    width: 100px;
+    height: 50px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 1px 1px 5px black;
+    text-shadow: -1px 1px 0px black; 
+    cursor: pointer;
+    background-color: #0d0020;
+}
+#save:hover {
+    background-color: rgb(87, 150, 87);
+}
+#save p {  color: whitesmoke!important; line-height: 16px;}

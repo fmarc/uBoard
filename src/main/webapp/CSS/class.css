@@ -108,39 +108,54 @@ p {
     padding: 20px;
     box-sizing: border-box;
 }
-#enrolled, #class-enroll, #price {
+
+#class-side-tools {
     position: absolute;
     width: 11%;
+    height: auto;
     text-align: center;
-    top: 83px;
+    top: 0px;
     right: 8px;
-    background-color: #DE0042;
     border-radius: 15px;
     padding: 10px;
+    
+}
+.tool {
+    margin-bottom: 20px;
+    border-radius: 15px;
     box-shadow: -1px 1px 5px #0d0020;
 }
+
+#enrolled, #price {
+    height: 80px;
+    border-radius: 20px;
+    background-color: #DE0042;
+}
+
 #price { top: 0px; right: 8px;}
 #enrolled h2, #price h2 {
     color: rgb(107, 7, 7);
     font-size: 20px;
     margin: 0px;
+    padding-top: 16px;
 }
 #enrolled p,#price p {
     color: rgb(107, 7, 7);
     margin: 0px;
 }
-#class-enroll { 
+#class-enroll, #class-stream { 
     background-color: #0d0020; 
-    top: 167px; 
-    right: 8px;
+    height: 50px;
+    border-radius: 15px;
     cursor: pointer;
 }
-#class-enroll:hover { 
+#class-enroll:hover, #class-stream:hover{ 
     background-color: #429ADB;  
 }
-#class-enroll p { 
+#class-enroll p, #class-stream p { 
     color: whitesmoke;
     margin: 0px; 
+    padding-top: 17px;
 }
 
 textarea {
@@ -285,10 +300,7 @@ textarea:disabled {
 
 /*-- ASSIGNMENTS -------------------*/
 #assignments {
-    position: absolute;
-    top: 227px;
-    right: 9px;
-    width: 12%;
+    width: 100%;
     height: auto;
     border-radius: 15px;
     background-color: whitesmoke;
@@ -315,6 +327,7 @@ textarea:disabled {
 }
 .assignment-title {
     word-wrap: break-word;
+    text-align: left;
     cursor: pointer;
     font-size: 16px;
     color: #666;
