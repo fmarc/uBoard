@@ -114,6 +114,26 @@
                         <p id="enroll">Enroll</p>
                     </div>
                 <%}%>
+                
+                <div id="assignments">
+                    <h2>Assignments</h2>
+                    <div class="assignment">
+                        <%if(!user) {%>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">1. House Bringing!</p>
+                        <%} else {%>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">1. House Bringing!</p>
+                        <%}%>
+                        <%if(!user) {%>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp'">2. Piano History and its Roots</p>
+                        <%} else {%>
+                        <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">2. Piano History and its Roots</p>
+                        <%}%>
+                        <%if(user) {%>
+                        <div id="create-new-assignment" onclick="toggleModal('create-assignment-modal');">Create Assignment</div>
+                        <%}%>
+                        
+                    </div>
+                </div>
                     
                 <div class="class-content">
                     <div id="class-top">
@@ -236,6 +256,8 @@
                 <input type="text" id="class-title" placeholder="Class Title">
                 <h4>Price ($):</h4>
                 <input type="text" id="class-price" placeholder="Class Price">
+                <h4>Class Enrollment Limit:</h4>
+                <input type="text" id="class-limit" placeholder="Class Limit">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
@@ -247,6 +269,17 @@
                 <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
                 <input type="button" onclick="postNewComment('mgonz108');" value="Create">
                 <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
+            </div>
+                        
+            <div id="create-assignment-modal" class="box-modal" style="top: 25%;">
+                <h2>Create New Assignment</h2>
+                <p>Please fill out the following information to create a new assignment.</p>
+                <h4>Title</h4>
+                <input type="text" id="assignment-title" placeholder="Assignment Title">
+                <h4>Description:</h4>
+                <textarea style="box-sizing: border-box; padding: 10px; max-width: 100%; min-width: 100%; min-height: 400px; max-height: 400px" id="assignment-description" placeholder="Assignment Description"></textarea>
+                <input type="button" onclick="createNewAssignment();" value="Create">
+                <input type="button" onclick="toggleModal('create-assignment-modal');" value="Cancel">
             </div>
             
             <div id="modal"></div>

@@ -103,13 +103,39 @@ function createNewLesson(element){
         dataType: 'json', 
         success: function(data) {
             alert('Ajax success!');
-            window.location('lesson.jsp');
+            window.location = 'lesson.jsp';
             changeSide();
         }, 
         error: function(data) {
             alert('Ajax error');
             window.location = 'lesson.jsp';
             changeSide();
+        }
+    });
+}
+
+
+function createNewAssignment(element){
+    var assignmentTitle     = $('#assignment-title').val();
+    var assignmentDesc      = $('#assignment-description').val();
+
+    var json = {"assignment-title" : assignmentTitle, "description": assignmentDesc};
+
+    alert('Data sent: ' + JSON.stringify(json));
+
+    $.ajax({
+        url: 'lesson.jsp',
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert('Ajax success!');
+            $('#create-new-assignment').before("<p class=\"assignment-title\" onclick=\"window.location = 'assignment.jsp?teacher=mgonz108'\">" +($('.assignment-title').length + 1)+ ". " + assignmentTitle + "</p>");
+            toggleModal('create-assignment-modal');
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            $('#create-new-assignment').before("<p class=\"assignment-title\" onclick=\"window.location = 'assignment.jsp?teacher=mgonz108'\">" +($('.assignment-title').length + 1)+ ". " + assignmentTitle + "</p>");
+            toggleModal('create-assignment-modal');
         }
     });
 }

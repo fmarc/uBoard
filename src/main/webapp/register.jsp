@@ -124,13 +124,15 @@
                 <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
             </div>
 
-            <div id="create-class-modal" class="box-modal">
+             <div id="create-class-modal" class="box-modal">
                 <h2>Create New Class</h2>
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
                 <input type="text" id="class-title" placeholder="Class Title">
                 <h4>Price ($):</h4>
                 <input type="text" id="class-price" placeholder="Class Price">
+                <h4>Class Enrollment Limit:</h4>
+                <input type="text" id="class-limit" placeholder="Class Limit">
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>

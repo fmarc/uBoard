@@ -564,7 +564,7 @@ hr { border-color: #F3F3F3; }
 .box-modal {
     display: none;
     position: fixed;
-    top: 50%;
+    top: 35%;
     left: 50%;
     border-radius: 20px;
     width: 400px;
