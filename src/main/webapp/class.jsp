@@ -138,6 +138,7 @@
                     </div>
                     <%}%>
                     
+                    <%if(user || teacher){%>
                     <div class="tool">
                         <%if(!user) {%>
                         <div id="class-stream" onclick="window.location = 'stream.jsp';">
@@ -147,7 +148,9 @@
                             <p id="stream">Stream Page</p>
                         </div>
                     </div>
+                    <%}%>
                     
+                    <%if(user || teacher){%>
                     <div class="tool">
                         <div id="assignments">
                             <h2>Assignments</h2>
@@ -169,6 +172,7 @@
                             </div>
                         </div>
                     </div>
+                    <%}%>
                 </div>
                     
                 <div class="class-content">
