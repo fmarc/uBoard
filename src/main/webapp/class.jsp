@@ -42,11 +42,17 @@
             
             <%
                 String id = "";
+                String teach = "";
                 boolean user = false;
+                boolean teacher = false;
                 
                 if (request.getParameter("id") != null){
                     id = request.getParameter("id");
                     user = true;
+                }
+                if (request.getParameter("teacher") != null){
+                    teach = request.getParameter("teacher");
+                    teacher = true;
                 }
             %>
             
@@ -67,6 +73,15 @@
                         <%if(user) {%>
                             <div id="login">
                                 <img id="user-hover" src="/images/login/user-img.png"><span style="position:relative; top:15px;"><%=id%></span>
+                            </div>
+                            <div id="logged-in">
+                                <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
+                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
+                                <div onclick="window.location = '/home.jsp'"><img src="/images/login/logout.png"><p>Log Out</p></div>
+                            </div>
+                        <%} else if(teacher) {%>
+                            <div id="login">
+                                <img id="user-hover" src="/images/login/teacher-auth-small.png"><span style="position:relative; top:15px;"><%=teach%></span>
                             </div>
                             <div id="logged-in">
                                 <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
@@ -94,7 +109,7 @@
                 <div id="bottom"></div>
             </div>
             
-            <%if(user) {%>
+            <%if(teacher) {%>
                 <div id="edit-save" class="edit-class" onclick="saveClassData(this);"><p>Edit</p></div>
             <%}%>
             
@@ -147,7 +162,7 @@
                                 <%} else {%>
                                 <p class="assignment-title" onclick="window.location = 'assignment.jsp?teacher=mgonz108'">2. Piano History and its Roots</p>
                                 <%}%>
-                                <%if(user) {%>
+                                <%if(teacher) {%>
                                 <div id="create-new-assignment" onclick="toggleModal('create-assignment-modal');">Create Assignment</div>
                                 <%}%>
 
@@ -198,7 +213,7 @@
                             </div>
                             <a class="content-title" href="lesson.jsp?lesson_id=123456789"">Material Pianos are Made Out Of</a>
                         </div>
-                        <%if(user) {%>
+                        <%if(teacher) {%>
                             <div class="create-new-lesson" onclick="toggleModal('create-lesson-class-modal');">
                                 <p>Create New Lesson</p>
                             </div>

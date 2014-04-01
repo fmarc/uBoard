@@ -1,3 +1,10 @@
+#login:hover img {
+    content: url("/images/login/teacher-auth-small-hover.png");
+}
+.display-modal img{
+    content: url("/images/login/teacher-auth-small-hover.png");
+}
+
 p {
     line-height: 18px;
 }
