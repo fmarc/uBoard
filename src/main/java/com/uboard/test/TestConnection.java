@@ -19,11 +19,12 @@ public class TestConnection {
     
     public static void main (String[] args) throws SQLException{
         Connection con = MyDatabase.getConnection();
-        String query = "SELECT * FROM \"UBOARD\".u_user WHERE username = 'admin'";
+        String query = "SELECT * FROM \"UBOARD\".u_user";
 
         ResultSet data = con.prepareStatement(query).executeQuery();
         
-        System.out.println(data.getString("username"));
+        while(data.next())
+            System.out.println("User: " + data.getString("username") + "\tPassword: " + data.getString("user_password"));
     } 
     
 }

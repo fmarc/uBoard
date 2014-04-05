@@ -35,24 +35,65 @@ $(document).ready(function() {
     });
     //********************************************************
     
-//    $("#login-form").submit(function(e){
-//        var form = JSON.stringify($(this).serializeArray());
-//        
-//        window.location = "?id=" + form.username;
-//
-//        return false;
-//    });
-//    
-//    $("#search").submit(function(e){
-//        var form = JSON.stringify($(this).serializeArray());
-//        
-//        window.location = "?search=" + form.username;
-//
-//        return false;
-//    });
+    
+    $("#search").submit(function(e){
+        var form = JSON.stringify($(this).serializeArray());
+        
+        window.location = "?search=" + form.username;
+
+        return false;
+    });
+    
+    // This method is invoked whtn the user Logs in.
+    //It successfully logs the user in to the application.
+    $('#login-form').submit(function(e){
+        var username = $('#login-user').val();
+        var password = $('#login-pass').val();
+
+        var json = {page: "all", method: "login", username: username, password: password};
+
+        $.ajax({
+            url: '/controller',
+            type: "POST",
+            data: json, 
+            dataType: 'json', 
+            success: function(data) {
+                alert(data);
+                window.location.reload();
+            }, 
+            error: function(data) {
+                alert('Ajax error');
+                //changeSide();
+            }
+        });
+        
+        e.preventDefault();
+        return false;
+    });
     
 });
 
+// This method is invoked whtn the user click on the "Logout" button.
+//It successfully logs the user out of the application.
+function logout(sessionId) {
+    var json = {page: "all", method: "logout"};
+
+    $.ajax({
+        url: '/controller',
+        type: "POST",
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            alert("Logout Successful!");
+            window.location = "/";
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+            //changeSide();
+        }
+    });
+    //return false;
+}
 
 var num = 0;
 function toggleModal(id){

@@ -5,7 +5,10 @@
                  Cory McAn
                  Francisco Marcano
 --%>
-<%@page import="java.io.BufferedReader"%>
+<%@page import="com.uboard.objects.Utilities"%>
+<%@page import="com.uboard.interfaces.User"%>
+<%@page import="com.uboard.objects.Student"%>
+<%@page import="com.uboard.objects.Teacher"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -43,13 +46,12 @@
         -->
         
             <%
-                String id = "";
-                boolean user = false;
+                Utilities util = Utilities.getInstance();
+                User user = null;
                 
-                if (request.getParameter("id") != null){
-                    id = request.getParameter("id");
-                    user = true;
-                }
+                try {
+                    user = util.getOnlineUser(session.getId());
+                } catch (Exception e){}
             %>
             
             <div id="top-banner">
@@ -66,22 +68,28 @@
                     </a>
                     
                     <div id="user-auth">
-                        <%if(user) {%>
+                        <%if(user != null) {%>
                             <div id="login">
-                                <img id="user-hover" src="/images/login/user-img.png"><span style="position:relative; top:15px;"><%=id%></span>
+                                <%if(user instanceof Teacher){%>
+                                <img id="user-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <%} else {%>
+                                <img id="user-hover" src="/images/login/user-img.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <%}%>
                             </div>
                             <div id="logged-in">
                                 <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
                                 <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
-                                <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
-                                <div onclick="window.location = '/home.jsp'"><img src="/images/login/logout.png"><p>Log Out</p></div>
+                                <%if(user instanceof Teacher){%>
+                                    <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <%}%>
+                                <div onclick="logout()"><img src="/images/login/logout.png"><p>Log Out</p></div>
                             </div>
                         <%} else {%>
                             <div id="login">
                                 <span style="position:relative; top:15px;">LOG IN</span>
                             </div>
                             <div id="login-modal">
-                                <form id="login-form">
+                                <form id="login-form" onsubmit="login();">
                                     <input name="id" type="text" id="login-user" class="text-input" placeholder="Username">
                                     <span id="login-user-pic"></span>
                                     <input type="password" id="login-pass" class="text-input" placeholder="Password">

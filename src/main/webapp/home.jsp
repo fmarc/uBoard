@@ -6,8 +6,12 @@
                  Francisco Marcano
 --%>
 
-<%@page import="java.io.BufferedReader"%>
+<%@page import="com.uboard.objects.Utilities"%>
+<%@page import="com.uboard.interfaces.User"%>
+<%@page import="com.uboard.objects.Student"%>
+<%@page import="com.uboard.objects.Teacher"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,7 +29,6 @@
         <script src="scripts/home.js"></script>
     </head>
     <body>
-        
             <!--
                 JSP IMPLEMENTATION PSEUDOCODE
                 
@@ -37,20 +40,19 @@
             -->
             
             <%
-                String id = "";
-                boolean user = false;
+                Utilities util = Utilities.getInstance();
+                User user = null;
                 
-                if (request.getParameter("id") != null || request.getParameter("search") != null){
-                    id = request.getParameter("id");
-                    user = true;
-                }
+                try {
+                    user = util.getOnlineUser(session.getId());
+                } catch (Exception e){}
             %>
 
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
                         <form id="search-form">
-                            <input name="search" type="text" id="content-search" val="" placeholder="Search">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
                     </div>
@@ -60,15 +62,21 @@
                     </a>
                     
                     <div id="user-auth">
-                        <%if(user) {%>
+                        <%if(user != null) {%>
                             <div id="login">
-                                <img id="user-hover" src="/images/login/user-img.png"><span style="position:relative; top:15px;"><%=id%></span>
+                                <%if(user instanceof Teacher){%>
+                                <img id="user-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <%} else {%>
+                                <img id="user-hover" src="/images/login/user-img.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <%}%>
                             </div>
                             <div id="logged-in">
                                 <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
                                 <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
-                                <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
-                                <div onclick="window.location = '/home.jsp'"><img src="/images/login/logout.png"><p>Log Out</p></div>
+                                <%if(user instanceof Teacher){%>
+                                    <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <%}%>
+                                <div onclick="logout()"><img src="/images/login/logout.png"><p>Log Out</p></div>
                             </div>
                         <%} else {%>
                             <div id="login">
@@ -81,7 +89,7 @@
                                     <input type="password" id="login-pass" class="text-input" placeholder="Password">
                                     <span id="login-pass-pic"></span>
                                     <input id="login-button" class="button" type="submit" value="LOG IN">
-                                    <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
+                                    <a href="/register.jsp"><input id="register-button" class="button" type="button" value="REGISTER" /></a>
                                 </form>
                             </div>
                         <%}%>
@@ -91,7 +99,7 @@
             </div>
             
             <div id="content">
-                <%if(!user) {%>
+                <%if(user == null) {%>
                     <div id="welcome-message" class="content-box">
 
                         <p>Pages done or work in progress:</p>
@@ -137,7 +145,7 @@
                                 <div class="lesson-rating">
                                     <p class="positive-rating">501</p>
                                 </div>
-                                <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - Piano Lesson: How to play the piano with your feet!</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - Piano Lesson: How to play the piano with your feet!</a>
                             </div>
                             <div class="class">
                                 <div class="class-rating">
@@ -158,13 +166,13 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">580</p>
                             </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - How To Bring The House Down!</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - How To Bring The House Down!</a>
                         </div>
                         <div class="lesson">
                             <div class="lesson-rating">
                                 <p class="positive-rating">541</p>
                             </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789"">LESSON - What are things I should do when bored?</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - What are things I should do when bored?</a>
                         </div>
                     </div>
                 </div>
