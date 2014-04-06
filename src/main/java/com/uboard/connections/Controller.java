@@ -37,22 +37,28 @@ public class Controller extends HttpServlet{
         PrintWriter out = response.getWriter();
         Utilities utilities = Utilities.getInstance();
         
-        String page     = request.getParameter("page");
-        String method   = request.getParameter("method");
+        String page         = request.getParameter("page");
+        String method       = request.getParameter("method");
+        String sessionId    = request.getSession().getId();
         
         if(page.equals("all")){
+            
+            //Handles the Login
             if(method.equals("login")){
                 String username     = request.getParameter("username");
                 String password     = request.getParameter("password");
-                String sessionId    = request.getSession().getId();
+                
                 
                 if(utilities.checkLogin(sessionId, username, password)) {
                     out.write("1");
                 } else {
                     out.write("0");
                 }
-            }else if(method.equals("logout")){
-                if(utilities.logout(request.getSession().getId())) {
+            }
+            
+            //Handles the Logout
+            if(method.equals("logout")){
+                if(utilities.logout(sessionId)) {
                     out.write("1");
                 } else {
                     out.write("0");
@@ -62,6 +68,24 @@ public class Controller extends HttpServlet{
         } else if(page.equals("home")){
             
         } else if(page.equals("register")){
+            
+            //Handles the Registering
+            if(method.equals("register")) {
+                String username     = request.getParameter("username");
+                String email        = request.getParameter("email");
+                String name         = request.getParameter("name");
+                String password     = request.getParameter("password");
+                
+                if(utilities.usernameExists(username)){
+                    out.write("2");
+                } else if(utilities.emailExists(email)) {
+                    out.write("3");
+                } else {
+                    utilities.register(username, email, name, password);
+                    utilities.checkLogin(sessionId, username, password);
+                    out.write("1");
+                }
+            }
             
         } else if(page.equals("lesson")){
             

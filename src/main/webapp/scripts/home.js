@@ -47,31 +47,39 @@ $(document).ready(function() {
     // This method is invoked whtn the user Logs in.
     //It successfully logs the user in to the application.
     $('#login-form').submit(function(e){
+        e.preventDefault();
+        
         var username = $('#login-user').val();
         var password = $('#login-pass').val();
 
-        var json = {page: "all", method: "login", username: username, password: password};
-
-        $.ajax({
-            url: '/controller',
-            type: "POST",
-            data: json, 
-            dataType: 'json', 
-            success: function(data) {
-                alert(data);
-                window.location.reload();
-            }, 
-            error: function(data) {
-                alert('Ajax error');
-                //changeSide();
-            }
-        });
+        login(username, password);
         
-        e.preventDefault();
         return false;
     });
     
 });
+
+//This method handles the log in for the application
+function login(username, password){
+    var json = {page: "all", method: "login", username: username, password: password};
+
+    $.ajax({
+        url: '/controller',
+        type: "POST",
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            if(data === 1){
+                window.location.reload();
+            } else {
+                $('#login-error').css('display', 'inline-block');
+            }
+        }, 
+        error: function(data) {
+            alert('Ajax error');
+        }
+    });
+}
 
 // This method is invoked whtn the user click on the "Logout" button.
 //It successfully logs the user out of the application.
@@ -84,7 +92,6 @@ function logout(sessionId) {
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert("Logout Successful!");
             window.location = "/";
         }, 
         error: function(data) {

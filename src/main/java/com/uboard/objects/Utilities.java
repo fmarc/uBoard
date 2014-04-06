@@ -22,6 +22,16 @@ public class Utilities {
         "SELECT username, user_password, user_type FROM \"UBOARD\".u_user WHERE username = ? "
         +   "AND user_password = ?";
     
+    private static final String query_usernameExists  = 
+        "SELECT username FROM \"UBOARD\".u_user WHERE username = ?";
+    
+    private static final String query_emailExists  = 
+        "SELECT email FROM \"UBOARD\".u_user WHERE email = ?";
+    
+    private static final String query_registerUser = 
+        "INSERT INTO \"UBOARD\".u_user (username, email, name, user_password) "
+        + "VALUES (?, ?, ?, ?)";
+    
     /**
      * Singleton Object, no constructor needed
      */
@@ -47,13 +57,13 @@ public class Utilities {
      * @return boolean - Indicates if the User was successfully logged in
      */
     public boolean checkLogin(String sessionId, String username, String password) {
-        Connection con = MyDatabase.getConnection();
-        PreparedStatement stm;
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
         try {
             //Creates a prepared statement that takes care of the query and its
             //values
             stm = con.prepareStatement(query_findUser);
-            stm.setString(1, username);
+            stm.setString(1, username.toLowerCase());
             stm.setString(2, password);
             ResultSet found = stm.executeQuery();
             
@@ -63,13 +73,19 @@ public class Utilities {
                 if(found.getString("username").equalsIgnoreCase(username)
                 && found.getString("user_password").equals(password)) {
                     login(sessionId, username, found.getString("user_type"));
-                    stm.close();
                     return true;
                 }
             }
         } catch (SQLException e) {
-            System.out.println("There was SQL error when finding the User while logging in:\n");
+            System.out.println("\nThere was SQL error when finding the User while logging in:");
             e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
         }
         
         return false;
@@ -85,9 +101,9 @@ public class Utilities {
     private void login(String sessionId, String username, String type) {
         //Checks to see whether the User is a Teacher or Student
         if(type.equals("0")){
-            usersOnline.put(sessionId, new Student(username));
+            usersOnline.put(sessionId, new Student(username.toLowerCase()));
         } else {
-            //usersOnline.put(sessionId, new Teacher(username));
+            usersOnline.put(sessionId, new Teacher(username.toLowerCase()));
         }
     }
     
@@ -114,6 +130,101 @@ public class Utilities {
      */
     public User getOnlineUser(String sessionId){
         return usersOnline.get(sessionId);
+    }
+    
+    /**
+     * Checks to see if the username passed exists in the database
+     * @param username - User's username
+     * @return boolean - Indicates whether the username exists
+     */
+    public boolean usernameExists(String username) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            stm = con.prepareStatement(query_usernameExists);
+            stm.setString(1, username.toLowerCase());
+            ResultSet found = stm.executeQuery();
+            
+            //Check for all the records (in this case just one) to see if the
+            //user credentials match the ones in the Database
+            if(found.next())
+                return true;
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when finding the User while logging in:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Checks to see if the email passed exists in the database
+     * @param email - User's email
+     * @return boolean - Indicates whether the email exists
+     */
+    public boolean emailExists(String email) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            stm = con.prepareStatement(query_emailExists);
+            stm.setString(1, email.toLowerCase());
+            ResultSet found = stm.executeQuery();
+            
+            //Check for all the records (in this case just one) to see if the
+            //user credentials match the ones in the Database
+            if(found.next())
+                return true;
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when finding the User while logging in:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        return false;
+    }
+    
+    public boolean register(String username, String email, String name, String password){
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            //Query = (username, email, name, user_password)
+            stm = con.prepareStatement(query_registerUser);
+            stm.setString(1, username.toLowerCase());
+            stm.setString(2, email.toLowerCase());
+            stm.setString(3, name.toLowerCase());
+            stm.setString(4, password);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when registeringa new User:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        
+        return false;
     }
     
 }

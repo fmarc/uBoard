@@ -65,17 +65,19 @@
                         <%if(user != null) {%>
                             <div id="login">
                                 <%if(user instanceof Teacher){%>
-                                <img id="user-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <img id="teacher-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
                                 <%} else {%>
                                 <img id="user-hover" src="/images/login/user-img.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
                                 <%}%>
                             </div>
                             <div id="logged-in">
-                                <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
-                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
                                 <%if(user instanceof Teacher){%>
+                                <div onclick="window.location = '/profile.jsp?username=<%=user.getUsername()%>'"><img src="/images/login/teacher-auth-small-hover.png"><p>View Profile</p></div>
                                     <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <%} else {%>
+                                    <div onclick="window.location = '/profile.jsp?username=<%=user.getUsername()%>'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
                                 <%}%>
+                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
                                 <div onclick="logout()"><img src="/images/login/logout.png"><p>Log Out</p></div>
                             </div>
                         <%} else {%>
@@ -91,6 +93,7 @@
                                     <input id="login-button" class="button" type="submit" value="LOG IN">
                                     <a href="/register.jsp"><input id="register-button" class="button" type="button" value="REGISTER" /></a>
                                 </form>
+                                <div id="login-error"><img src="/images/login/login-error.png" style="position: relative; top: 2px; display: inline-block; width: 18px; margin: 0px;"><p style="display: inline-block;color:  whitesmoke;line-height: 20px;margin: 0px 0px 0px 15px;">Invalid login, please try again</p></div>
                             </div>
                         <%}%>
                     </div>

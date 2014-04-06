@@ -179,8 +179,14 @@ hr { border-color: #F3F3F3; }
     height: 21px;
     margin-left: 10px;
 }
-#login:hover img {
+#login:hover #user-hover {
+    transition: 0.3s;
     content: url("/images/login/user-img-hover.png");
+}
+
+#login:hover #teacher-hover {
+    transition: 0.3s;
+    content: url("/images/login/teacher-auth-small-hover.png");
 }
 
 
@@ -198,8 +204,12 @@ hr { border-color: #F3F3F3; }
     background-color: #DE0042!important;
     box-shadow: inset 0px -2px 1px #444444;
 }
-.display-modal img{
+.display-modal #user-hover{
     content: url("/images/login/user-img-hover.png");
+}
+
+.display-modal #teacher-hover{
+    content: url("/images/login/teacher-auth-small-hover.png");
 }
 
 .display-modal:hover {
@@ -210,7 +220,7 @@ hr { border-color: #F3F3F3; }
 .display-modal + #logged-in{
     transition: 0.3s;
     display: block;
-    height: 103px;
+    height: auto;
 }
 
 #login-modal {
@@ -345,6 +355,14 @@ hr { border-color: #F3F3F3; }
     height: 10px;
     background-color: #DE8642;
     box-shadow: 0px 5px 5px #242424;
+}
+
+#login-error {
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 /*---TOP BAR END---------------------*/
 

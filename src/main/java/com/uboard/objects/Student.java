@@ -43,12 +43,11 @@ public class Student implements User{
     /**
      * This constructor is to create a new Student object from the specified
      * parameter using the database to retrieve the information. 
-     * @throws SQLException - If the database fails, this throws an exception
      * @param username - The User's username
      */
     public Student(String username) {
-        Connection con = MyDatabase.getConnection();
-        PreparedStatement stm;
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
         try {
             //Creates a prepared statement that takes care of the query and its
             //values
@@ -68,12 +67,16 @@ public class Student implements User{
             this.posRating          = this.getPositiveRating();
             this.createdLessons     = this.getCreatedLesssons();
             this.enrolledClasses    = this.getEnrolledClasses();
-            
-            stm.close();
-            
         } catch (SQLException e) {
             System.out.println("There was SQL error when creating a Student object:\n");
             e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
         }
     }
     
@@ -98,8 +101,8 @@ public class Student implements User{
     }
 
     public int getTotalRating() {
-        Connection con = MyDatabase.getConnection();
-        PreparedStatement stm;
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
         try {
             //Creates a prepared statement that takes care of the query and its
             //values
@@ -114,13 +117,20 @@ public class Student implements User{
         } catch (SQLException e) {
             System.out.println("There was SQL error when retrieving the total rating of a Student object:\n");
             e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
         }
         return 0;
     }
 
     public int getPositiveRating() {
-        Connection con = MyDatabase.getConnection();
-        PreparedStatement stm;
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
         try {
             //Creates a prepared statement that takes care of the query and its
             //values
@@ -135,6 +145,13 @@ public class Student implements User{
         } catch (SQLException e) {
             System.out.println("There was SQL error when retrieving the positive rating of a Student object:\n");
             e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
         }
         return 0;
     }

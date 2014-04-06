@@ -52,6 +52,17 @@
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
+                
+                //If the user is already active, then redirect the user to the homepage
+                if(user != null){
+                    String redirect = "";
+                    
+                    if(!request.getRequestURL().toString().contains("register.jsp"))
+                        redirect = request.getRequestURL().toString();
+                        
+                    response.sendRedirect(redirect);
+                    return;
+                }
             %>
             
             <div id="top-banner">
@@ -71,17 +82,19 @@
                         <%if(user != null) {%>
                             <div id="login">
                                 <%if(user instanceof Teacher){%>
-                                <img id="user-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
+                                <img id="teacher-hover" src="/images/login/teacher-auth-small.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
                                 <%} else {%>
                                 <img id="user-hover" src="/images/login/user-img.png" /><span style="position:relative; top:15px;"><%=user.getUsername()%></span>
                                 <%}%>
                             </div>
                             <div id="logged-in">
-                                <div onclick="window.location = '/profile.jsp'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
-                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
                                 <%if(user instanceof Teacher){%>
+                                <div onclick="window.location = '/profile.jsp?username=<%=user.getUsername()%>'"><img src="/images/login/teacher-auth-small-hover.png"><p>View Profile</p></div>
                                     <div onclick="toggleModal('create-class-modal');"><img src="/images/login/create-class.png"><p>Create Class</p></div>
+                                <%} else {%>
+                                    <div onclick="window.location = '/profile.jsp?username=<%=user.getUsername()%>'"><img src="/images/login/view-profile.png"><p>View Profile</p></div>
                                 <%}%>
+                                <div onclick="toggleModal('create-lesson-modal');"><img src="/images/login/create-lesson.png"><p>Create Lesson</p></div>
                                 <div onclick="logout()"><img src="/images/login/logout.png"><p>Log Out</p></div>
                             </div>
                         <%} else {%>
@@ -89,7 +102,7 @@
                                 <span style="position:relative; top:15px;">LOG IN</span>
                             </div>
                             <div id="login-modal">
-                                <form id="login-form" onsubmit="login();">
+                                <form id="login-form">
                                     <input name="id" type="text" id="login-user" class="text-input" placeholder="Username">
                                     <span id="login-user-pic"></span>
                                     <input type="password" id="login-pass" class="text-input" placeholder="Password">
@@ -97,6 +110,7 @@
                                     <input id="login-button" class="button" type="submit" value="LOG IN">
                                     <a href="/register.jsp"><input href="/register.jsp" id="register-button" class="button" type="button" value="REGISTER" /></a>
                                 </form>
+                                <div id="login-error"><img src="/images/login/login-error.png" style="position: relative; top: 2px; display: inline-block; width: 18px; margin: 0px;"><p style="display: inline-block;color:  whitesmoke;line-height: 20px;margin: 0px 0px 0px 15px;">Invalid login, please try again</p></div>
                             </div>
                         <%}%>
                     </div>
@@ -107,17 +121,15 @@
             <div id="content">
                 <div class="content-box">
                     <h1>REGISTER</h1>
-                    <form id="register" actioin="register.jsp">
+                    <form id="register">
                         <p>Username: </p>
-                        <input type="text" name="username" placeholder="Username" />
-                        <p>First Name:</p>
-                        <input type="text" name="fname" placeholder="First Name" />
-                        <p>Last Name:</p>
-                        <input type="text" name="lname" placeholder="Last Name"/>
+                        <input id="u-username" type="text" name="username" placeholder="Username" />
+                        <p>Full Name:</p>
+                        <input id="u-name" type="text" name="name" placeholder="Full Name" />
                         <p>Email:</p>
-                        <input type="email" name="email" placeholder="Email"/>
+                        <input id="u-email" type="email" name="email" placeholder="Email"/>
                         <p>Password:</p>
-                        <input type="password" name="password" placeholder="Password"/>
+                        <input id="u-password" type="password" name="password" placeholder="Password"/>
                         <input type="submit" value="Submit" />
                     </form>
                 </div>
