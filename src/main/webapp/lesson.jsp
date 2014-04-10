@@ -10,6 +10,9 @@
 <%@page import="com.uboard.interfaces.User"%>
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
+<%@page import="com.uboard.objects.Lesson"%>
+<%@page import="com.uboard.objects.Comment"%>
+<%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -45,18 +48,36 @@
             -->
             
             <%
-                String title = "";
-                boolean lesson  = false; 
-                
                 Utilities util = Utilities.getInstance();
-                User user = null;
+                User user           = null;
+                
+                Lesson object       = null;
+                String title        = "";
+                boolean isUser      = false;
+                boolean isOwner     = false; 
                 
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
                 
                 if((title = request.getParameter("lesson_id")) != null){
-                    lesson  = true;
+                    object = new Lesson(Integer.parseInt(title), 0);
+                    if(object.lessonId == 0){
+                        %>Lesson not found<%
+                        return;
+                    }
+                } else {
+                    response.sendRedirect("/");
+                    return;
+                }
+                
+                if(user != null) {
+                    
+                    isUser = true;
+                    
+                    if(user.getUsername().equals(object.createdBy)){
+                        isOwner = true;
+                    }
                 }
             %>
             
@@ -113,7 +134,7 @@
                 <div id="bottom"></div>
             </div>
                     
-    <%if(!lesson){%>
+    <%if(isOwner){%>
             <div id="save" onclick="saveLessonData();"><p>Save</p></div>
             
             <div id="sidebar" class="hidden">
@@ -125,8 +146,8 @@
                 <div id="sidebar-handle" onclick="toggleSideBar();"></div>
             </div>
             <div id="content">
-                <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false">How To Bring The House Down!</h1><h2 id="username">mgonz108</h2></div>
-                <div id="sort"></div>
+                <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
+                <div id="sort"><%=object.html%></div>
             </div>
 
 
@@ -153,37 +174,27 @@
     <%} else {%>
         <div id="rating">
             <div class="rate" id="rate-positive" onclick="rate(1);"><img src="/images/rating/pos-rate.png"></div>
-            <div class="lesson-rating"><p class="positive-rating">0</p></div>
+            <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
             <div class="rate" id="rate-negative" onclick="rate(-1);"><img src="/images/rating/neg-rate.png"></div>
         </div>
     
         <div id="content" style="left: 0;">
-            <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false">How To Bring The House Down!</h1><h2 id="username">mgonz108</h2></div>
-            <div class="box title-box" title="Title"><h1 contenteditable="false">Overview</h1></div>
-            <div class="box text-box" title="Text Box"><div contenteditable="false">In this lesson we are going to be atalking about all the different things you must do in order to bring the house down! Please make sure to read through the entire lesson in order to truly be regarded as a force to be reckoned with whenever you decided to embark in the amazing feat that is the bringing of the house down!</div></div>
-            <div class="box image-box" title="Image Box"><div class="images"><img class="image"  src="http://static.tumblr.com/zlyygir/SBgll7q5e/bthd.jpg" /><img class="image" src="http://seangilliganproductions.com/wp-content/uploads/2012/09/Bring-the-House-Down-80s-v2-01-540x405.jpg" /><img class="image" src="http://a2.mzstatic.com/us/r30/Music/91/c4/34/mzi.ggbthkpb.170x170-75.jpg" /></div></div>
+            <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
+            <%=object.html%>
             <div id="comments" class="box">
                 <div class="box-header">
                     <h1>COMMENTS</h1>
                 </div>
                 <div class="box-content" id="comment-section">
+                    <%if(isUser){%>
                     <div style="width: 100%; text-align: center;"><div id="post-comment" onclick="toggleModal('post-comment-modal');">Comment</div></div>
+                    <%}%>
+                    <%for(Comment comment : object.comments){%>
                     <div class="comment">
                         <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                        <div class="comment-text"><p class="user">mgonz108</p><p class="text">This is an awesome lesson! Woohoo!</p></div>
+                        <div class="comment-text"><p class="user"><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
                     </div>
-                    <div class="comment">
-                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                        <div class="comment-text"><p class="user">fmarc011</p><p class="text">I agree! This lesson is so cool!</p></div>
-                    </div>
-                    <div class="comment">
-                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                        <div class="comment-text"><p class="user">CoryG</p><p class="text">Yo man this thing is pretty cool</p></div>
-                    </div>
-                    <div class="comment">
-                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                        <div class="comment-text"><p class="user">LauraP</p><p class="text">I have become an expert in Bringing the House Down! Thank you!!</p></div>
-                    </div>
+                    <%}%>
                 </div>
             </div>
         </div>
@@ -210,15 +221,16 @@
                 <input type="button" onclick="createNewLesson();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
-        
-        <div id="post-comment-modal" class="box-modal" style="top: 25%;">
-            <h2>Post New Comment</h2>
-            <p>Please fill out the following information to post a new comment.</p>
-            <h4>Text</h4>
-            <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
-            <input type="button" onclick="postNewComment('mgonz108');" value="Create">
-            <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
-        </div>
+        <%if(user != null){%>
+            <div id="post-comment-modal" class="box-modal" style="top: 25%;">
+                <h2>Post New Comment</h2>
+                <p>Please fill out the following information to post a new comment.</p>
+                <h4>Text</h4>
+                <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
+                <input type="button" onclick="postNewComment('<%=user.getUsername()%>', <%=object.classId%>, <%=object.lessonId%>);" value="Create">
+                <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
+            </div>
+        <%}%>
         
         <div id="modal"></div>
     </body>

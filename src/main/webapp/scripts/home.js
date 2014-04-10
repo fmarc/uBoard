@@ -113,33 +113,56 @@ function toggleModal(id){
 }
 
 
-function postNewComment(user) {
+/**
+ * Creates a new ajax request which is sent to the server
+ * in order to create a new comment under this lesson
+ * @param {type} user - User posting comment
+ * @param {type} classId - The class ID for this lesson
+ * @param {type} lessonId - The lesson ID for this lesson
+ * @returns {Boolean} - Indicates wether the process was successful
+ */
+function postNewComment(user, classId, lessonId) {
     var comment = $('#text-comment').val();
     
+    //If the comment length is equal to 0 (Empty) the
+    //method informs the user that they must input text
     if(comment.length === 0){
         alert("Comment text cannot be empty. Please type in your comment.");
         return false;
     }
     
-    var json = {"user": user, "comment" : comment};
-    alert('Data sent: ' + JSON.stringify(json));
+    //This is a JSON object which is sent to the Server
+    var json = {page: 'lesson', method: 'comment', username: user, classId: classId, lessonId: lessonId, text: comment};
     
+    //This is an ajax request which runs asynchrounously
     $.ajax({
-        url: '',
+        type: 'POST',
+        //The url where the POST request should be sent
+        url: '/controller',
         data: json, 
         dataType: 'json', 
+        //If the request was successful (no errors server-side) then this will hit
+        // data - The information that gets returned from the Server
         success: function(data) {
-            alert('Ajax success!');
-            postComment(user, comment);
+            if(data === 1){
+                postComment(user, comment);
+            } else {
+                alert('An error occured while posting a new comment. Please try again later');
+            }
+            
             toggleModal('post-comment-modal');
-        }, 
+            return true;
+        },
+        //IF there was an error server-side, this will hit.
         error: function(data) {
-            alert('Ajax error');
-            postComment(user, comment);
+            alert('An error occured while posting a new comment. Please try again later');
             toggleModal('post-comment-modal');
+            return false;
         }
     });
     
+    //This function attaches the recently created comment at the end
+    //of the comment section.
     function postComment(user, comment){
         var commentHtml = '<div class="comment">' +
                             '<div class="comment-user"><img src="/images/comments/user-comment.png"></div>' +

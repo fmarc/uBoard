@@ -6,6 +6,7 @@
 
 package com.uboard.connections;
 
+import com.uboard.objects.Comment;
 import com.uboard.objects.Utilities;
 
 import java.io.IOException;
@@ -88,6 +89,20 @@ public class Controller extends HttpServlet{
             }
             
         } else if(page.equals("lesson")){
+            
+            //Handles the psoting of comments
+            if(method.equals("comment")) {
+                String username     = request.getParameter("username");
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                int lessonId        = Integer.parseInt(request.getParameter("lessonId"));
+                String text         = request.getParameter("text");
+                
+                if(Comment.submitComment(new Comment(username, classId, lessonId, text))){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
             
         } else if(page.equals("profile")){
             
