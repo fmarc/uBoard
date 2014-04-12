@@ -7,6 +7,7 @@
 package com.uboard.connections;
 
 import com.uboard.objects.Comment;
+import com.uboard.objects.Lesson;
 import com.uboard.objects.Utilities;
 
 import java.io.IOException;
@@ -64,6 +65,15 @@ public class Controller extends HttpServlet{
                 } else {
                     out.write("0");
                 }
+            }
+            
+            //Handles creating new lessons
+            if(method.equals("createLesson")) {
+                String username     = request.getParameter("username");
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                String title        = request.getParameter("title");
+                
+                out.write(Lesson.createLesson(username, classId, title) + "");
             }
             
         } else if(page.equals("home")){

@@ -83,7 +83,7 @@ function login(username, password){
 
 // This method is invoked whtn the user click on the "Logout" button.
 //It successfully logs the user out of the application.
-function logout(sessionId) {
+function logout() {
     var json = {page: "all", method: "logout"};
 
     $.ajax({
@@ -91,17 +91,19 @@ function logout(sessionId) {
         type: "POST",
         data: json, 
         dataType: 'json', 
-        success: function(data) {
+        success: function() {
             window.location = "/";
+            return true;
         }, 
         error: function(data) {
-            alert('Ajax error');
+            alert('Ajax error: ' + data);
             //changeSide();
         }
     });
-    //return false;
+     return false;
 }
 
+//Toggles all the modals based on their element ID
 var num = 0;
 function toggleModal(id){
     num++;
@@ -110,6 +112,40 @@ function toggleModal(id){
     } else {
         $('#'+ id +', #modal').show();
     }
+}
+
+
+/**
+ * Creates a new lesson and re-directs the user to the newly created lesson
+ * @param {type} username - The User's username
+ * @param {type} title - The lesson title
+ * @param {type} classId - The class ID for the created lesson
+ * @returns {Boolean} - Indicates whether the process was successful.
+ */
+function createNewLesson(username, title, classId) {
+    
+    //Creates the JSON object being sent to the server
+    var json = {page: "all", method: "createLesson", username: username, classId: classId, title: title};
+
+    //Creates an async call to the server using AJAX
+    $.ajax({
+        url: '/controller',
+        type: "POST",
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            if(data >= 1){
+                window.location = "/lesson.jsp?lesson_id=" + data;
+                return true;
+            } else {
+                alert('There was an error while creating the lesson. Please try again later');
+            }
+        }, 
+        error: function(data) {
+            alert('There was an error with the server! Please contact an admin: ' + data);
+        }
+    });
+    return false;
 }
 
 

@@ -148,13 +148,13 @@
                                 <div class="lesson-rating">
                                     <p class="positive-rating">501</p>
                                 </div>
-                                <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - Piano Lesson: How to play the piano with your feet!</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - Piano Lesson: How to play the piano with your feet!</a>
                             </div>
                             <div class="class">
                                 <div class="class-rating">
                                     <p class="negative-rating">-30</p>
                                 </div>
-                                <a class="content-title" href="class.jsp?class_id=123456789">CLASS - Everything you need to know about Pianos.</a>
+                                <a class="content-title" href="class.jsp?class_id=2">CLASS - Everything you need to know about Pianos.</a>
                             </div>
                         </div>
                     </div>
@@ -169,28 +169,29 @@
                             <div class="lesson-rating">
                                 <p class="positive-rating">580</p>
                             </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - How To Bring The House Down!</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - How To Bring The House Down!</a>
                         </div>
                         <div class="lesson">
                             <div class="lesson-rating">
                                 <p class="positive-rating">541</p>
                             </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=123456789">LESSON - What are things I should do when bored?</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - What are things I should do when bored?</a>
                         </div>
                     </div>
                 </div>
             </div>
                 
+            <%if(user != null){%>
             <div id="create-lesson-modal" class="box-modal">
                 <h2>Create New Lesson</h2>
                 <p>Please fill out the following information to create a new lesson.</p>
                 <h4>Title</h4>
                 <input type="text" id="lesson-title" placeholder="Lesson Title">
-                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="createNewLesson('<%=user.getUsername()%>', $('#lesson-title').val(), 0);" value="Create">
                 <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
             </div>
 
-             <div id="create-class-modal" class="box-modal">
+            <div id="create-class-modal" class="box-modal">
                 <h2>Create New Class</h2>
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
@@ -199,9 +200,10 @@
                 <input type="text" id="class-price" placeholder="Class Price">
                 <h4>Class Enrollment Limit:</h4>
                 <input type="text" id="class-limit" placeholder="Class Limit">
-                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="createNewClass();" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
+            <%}%>
 
             <div id="modal"></div>
     </body>

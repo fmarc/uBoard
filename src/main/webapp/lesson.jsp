@@ -134,7 +134,7 @@
                 <div id="bottom"></div>
             </div>
                     
-    <%if(isOwner){%>
+        <%if(isOwner){%>
             <div id="save" onclick="saveLessonData();"><p>Save</p></div>
             
             <div id="sidebar" class="hidden">
@@ -147,7 +147,26 @@
             </div>
             <div id="content">
                 <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
-                <div id="sort"><%=object.html%></div>
+                <div id="sort"><%if(object.html != null){%>
+                        <%=object.html%>
+                    <%}%>
+                </div>
+                <div id="comments" class="box">
+                    <div class="box-header">
+                        <h1>COMMENTS</h1>
+                    </div>
+                    <div class="box-content" id="comment-section">
+                        <%if(isUser){%>
+                        <div style="width: 100%; text-align: center;"><div id="post-comment" onclick="toggleModal('post-comment-modal');">Comment</div></div>
+                        <%}%>
+                        <%for(Comment comment : object.comments){%>
+                        <div class="comment">
+                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p class="user"><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
             </div>
 
 
@@ -171,7 +190,7 @@
                 <h2>Lesson Saved Successfully!</h2>
                 <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
-    <%} else {%>
+        <%} else {%>
         <div id="rating">
             <div class="rate" id="rate-positive" onclick="rate(1);"><img src="/images/rating/pos-rate.png"></div>
             <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
@@ -180,7 +199,9 @@
     
         <div id="content" style="left: 0;">
             <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
-            <%=object.html%>
+            <%if(object.html != null){%>
+                <%=object.html%>
+            <%}%>
             <div id="comments" class="box">
                 <div class="box-header">
                     <h1>COMMENTS</h1>
@@ -198,38 +219,39 @@
                 </div>
             </div>
         </div>
+        <%}%>
         
-    <%}%>
+        <%if(user != null){%>
         <div id="create-lesson-modal" class="box-modal">
             <h2>Create New Lesson</h2>
             <p>Please fill out the following information to create a new lesson.</p>
             <h4>Title</h4>
             <input type="text" id="lesson-title" placeholder="Lesson Title">
-            <input type="button" onclick="createNewLesson();" value="Create">
+            <input type="button" onclick="createNewLesson('<%=user.getUsername()%>', $('#lesson-title').val(), 0);" value="Create">
             <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
         </div>
 
-         <div id="create-class-modal" class="box-modal">
-                <h2>Create New Class</h2>
-                <p>Please fill out the following information to create a new class.</p>
-                <h4>Title</h4>
-                <input type="text" id="class-title" placeholder="Class Title">
-                <h4>Price ($):</h4>
-                <input type="text" id="class-price" placeholder="Class Price">
-                <h4>Class Enrollment Limit:</h4>
-                <input type="text" id="class-limit" placeholder="Class Limit">
-                <input type="button" onclick="createNewLesson();" value="Create">
-                <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
-            </div>
-        <%if(user != null){%>
-            <div id="post-comment-modal" class="box-modal" style="top: 25%;">
-                <h2>Post New Comment</h2>
-                <p>Please fill out the following information to post a new comment.</p>
-                <h4>Text</h4>
-                <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
-                <input type="button" onclick="postNewComment('<%=user.getUsername()%>', <%=object.classId%>, <%=object.lessonId%>);" value="Create">
-                <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
-            </div>
+        <div id="create-class-modal" class="box-modal">
+            <h2>Create New Class</h2>
+            <p>Please fill out the following information to create a new class.</p>
+            <h4>Title</h4>
+            <input type="text" id="class-title" placeholder="Class Title">
+            <h4>Price ($):</h4>
+            <input type="text" id="class-price" placeholder="Class Price">
+            <h4>Class Enrollment Limit:</h4>
+            <input type="text" id="class-limit" placeholder="Class Limit">
+            <input type="button" onclick="createNewClass();" value="Create">
+            <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
+        </div>
+
+        <div id="post-comment-modal" class="box-modal" style="top: 25%;;">
+            <h2>Post New Comment</h2>
+            <p>Please fill out the following information to post a new comment.</p>
+            <h4>Text</h4>
+            <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 300px; max-height: 300px;"></textarea>
+            <input type="button" onclick="postNewComment('<%=user.getUsername()%>', <%=object.classId%>, <%=object.lessonId%>);" value="Create">
+            <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
+        </div>
         <%}%>
         
         <div id="modal"></div>

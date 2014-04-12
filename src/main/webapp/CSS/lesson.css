@@ -81,7 +81,7 @@
     height: auto;
 }
 #content #sort {
-    min-height: 500px;
+    min-height: 100px;
     height: auto;
 }
 #username {

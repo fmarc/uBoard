@@ -49,7 +49,10 @@ $(document).ready(function() {
         scrollSensitivity: 200,
         scrollSpeed: 50
     }).droppable({
-        drop: function(){
+        drop: function(dropObject, domObject){
+            
+            //Remove the drag tag
+            $($(domObject)[0].draggable[0]).removeClass('drag');
             
             //********************************************************
             //Deletes the element when clicking on the remove button
@@ -60,14 +63,6 @@ $(document).ready(function() {
             
         }
     });
-    
-    //Initializes the resizable elements
-    //$('.image-box, .video-box').resizable({
-    //    ghost: true,
-    //    containment: '#content'
-    //});
-    //********************************************************
-    
     //--------------------Event Handlers END------------------
 });
 
@@ -77,7 +72,6 @@ $(document).ready(function() {
 
 //--------------------------------------------------------
 //              SIDE BAR TOGGLE
-
 //Toggles the side bar on and off
 function toggleSideBar() {
     $('#sidebar').toggleClass('hidden');
@@ -111,6 +105,7 @@ function openImageModal(element) {
    $currentImageSelected = $image;
 }
 
+//Changes the image of with the desired url supplied by the user
 function changeImage(){
     var src = $('#image-url').val();
     
@@ -155,7 +150,10 @@ function hideModal(){
     $('.box-modal, #modal').hide();
 }
 
-
+/**
+ * Saves the new lesson data edited by the author of the page. 
+ * @returns boolean - Indicates whether the process succeeded
+ */
 function saveLessonData() {
     var html = $('#sort').html();
     
@@ -167,33 +165,28 @@ function saveLessonData() {
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
-            toggleModal('save-confirm-modal');
+            return true;
         }, 
         error: function(data) {
             alert('Ajax error');
-            toggleModal('save-confirm-modal');
         }
     });
-}
-
-
-var num = 0;
-
-function toggleModal(id){
-    num++;
-    if(num%2 === 0) {
-        $('#'+ id +', #modal').hide();
-    } else {
-        $('#'+ id +', #modal').show();
-    }
-}
-
-function rate(num){
-    $('.rate').prop('onclick', null);
     
+    toggleModal('save-confirm-modal');
+}
+
+/**
+ * Rates the current lesson with the specified rating
+ * @param {type} num - The rating (1 or -1) from the user
+ * @returns boolean - Indicates whether the process succeeded
+ */
+function rate(num){
+    //Remove the click event on the rating so the user cannot rate the lesson
+    //again
+    $('.rate').prop('onclick', null);
     $('#rate-positive, #rate-negative').addClass('rated');
     
+    //Keep track of whether the rating was positive or negative
     var positive = false;
     if(num > 0) {
         positive = true;
@@ -203,7 +196,8 @@ function rate(num){
     alert('Data sent: ' + JSON.stringify(json));
     
     $.ajax({
-        url: '',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
