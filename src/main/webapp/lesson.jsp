@@ -135,7 +135,7 @@
             </div>
                     
         <%if(isOwner){%>
-            <div id="save" onclick="saveLessonData();"><p>Save</p></div>
+            <div id="save" onclick="saveLessonData(<%=object.lessonId%>);"><p>Save</p></div>
             
             <div id="sidebar" class="hidden">
                 <div class="box drag title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 class="editable" contenteditable="false">Edit me!</h1></div>
@@ -159,7 +159,7 @@
                         <%if(isUser){%>
                         <div style="width: 100%; text-align: center;"><div id="post-comment" onclick="toggleModal('post-comment-modal');">Comment</div></div>
                         <%}%>
-                        <%for(Comment comment : object.comments){%><!---->
+                        <%for(Comment comment : object.comments){%>
                         <div class="comment">
                             <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
                             <div class="comment-text"><p class="user"><%=comment.username%></p><p class="text"><%=comment.text%></p></div>

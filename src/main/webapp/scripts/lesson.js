@@ -80,9 +80,9 @@ function toggleSideBar() {
     $('#content .box .edit').toggleClass('hide');
     if(++num%2) {
        $('.editable').prop('contenteditable', 'true');
-   } else {
-       $('.editable').prop('contenteditable', 'false');
-   }
+    } else {
+        $('.editable').prop('contenteditable', 'false');
+    }
 };
 //--------------------------------------------------------
 
@@ -157,28 +157,46 @@ function hideModal(){
 }
 
 /**
- * Saves the new lesson data edited by the author of the page. 
+ * Saves the new lesson data edited by the author of the page.
+ * @param lessonId - The lesson ID of the lesson being saved.
  * @returns boolean - Indicates whether the process succeeded
  */
-function saveLessonData() {
+function saveLessonData(lessonId) {
+    
+    var isHidden = false;
+    
+    //Removes formatting capabilities
+    if(!$('#content .box .edit').hasClass('hide')) {
+        isHidden = true;
+        $('#content .box .edit').toggleClass('hide');
+        $('.editable').prop('contenteditable', 'false');
+    }
+    
     var html = $('#sort').html();
     
-    var json = {"html" : html};
-    alert('Data sent: ' + JSON.stringify(json));
-    
+    var json = {page: "lesson", method: "saveLesson",  lessonId: lessonId, html: html};
+        
     $.ajax({
-        url: '',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            return true;
+            if(data === 1) {
+                toggleModal('save-confirm-modal');
+            } else {
+                alert("Lesson not saved successfully");
+            }
         }, 
-        error: function(data) {
-            alert('Ajax error');
+        error: function() {
+            alert('There was an error in the server. Please try again.');
         }
     });
     
-    toggleModal('save-confirm-modal');
+    if(isHidden) {
+        $('#content .box .edit').toggleClass('hide');
+        $('.editable').prop('contenteditable', 'true');
+    }
 }
 
 /**
