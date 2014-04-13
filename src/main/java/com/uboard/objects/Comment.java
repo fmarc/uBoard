@@ -98,7 +98,7 @@ public class Comment {
                 con.close();
                 stm.close();
             } catch(SQLException e) {
-                System.out.println("Failes to close connections.");
+                System.out.println("Failed to close connections.");
             }
         }
         
