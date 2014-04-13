@@ -103,7 +103,7 @@
             </div>
             
             <div id="content">
-                <%if(user == null) {%>
+                <%if(user == null && request.getParameter("search") == null) {%>
                     <div id="welcome-message" class="content-box">
 
                         <p>Pages done or work in progress:</p>
