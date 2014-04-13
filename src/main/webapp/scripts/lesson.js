@@ -73,10 +73,16 @@ $(document).ready(function() {
 //--------------------------------------------------------
 //              SIDE BAR TOGGLE
 //Toggles the side bar on and off
+var num = 0;
 function toggleSideBar() {
     $('#sidebar').toggleClass('hidden');
     $('#content').css('width', $(window).width() - 270);
     $('#content .box .edit').toggleClass('hide');
+    if(++num%2) {
+       $('.editable').prop('contenteditable', 'true');
+   } else {
+       $('.editable').prop('contenteditable', 'false');
+   }
 };
 //--------------------------------------------------------
 

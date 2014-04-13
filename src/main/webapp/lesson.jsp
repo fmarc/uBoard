@@ -138,8 +138,8 @@
             <div id="save" onclick="saveLessonData();"><p>Save</p></div>
             
             <div id="sidebar" class="hidden">
-                <div class="box drag title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 contenteditable="">Edit me!</h1></div>
-                <div class="box drag text-box" title="Text Box"><img class="handle edit" /><img class="remove edit" /><div contenteditable="">Edit Me!</div></div>
+                <div class="box drag title-box" title="Title"><img class="handle edit" /><img class="remove edit" /><h1 class="editable" contenteditable="false">Edit me!</h1></div>
+                <div class="box drag text-box" title="Text Box"><img class="handle edit" /><img class="remove edit" /><div class="editable" contenteditable="false">Edit Me!</div></div>
                 <div class="box drag image-box" title="Image Box"><img class="handle edit" /><img class="remove edit" /><div class="images"><img class="image"  src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /><img class="image" src="/images/blanked.png" /></div><div class="buttons edit"><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/><input type="button" class="change-image" onclick="openImageModal(this);" value="Change Image"/></div></div>
                 <div class="box drag video-box" title="Video Box"><img class="handle edit" /><img class="remove edit" /><iframe class="video" width="853" height="480"  src="//www.youtube.com/embed/oJg2_dUHd84" frameborder="0" allowfullscreen></iframe><input type="button" class="change-video edit" onclick="openVideoModal(this);" value="Change Video"/></div>
                 <div id="sidebar-click-area" onclick="toggleSideBar();"></div>
