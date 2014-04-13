@@ -250,7 +250,7 @@ public class Utilities {
                 count++;
             }
         } catch (SQLException e) {
-            System.out.println("\nThere was SQL error when registeringa new User:");
+            System.out.println("\nThere was SQL error when retrieving topRated Lessons");
             e.printStackTrace();
         } finally {
             try{
