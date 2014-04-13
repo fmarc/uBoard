@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 /**
  *
@@ -43,9 +43,9 @@ public class Assignment {
         this.description    = description;
     }
     
-    public static ArrayList<Assignment> getAssignments(Connection con, int classId){
+    public static Set<Assignment> getAssignments(Connection con, int classId){
         PreparedStatement stm = null;
-        ArrayList<Assignment> userAssignments = new ArrayList<Assignment>();   
+        Set<Assignment> userAssignments = new HashSet<Assignment>();   
         try{
             //Creates a prepared statement that takes care of the query and its
             //values

@@ -197,4 +197,40 @@ public class Lesson {
         }
         return userraters;
     }
+    
+    /**
+     * Stores Users who rated this Lesson in the UserRaters Table
+     * @param con - The Database connection used
+     * @return Raters - HashMap<Username, Rating>
+     */
+    private static boolean addRaters(String username, int lessonId, int rating){
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values - Query = (username, lessonId, rating)
+            stm = con.prepareStatement(query_rateLesson);
+            stm.setString(1, username);
+            stm.setInt(2, lessonId);            
+            stm.setInt(3, rating);
+            
+            //Executes the query
+            stm.executeUpdate();
+            
+            //Returns true unless the execute command hits an Exception
+            return true;
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when inserting a rater");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failed to close connections.");
+            }
+        }
+        // Returns false if the process was unsuccessful
+        return false;
+    }
 }

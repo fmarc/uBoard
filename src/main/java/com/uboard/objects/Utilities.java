@@ -38,6 +38,9 @@ public class Utilities {
         "SELECT * "
         + "FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
     
+    private static final String query_getTopRated =
+        "SELECT pos_rating FROM \"UBOARD\".u_lesson ORDER_BY pos_rating DESC ";
+    
     /**
      * Singleton Object, no constructor needed
      */
@@ -269,6 +272,40 @@ public class Utilities {
         }
         
         return lessons;
+    }
+    
+    
+    public Set<Lesson> getTopRated(){
+        int count = 0;
+        Set<Lesson> lessons = new HashSet<Lesson>();
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            //Query = (username, email, name, user_password)
+            stm = con.prepareStatement(query_getTopRated);
+            ResultSet found = stm.executeQuery();
+            
+            while(found.next()){
+                if(count > 14) break;
+                lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id")));
+                count++;
+            }
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when retrieving topRated Lessons");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        
+        return lessons;
+    
     }
     
 }

@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,37 +24,30 @@ public class Class {
     public int totRating;
     public String description;
     public String streamName;
-
-    //List of Rates where <Username, Rating>
-    public Map<String, Integer> raters;
+    public String html;
+    
+    //REMINDER: USE LESSON CONSTRUCTOR TO CREATE CLASS LESSONS
     
     //List of Comments where <Username, Comment Text>
-    public ArrayList<Assignment> assignments = new ArrayList<Assignment>();
+    public Set<Assignment> assignments = new HashSet<Assignment>();
+    
+    //List of Lessons
+    public Set<Lesson> lessons = new HashSet<Lesson>();
     
     private static final String query_createClass = 
-        "INSERT INTO \"UBOARD\".u_class (class_id, created_by, class_name, "
-            + "enrolled_num, price, class_limit) "
-        + "VALUES (?, ?, ?, ?, ?, ?) RETURNING lesson_id";
+        "INSERT INTO \"UBOARD\".u_class (created_by, class_name, "
+            + "price, class_limit) "
+        + "VALUES (?, ?, ?, ?) RETURNING class_id";
     
     private static final String query_getClass = 
         "SELECT * FROM \"UBOARD\".u_class WHERE class_id = ?";
     
-    private static final String query_saveLesson = 
-        "UPDATE \"UBOARD\" SET lesson_content = ? WHERE lesson_id = ?";
+    public static int createClass(String username, int classId, String title) {
+        return 0;
+    }
     
-    private static final String query_updateRating = 
-        "UPDATE \"UBOARD\".u_lesson SET pos_rating = pos_rating + ? "
-        + "AND tot_rating = tot_rating + 1";
+    public static boolean saveClass(int classId, String html) {
+        return false;
+    }
     
-    private static final String query_rateClass = 
-        "INSERT INTO \"UBOARD\".u_rated (username, class_id, rating) "
-        + "VALUES (?, ?, ?)";
-    
-    private static final String query_getRaters = 
-        "SELECT username, rating FROM \"UBOARD\".u_rated WHERE lesson_id = ?";
-    
-   
-
-
-
 }
