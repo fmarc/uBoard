@@ -36,7 +36,7 @@ public class Lesson {
         "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id = ?";
     
     private static final String query_saveLesson = 
-        "UPDATE \"UBOARD\" SET lesson_content = ? WHERE lesson_id = ?";
+        "UPDATE \"UBOARD\".u_lesson SET lesson_content = ? WHERE lesson_id = ?";
     
     private static final String query_updateRating = 
         "UPDATE \"UBOARD\".u_lesson SET pos_rating = pos_rating + ? "
@@ -90,33 +90,6 @@ public class Lesson {
         }
     }
     
-    /**
-     * Retrieves all the Users who rated this particular Lesson
-     * @param con - The Database connection used
-     * @return Raters - HashMap<Username, Rating>
-     */
-    private HashMap<String, Integer> getRaters(Connection con){
-        PreparedStatement stm = null;
-        HashMap<String, Integer> userraters = new HashMap<String, Integer>();
-        try {
-            //Creates a prepared statement that takes care of the query and its
-            //values
-            stm = con.prepareStatement(query_getRaters);
-            stm.setInt(1, this.lessonId);
-            ResultSet found = stm.executeQuery();
-            
-            //Check for the record to see if the user credentials match the 
-            //ones in the Database
-            while(found.next()){
-                userraters.put(found.getString("username"), found.getInt("rating"));
-            }
-        } catch (SQLException e) {
-            userraters = null;
-            System.out.println("There was SQL error when getting Users who rated the lesson:\n");
-            e.printStackTrace();
-        }
-        return userraters;
-    }
     
     /**
      * Creates a new lesson using the specified information then returns the
@@ -159,5 +132,69 @@ public class Lesson {
         
         // Returns 0 if the lessonID could not be created
         return 0;
+    }
+    
+    /**
+     * Saves the lesson to the database
+     * @param lessonId - The id of the lesson being saved
+     * @param html - The content to be saved to the database
+     * @return 
+     */
+    public static boolean saveLesson(int lessonId, String html) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values - Query = (username, classId, lessonId, text)
+            stm = con.prepareStatement(query_saveLesson);
+            stm.setString(1, html);
+            stm.setInt(2, lessonId);
+            
+            //Executes the query
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when saving a Lesson:");
+            e.printStackTrace();
+            return false;
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        
+        // Returns 0 if the lessonID could not be created
+        return true;
+    }
+    
+    /**
+     * Retrieves all the Users who rated this particular Lesson
+     * @param con - The Database connection used
+     * @return Raters - HashMap<Username, Rating>
+     */
+    private HashMap<String, Integer> getRaters(Connection con){
+        PreparedStatement stm = null;
+        HashMap<String, Integer> userraters = new HashMap<String, Integer>();
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            stm = con.prepareStatement(query_getRaters);
+            stm.setInt(1, this.lessonId);
+            ResultSet found = stm.executeQuery();
+            
+            //Check for the record to see if the user credentials match the 
+            //ones in the Database
+            while(found.next()){
+                userraters.put(found.getString("username"), found.getInt("rating"));
+            }
+        } catch (SQLException e) {
+            userraters = null;
+            System.out.println("There was SQL error when getting Users who rated the lesson:\n");
+            e.printStackTrace();
+        }
+        return userraters;
     }
 }

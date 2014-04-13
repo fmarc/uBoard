@@ -100,6 +100,17 @@ public class Controller extends HttpServlet{
             
         } else if(page.equals("lesson")){
             
+            if(method.equals("saveLesson")) {
+                int lessonId        = Integer.parseInt(request.getParameter("lessonId"));
+                String html         = request.getParameter("html");
+                
+                if(Lesson.saveLesson(lessonId, html)) {
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            
             //Handles the psoting of comments
             if(method.equals("comment")) {
                 String username     = request.getParameter("username");
