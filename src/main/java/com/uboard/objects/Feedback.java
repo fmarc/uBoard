@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Franco
+ * @author Cory
  */
 public class Feedback {
     
@@ -38,7 +38,6 @@ public class Feedback {
         Feedback feedback = null;
         try {
             
-            //CREATE QUERIES
             stm = con.prepareStatement(query_getFeedback);
             stm.setInt(1, assign);
             ResultSet found = stm.executeQuery();

@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  *
- * @author Franco
+ * @author Cory
  */
 public class SubAssignment {
     public int assignId;
@@ -57,7 +57,7 @@ public SubAssignment(int assignid, String submitby, String title, String submiss
         PreparedStatement stm = null;
         try {
             //Creates a prepared statement that takes care of the query and its
-            //values - Query = (username, classId, lessonId, text)
+            //values - Query = (assignid, submitby, title, submission)
             stm = con.prepareStatement(query_submitAssignment);
             stm.setInt(1, assignid);
             stm.setString(2, submitby);

@@ -7,7 +7,9 @@
 package com.uboard.connections;
 
 import com.uboard.objects.Comment;
+import com.uboard.objects.Feedback;
 import com.uboard.objects.Lesson;
+import com.uboard.objects.SubAssignment;
 import com.uboard.objects.Utilities;
 
 import java.io.IOException;
@@ -16,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import static org.apache.tomcat.jni.User.username;
 
 /**
  * This Servlet acts as the receiver for all the AJAX or POST requests handled
@@ -131,6 +134,30 @@ public class Controller extends HttpServlet{
             
         } else if(page.equals("assignment")){
             
+            if(method.equals("subAssignment")){
+                int assignId        = Integer.parseInt(request.getParameter("assignId"));
+                String submitBy     = request.getParameter("submitBy");
+                String title        = request.getParameter("title");
+                String submission   = request.getParameter("submission");
+                
+                if(SubAssignment.submitAssignment(assignId, submitBy, title, submission)){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            else if(method.equals("feedBack")){
+                int assignId        = Integer.parseInt(request.getParameter("assignId"));
+                String createBy     = request.getParameter("createBy");
+                String feedBack     = request.getParameter("feedBack");
+                
+                
+                if(Feedback.submitFeedback(new Feedback(assignId, createBy, feedBack))){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
         } else if(page.equals("stream")){
             
         } else {
