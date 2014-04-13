@@ -204,6 +204,7 @@ public class Utilities {
         return false;
     }
     
+    
     public boolean register(String username, String email, String name, String password){
         Connection con = MyDatabase.connect();
         PreparedStatement stm = null;
