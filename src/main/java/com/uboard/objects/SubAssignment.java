@@ -23,7 +23,7 @@ public class SubAssignment {
     
     private static final String query_submitAssignment = 
         "INSERT INTO \"UBOARD\".u_sub_assignments (assign_id, submitted_by, title, submission) "
-        + "VALUES (?, ?, ?, ?)";
+        + "VALUES (?, ?, ?, ?)"; 
         
     public SubAssignment(int assignId){
         Connection con = MyDatabase.connect();
