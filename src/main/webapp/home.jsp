@@ -10,6 +10,7 @@
 <%@page import="com.uboard.interfaces.User"%>
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
+<%@page import="com.uboard.objects.Lesson"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -138,7 +139,9 @@
                     </div>
                <%}%>
                
-               <%if(request.getParameter("search") != null){%>
+               <%if(request.getParameter("search") != null){
+                   for(Lesson lesson : util.searchContent(request.getParameter("search"))) {
+               %>
                     <div id="search-content">
                         <div class="box-header">
                             <h1>SEARCH: <span id="search-keyword" style="font-style: italic; font-weight: normal; font-family: Arial;"><%=request.getParameter("search")%></span></h1>
@@ -146,19 +149,14 @@
                         <div class="box-content">
                             <div class="lesson">
                                 <div class="lesson-rating">
-                                    <p class="positive-rating">501</p>
+                                    <p class="positive-rating"><%=lesson.posRating%></p>
                                 </div>
-                                <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - Piano Lesson: How to play the piano with your feet!</a>
-                            </div>
-                            <div class="class">
-                                <div class="class-rating">
-                                    <p class="negative-rating">-30</p>
-                                </div>
-                                <a class="content-title" href="class.jsp?class_id=2">CLASS - Everything you need to know about Pianos.</a>
+                                <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
                             </div>
                         </div>
                     </div>
-                <%}%>
+                <%  }
+                }%>
                
                 <div id="high-rated" class="box">
                     <div class="box-header">

@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * This class is in charged of keeping all necessary methods and objects related
@@ -31,6 +33,10 @@ public class Utilities {
     private static final String query_registerUser = 
         "INSERT INTO \"UBOARD\".u_user (username, email, name, user_password) "
         + "VALUES (?, ?, ?, ?)";
+    
+    private static final String query_Search = 
+        "SELECT * "
+        + "FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
     
     /**
      * Singleton Object, no constructor needed
@@ -225,6 +231,43 @@ public class Utilities {
         }
         
         return false;
+    }
+    
+    
+    /**
+     * This searches the lessons in the database based on the search criteria
+     * @param search - The search criteria the User enters
+     * @return Set<Lesson> - All the lessons that match the search criteria.
+     */
+    public Set<Lesson> searchContent(String search) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        
+        Set<Lesson> lessons = new HashSet<Lesson>(); 
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            //Query = (username, email, name, user_password)
+            stm = con.prepareStatement(query_Search);
+            stm.setString(1, search.toLowerCase());
+            ResultSet found = stm.executeQuery();
+            
+            while(found.next()) {
+                lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id")));
+            }
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when registeringa new User:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        
+        return lessons;
     }
     
 }
