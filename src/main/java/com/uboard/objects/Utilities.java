@@ -35,8 +35,7 @@ public class Utilities {
         + "VALUES (?, ?, ?, ?)";
     
     private static final String query_Search = 
-        "SELECT * "
-        + "FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
+        "SELECT * FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
     
     private static final String query_getTopRated =
         "SELECT pos_rating FROM \"UBOARD\".u_lesson ORDER_BY pos_rating DESC ";
