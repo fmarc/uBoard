@@ -39,10 +39,12 @@ public class Utilities {
         + "VALUES (?, ?, ?, ?)";
     
     private static final String query_Search = 
-        "SELECT * FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
+        "SELECT * FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' "
+            + "OR lower(lesson_name) LIKE '%' || ? OR lower(lesson_name) LIKE ? || '%' ";
     
     private static final String query_SearchClass = 
-        "SELECT * FROM \"UBOARD\".u_class WHERE lower(class_name) LIKE '%' || ? || '%' ";
+        "SELECT * FROM \"UBOARD\".u_class WHERE lower(class_name) LIKE '%' || ? || '%' "
+            + "+ \"OR lower(class_name) LIKE '%' || ? OR lower(class_name) LIKE ? || '%' ";
     
     private static final String query_getTopRated =
         "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
@@ -305,6 +307,9 @@ public class Utilities {
             //Query = (username, email, name, user_password)
             stm = con.prepareStatement(query_Search);
             stm.setString(1, search.toLowerCase());
+            stm.setString(2, search.toLowerCase());
+            stm.setString(3, search.toLowerCase());
+
             ResultSet found = stm.executeQuery();
             while(found.next()) {
                 lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id")));
@@ -340,6 +345,8 @@ public class Utilities {
             //Query = (username, email, name, user_password)
             stm = con.prepareStatement(query_SearchClass);
             stm.setString(1, search.toLowerCase());
+            stm.setString(2, search.toLowerCase());
+            stm.setString(3, search.toLowerCase());
             ResultSet found = stm.executeQuery();
             while(found.next()) {
                 classes.add(new Class(con, found.getInt("class_id"), found.getString("class_name")));
