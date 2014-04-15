@@ -9,41 +9,41 @@ import java.sql.SQLException;
 /**
  *
  * @author Cory
+ * @editedBy Francisco Marcano
  */
 public class Feedback {
-    
-    
-    int assignId;
-    String createBy;
-    String feedBack;
+    public int subAssingId;
+    public String submitby;
+    public String feedBack;
     
     //implement queries for getFeedBack && submitFeedback
      private static final String query_getFeedback = 
-        "SELECT * FROM \"UBOARD\".u_feedback WHERE assignment_id = ? ";
+        "SELECT * FROM \"UBOARD\".u_feedback WHERE assignment_id = ? AND submitted_by = ? ";
     
     private static final String query_submitFeedback = 
-        "INSERT INTO \"UBOARD\".u_feedback (assignment_id, submitted_by, feedback) \n" +
+        "INSERT INTO \"UBOARD\".u_feedback (assignment_id, submitted_by, feedback) " +
          "VALUES (?, ?, ?)";
     
-    public Feedback(int assign, 
-                    String creator, String feedback){
-    
-        assignId = assign;
-        createBy = creator;
-        feedBack = feedback;
+    public Feedback(int subAssingId, String submitby, String feedback){
+        this.subAssingId = subAssingId;
+        this.submitby = submitby;
+        this.feedBack = feedback;
     }
     
-    public static Feedback getFeedback(Connection con, int assign){
+    public static Feedback getFeedback(Connection con, int assign, String submitby){
         PreparedStatement stm = null;
         Feedback feedback = null;
         try {
             
             stm = con.prepareStatement(query_getFeedback);
             stm.setInt(1, assign);
+            stm.setString(2, submitby);
             ResultSet found = stm.executeQuery();
             
             if(found.next()){
-                feedback = new Feedback(assign, found.getString("submitted_by"), found.getString("feedback"));
+                feedback = new Feedback(assign, submitby, found.getString("feedback"));
+            } else {
+                feedback = new Feedback(assign, submitby, "");
             }  
         }
         catch(SQLException e){
@@ -51,7 +51,7 @@ public class Feedback {
             e.printStackTrace();
         }
         
-    return feedback;
+        return feedback;
     }
     
     public static boolean submitFeedback(Feedback feedback){
@@ -59,9 +59,9 @@ public class Feedback {
         PreparedStatement stm = null;
         try{
             stm = con.prepareStatement(query_submitFeedback);
-            stm.setInt(1, feedback.assignId);
-            stm.setString(3, feedback.createBy);
-            stm.setString(4, feedback.feedBack);
+            stm.setInt(1, feedback.subAssingId);
+            stm.setString(2, feedback.submitby);
+            stm.setString(3, feedback.feedBack);
             
             stm.executeUpdate();
             
@@ -79,8 +79,8 @@ public class Feedback {
                 System.out.println("Failed to close connections");
             }
         
-    }
-    return false;
+        }
+        return false;
     }
 }
 

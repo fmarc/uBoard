@@ -6,9 +6,11 @@
 
 package com.uboard.connections;
 
+import com.uboard.objects.Assignment;
 import com.uboard.objects.Comment;
 import com.uboard.objects.Feedback;
 import com.uboard.objects.Lesson;
+import com.uboard.objects.Class;
 import com.uboard.objects.SubAssignment;
 import com.uboard.objects.Utilities;
 
@@ -18,7 +20,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import static org.apache.tomcat.jni.User.username;
 
 /**
  * This Servlet acts as the receiver for all the AJAX or POST requests handled
@@ -79,7 +80,14 @@ public class Controller extends HttpServlet{
                 out.write(Lesson.createLesson(username, classId, title) + "");
             }
             
-        } else if(page.equals("home")){
+            if(method.equals("createClass")) {
+                String username     = request.getParameter("username");
+                String name         = request.getParameter("name");
+                float price         = Float.parseFloat(request.getParameter("price"));
+                int limit           = Integer.parseInt(request.getParameter("limit"));
+                
+                out.write(Class.createClass(username, name, price, limit) + "");
+            }
             
         } else if(page.equals("register")){
             
@@ -128,15 +136,87 @@ public class Controller extends HttpServlet{
                 }
             }
             
+            //Handles the rating of a lesson
+            if(method.equals("rate")) {
+                String username     = request.getParameter("username");
+                int lessonId        = Integer.parseInt(request.getParameter("lessonId"));
+                int rating          = Integer.parseInt(request.getParameter("rating"));
+                
+                if(Lesson.rateLesson(username, lessonId, rating)){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+                
+            }
+            
         } else if(page.equals("profile")){
             
+            if(method.equals("saveProfile")) {
+                String name     = request.getParameter("name");
+                String about    = request.getParameter("about");
+                String paypal   = request.getParameter("paypal");
+                String username = request.getParameter("username");
+                
+                if(utilities.saveProfile(name, about, paypal, username)){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            
         } else if(page.equals("class")){
+            
+            if(method.equals("saveClass")) {
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                String desc         = request.getParameter("description");
+                
+                if(Class.saveClass(classId, desc)) {
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            
+            //Handles the psoting of comments
+            if(method.equals("comment")) {
+                String username     = request.getParameter("username");
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                int lessonId        = 0;
+                String text         = request.getParameter("text");
+                
+                if(Comment.submitComment(new Comment(username, classId, lessonId, text))){
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            
+            if(method.equals("enroll")) {
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                String username     = request.getParameter("username");
+                
+                if(Class.enroll(classId, username)) {
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
+            
+            if(method.equals("createAssignment")) {
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                String username     = request.getParameter("username");
+                String name         = request.getParameter("name");
+                String desc         = request.getParameter("description");
+                
+                out.write(Assignment.createAssignment(classId, username, name, desc)+ "");
+            }
             
         } else if(page.equals("assignment")){
             
             if(method.equals("subAssignment")){
-                int assignId        = Integer.parseInt(request.getParameter("assignId"));
-                String submitBy     = request.getParameter("submitBy");
+                int assignId        = Integer.parseInt(request.getParameter("assignmentId"));
+                String submitBy     = request.getParameter("username");
                 String title        = request.getParameter("title");
                 String submission   = request.getParameter("submission");
                 
@@ -146,19 +226,30 @@ public class Controller extends HttpServlet{
                     out.write("0");
                 }
             }
-            else if(method.equals("feedBack")){
+            else if(method.equals("feedback")){
                 int assignId        = Integer.parseInt(request.getParameter("assignId"));
-                String createBy     = request.getParameter("createBy");
-                String feedBack     = request.getParameter("feedBack");
+                String submitby     = request.getParameter("submitBy");
+                String feedBack     = request.getParameter("feedback");
                 
                 
-                if(Feedback.submitFeedback(new Feedback(assignId, createBy, feedBack))){
+                if(Feedback.submitFeedback(new Feedback(assignId, submitby, feedBack))){
                     out.write("1");
                 } else {
                     out.write("0");
                 }
             }
         } else if(page.equals("stream")){
+            
+            if(method.equals("saveStream")) {
+                int classId         = Integer.parseInt(request.getParameter("classId"));
+                String stream       = request.getParameter("streamName");
+                
+                if(Class.saveStream(classId, stream)) {
+                    out.write("1");
+                } else {
+                    out.write("0");
+                }
+            }
             
         } else {
             

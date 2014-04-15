@@ -148,6 +148,40 @@ function createNewLesson(username, title, classId) {
     return false;
 }
 
+/**
+ * Creates a new class in the server
+ * @param {type} username
+ * @param {type} title
+ * @param {type} price
+ * @param {type} limit
+ * @returns {Boolean}
+ */
+function createNewClass(username, title, price, limit) {
+    
+    //Creates the JSON object being sent to the server
+    var json = {page: "all", method: "createClass", username: username, name: title, price: price, limit: limit};
+
+    //Creates an async call to the server using AJAX
+    $.ajax({
+        url: '/controller',
+        type: "POST",
+        data: json, 
+        dataType: 'json', 
+        success: function(data) {
+            if(data >= 1){
+                window.location = "/class.jsp?class_id=" + data;
+                return true;
+            } else {
+                alert('There was an error while creating the lesson. Please try again later');
+            }
+        }, 
+        error: function(data) {
+            alert('There was an error with the server! Please contact an admin: ' + data);
+        }
+    });
+    return false;
+}
+
 
 /**
  * Creates a new ajax request which is sent to the server

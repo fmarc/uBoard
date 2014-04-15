@@ -2,6 +2,7 @@ package com.uboard.interfaces;
 
 import com.uboard.objects.Class;
 import com.uboard.objects.Lesson;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -42,41 +43,48 @@ public interface User {
      */
     public String getName();
     
+    
+    public int getPosRating();
+    
+    public List<Class> getEnrollClasses();
+    
+    public List<Lesson> getCreateLesson();
+    
+    public List<Class> getCreateClasses();
+    
     /**
      * Gets the user's total rating based
+     * @param con - The Database connection
      * @return int - totalRating
      */
-    public int getTotalRating();
+    public int getTotalRating(Connection con);
     
     /**
      * Gets the user's total positive rating
+     * @param con - The Database connection
      * @return int - totalPosRating
      */
-    public int getPositiveRating();
+    public int getPositiveRating(Connection con);
     
     /**
      * Gets all the classes this user is enrolled in
+     * @param con - The Database connection
      * @return List<Class> - A list of all classes enrolled
      */
-    public List<Class> getEnrolledClasses();
+    public List<Class> getEnrolledClasses(Connection con);
     
     /**
      * Gets all the Lessons created by this user
+     * @param con - The Database connection
      * @return List<Lesson> - All the lessons created by this user.
      */
-    public List<Lesson> getCreatedLesssons();
+    public List<Lesson> getCreatedLesssons(Connection con);
     
     /**
-     * Creates a lesson using the provided parameters
-     * @param title - Title of the lesson
-     * @param username - The username of the user creating the lesson
-     * @return boolean - Indicates whether the lesson was created successfully
+     * Checks to see of the user is enrolled in this lesson
+     * @param classId
+     * @return boolean - Indicates success or failure
      */
-    public boolean createLesson(String title, String username);
-    
-    /**
-     * Sets the user's profile when they update thir information
-     * @return boolean - Indicates whether the profile was updated successfully
-     */
-    public boolean setProfile();
+    public boolean isEnrolled(int classId);
+   
 }

@@ -14,40 +14,44 @@ $(document).ready(function() {
 });
 
 
-function submitAssignment(username, assignmentId) {
-    var assignmentText = $('#assignment').val();
-    
-    var json = {"username" : username, "assignment-id": assignmentId, "assignment-text": assignmentText};
-    alert('Data sent: ' + JSON.stringify(json));
+function submitAssignment(assignmentId, username, submission) {
+    var json = {page: 'assignment', method: 'subAssignment', username: username, assignmentId: assignmentId, submission: submission, title: ''};
     
     $.ajax({
-        url: '',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
+            if(data === 1) {
+                alert('Assignment submitted successfully!');
+            } else {
+                alert('There was an error while submitting your assignment, please try again.');
+            }
         }, 
-        error: function(data) {
-            alert('Ajax error');
+        error: function() {
+            alert('There was an error in the server. Please try again later.');
         }
     });
 }
 
-function submitFeedback(username, assignmentId) {
-    var feedbackText = $('#feedback').val();
-    
-    var json = {"username" : username, "assignment-id": assignmentId, "feedback-text": feedbackText};
-    alert('Data sent: ' + JSON.stringify(json));
+function submitFeedback(assignmentId, submitBy, feedback) {
+    var json = {page: 'assignment', method: 'feedback', submitBy: submitBy, assignId: assignmentId, feedback: feedback};
     
     $.ajax({
-        url: '',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
+            if(data === 1) {
+                alert('Assignment feedback submitted successfully!');
+            } else {
+                alert('There was an error while submitting your feedback, please try again.');
+            }
         }, 
-        error: function(data) {
-            alert('Ajax error');
+        error: function() {
+            alert('There was an error in the server. Please try again later.');
         }
     });
 }

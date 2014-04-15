@@ -52,7 +52,7 @@ function toggleModal(id){
 }
 
 
-function saveClassData(element){
+function saveClassData(classId){
     if($('#edit-save').hasClass('edit-class')){
         $('#edit-save p').html('Save');
         
@@ -62,20 +62,23 @@ function saveClassData(element){
     } else {
         var classDesc   = $('#class-desc').val();
 
-        var json = {"desc" : classDesc};
-        
-        alert('Data sent: ' + JSON.stringify(json));
+        var json = {page: 'class', method: 'saveClass',  classId: classId, description: classDesc};
         
         $.ajax({
-            url: '',
+            type: 'POST',
+            url: '/controller',
             data: json, 
             dataType: 'json', 
             success: function(data) {
-                alert('Ajax success!');
+                if(data === 1) {
+                    alert("Class saved successfully!");
+                } else {
+                    alert("The class could not be saved successfully. Please try again.");
+                }
                 changeSide();
             }, 
-            error: function(data) {
-                alert('Ajax error');
+            error: function() {
+                alert("There was an error in the server. Please try again later");
                 changeSide();
             }
         });
@@ -90,52 +93,61 @@ function saveClassData(element){
 }
 
 
-function createNewLesson(element){
-    var lessonTitle   = $('#lesson-title').val();
-
-    var json = {"lesson-title" : lessonTitle};
-
-    alert('Data sent: ' + JSON.stringify(json));
+function createNewAssignment(classId, username, name, desc){
+    
+    var json = {page: 'class', method: 'createAssignment', classId: classId, username: username, name: name, description: desc};
 
     $.ajax({
-        url: 'lesson.jsp',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
-            window.location = 'lesson.jsp';
-            changeSide();
+            if(data >= 0) {
+                window.location = "assignment.jsp?assignment_id=" + data;
+                return true;
+            } else {
+                alert('There was an error while creating the Assignment. Please try again later');
+            }
         }, 
-        error: function(data) {
-            alert('Ajax error');
-            window.location = 'lesson.jsp';
-            changeSide();
+        error: function() {
+            alert("There was a server error. Please try again later.");
         }
     });
+    
+    toggleModal('create-assignment-modal');
+    return false;
 }
 
 
-function createNewAssignment(element){
-    var assignmentTitle     = $('#assignment-title').val();
-    var assignmentDesc      = $('#assignment-description').val();
+function enroll(classId, username, paypal){
+    if(paypal.length > 4) {
+        var json = {page: 'class', method: 'enroll', classId: classId, username: username};
 
-    var json = {"assignment-title" : assignmentTitle, "description": assignmentDesc};
+        $.ajax({
+            type: 'POST',
+            url: '/controller',
+            data: json, 
+            dataType: 'json', 
+            success: function(data) {
+                if(data === 1){
+                    window.location.reload();
+                } else {
+                    alert('There was an error while enrolling you into the class, please try again later');
+                }
+                toggleModal('enroll-modal');
+            }, 
+            error: function(data) {
+                alert('There was an error while enrolling you into the class, please try again later');
+                toggleModal('enroll-modal');
+            }
+        });
+    } else {
+        toggleModal('enroll-modal');
+        toggleModal('error-modal');
+    }
+}
 
-    alert('Data sent: ' + JSON.stringify(json));
-
-    $.ajax({
-        url: 'lesson.jsp',
-        data: json, 
-        dataType: 'json', 
-        success: function(data) {
-            alert('Ajax success!');
-            $('#create-new-assignment').before("<p class=\"assignment-title\" onclick=\"window.location = 'assignment.jsp?teacher=mgonz108'\">" +($('.assignment-title').length + 1)+ ". " + assignmentTitle + "</p>");
-            toggleModal('create-assignment-modal');
-        }, 
-        error: function(data) {
-            alert('Ajax error');
-            $('#create-new-assignment').before("<p class=\"assignment-title\" onclick=\"window.location = 'assignment.jsp?teacher=mgonz108'\">" +($('.assignment-title').length + 1)+ ". " + assignmentTitle + "</p>");
-            toggleModal('create-assignment-modal');
-        }
-    });
+function redirectProfile(username){
+    window.location = "/profile.jsp?username=" + username;
 }

@@ -10,6 +10,7 @@
 <%@page import="com.uboard.interfaces.User"%>
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
+<%@page import="com.uboard.objects.Class"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,25 +32,37 @@
         <script src="scripts/home.js"></script>
         <script src="scripts/stream.js"></script>
     </head>
-    <body>
-        
-            <!--
-                JSP IMPLEMENTATION PSEUDOCODE
-                
-                Is the user logged in? {
-                    -YES {
-                        Redirect the user to search location (with no parameters, showing recent lessons/classes and highest rated lessons/classes)
-                    }
-                }
-            -->
-            
+    <body>  
             <%
                 Utilities util = Utilities.getInstance();
                 User user = null;
                 
+                boolean isOwner = false;
+                
+                String title = "";
+                Class object = null;
+                
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
+                
+                if((title = request.getParameter("class_id")) != null){
+                    
+                    object = new Class(object.classId);
+                    
+                    if(object.classId == 0){
+                        %>Assignment not found<%
+                        return;
+                    }
+                    
+                } else {
+                    response.sendRedirect("/");
+                    return;
+                }
+                
+                if(user != null && user.getUsername().equals(object.createdBy)){
+                    isOwner = true;
+                }
             %>
 
             <div id="top-banner">
@@ -105,43 +118,36 @@
                 <div id="bottom"></div>
             </div>
                     
-            <%if(user != null){%>
-            <div id="save" onclick="saveStream('123456');"><p>Save</p></div>
+            <%if(isOwner){%>
+            <div id="save" onclick="saveStream('<%=object.classId%>');"><p>Save</p></div>
             <%}%>
                     
             <div id="content">
                 <div class="class-title">
-                    <h1>Everything You Need To Know About Pianos</h1>
+                    <h1><%=object.className%></h1>
                 </div>
                 <div id="class-banner">
                         <div id="teacher">
-                            <p id="teacher-name">mgonz108</p>
+                            <p id="teacher-name"><%=object.createdBy%></p>
                         </div>
                     </div>
                 <div id="stream-container">
-                    <object id="stream-video" type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=datmodz" bgcolor="#000000">
+                    <object id="stream-video" type="application/x-shockwave-flash" height="378" width="620" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=<%=object.streamName%>" bgcolor="#000000">
                         <param name="allowFullScreen" value="true" />
                         <param name="allowScriptAccess" value="always" />
                         <param name="allowNetworking" value="all" />
                         <param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-                        <param id="twitch-param" name="flashvars" value="hostname=www.twitch.tv&channel=datmodz&auto_play=true&start_volume=25" />
+                        <param id="twitch-param" name="flashvars" value="hostname=www.twitch.tv&channel=<%=object.streamName%>&auto_play=true&start_volume=25" />
                     </object>
-                    <iframe id="stream-chat" frameborder="0" scrolling="no" src="http://twitch.tv/datmodz/chat?popout=" height="500" width="350"></iframe>
+                    <iframe id="stream-chat" frameborder="0" scrolling="no" src="http://twitch.tv/<%=object.streamName%>/chat?popout=" height="500" width="350"></iframe>
                 </div>
-                <%if(user != null){%>
+                <%if(isOwner){%>
                 <input id="change-stream" type="button" onclick="toggleModal('change-stream-modal');" value="Change Stream Channel">
                 <%}%>
             </div>
                 
-            <div id="create-lesson-modal" class="box-modal">
-                <h2>Create New Lesson</h2>
-                <p>Please fill out the following information to create a new lesson.</p>
-                <h4>Title</h4>
-                <input type="text" id="lesson-title" placeholder="Lesson Title">
-                <input type="button" onclick="createNewLesson();" value="Create">
-                <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
-            </div>
             
+            <%if(user != null){%>
             <div id="change-stream-modal" class="box-modal">
                 <h2>Change Stream Channel</h2>
                 <p>Please fill out the following information to change the stream channel.</p>
@@ -150,8 +156,17 @@
                 <input type="button" onclick="changeStream();" value="Create">
                 <input type="button" onclick="toggleModal('change-stream-modal');" value="Cancel">
             </div>
+            
+            <div id="create-lesson-modal" class="box-modal">
+                <h2>Create New Lesson</h2>
+                <p>Please fill out the following information to create a new lesson.</p>
+                <h4>Title</h4>
+                <input type="text" id="lesson-title" placeholder="Lesson Title">
+                <input type="button" onclick="createNewLesson('<%=user.getUsername()%>', $('#lesson-title').val(), 0);" value="Create">
+                <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
+            </div>
 
-             <div id="create-class-modal" class="box-modal">
+            <div id="create-class-modal" class="box-modal">
                 <h2>Create New Class</h2>
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
@@ -160,14 +175,15 @@
                 <input type="text" id="class-price" placeholder="Class Price">
                 <h4>Class Enrollment Limit:</h4>
                 <input type="text" id="class-limit" placeholder="Class Limit">
-                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="createNewClass('<%=user.getUsername()%>', $('#class-title').val(), $('#class-price').val(), $('#class-limit').val());" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
-            
+
             <div id="save-confirm-modal" class="box-modal">
                 <h2>Stream Saved Successfully!</h2>
                 <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
+            <%}%>
 
             <div id="modal"></div>
     </body>

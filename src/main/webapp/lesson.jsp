@@ -75,8 +75,19 @@
                     
                     isUser = true;
                     
+                    if(!user.isEnrolled(object.classId)){
+                        %>You are not enrolled in this Lesson's Class<%
+                        return;
+                    }
+                        
+                    
                     if(user.getUsername().equals(object.createdBy)){
                         isOwner = true;
+                    }
+                } else {
+                    if(object.classId != 0) {
+                        %>You are not enrolled in this Lesson's Class<%
+                        return;
                     }
                 }
             %>
@@ -146,7 +157,7 @@
                 <div id="sidebar-handle" onclick="toggleSideBar();"></div>
             </div>
             <div id="content">
-                <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
+                <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username" style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=object.createdBy%>' "><%=object.createdBy%></h2></div>
                 <div id="sort"><%if(object.html != null){%>
                         <%=object.html%>
                     <%}%>
@@ -161,8 +172,8 @@
                         <%}%>
                         <%for(Comment comment : object.comments){%>
                         <div class="comment">
-                            <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                            <div class="comment-text"><p class="user"><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
+                            <div class="comment-user"><img style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=comment.username%>' " src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=comment.username%>' "><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
                         </div>
                         <%}%>
                     </div>
@@ -191,14 +202,43 @@
                 <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
         <%} else {%>
-        <div id="rating">
-            <div class="rate" id="rate-positive" onclick="rate(1);"><img src="/images/rating/pos-rate.png"></div>
-            <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
-            <div class="rate" id="rate-negative" onclick="rate(-1);"><img src="/images/rating/neg-rate.png"></div>
-        </div>
+        
+        <%if(user != null) {%>
+            <%if(!object.raters.containsKey(user.getUsername())){%>
+                <div id="rating">
+                    <div class="rate" id="rate-positive" onclick="rate('<%=user.getUsername()%>', <%=object.lessonId%>, 1);"><img src="/images/rating/pos-rate.png"></div>
+                    <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
+                    <div class="rate" id="rate-negative" onclick="rate('<%=user.getUsername()%>', <%=object.lessonId%>, -1);"><img src="/images/rating/neg-rate.png"></div>
+                </div>
+            <%} else {%>
+                <div id="rating">
+                    <% if(object.raters.get(user.getUsername()) > 0) {%>
+                    <div class="rate rated user-rated" id="rate-positive"><img src="/images/rating/pos-rate.png"></div>
+                    <%if(object.posRating > 0) {%>
+                    <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
+                    <%} else {%>
+                    <div class="lesson-rating"><p class="negative-rating"><%=object.posRating%></p></div>
+                    <%}%>
+                    <div class="rate rated" id="rate-negative"><img src="/images/rating/neg-rate.png"></div>
+                    <%} else {%>
+                    <div class="rate rated" id="rate-positive"><img src="/images/rating/pos-rate.png"></div>
+                    <%if(object.posRating > 0) {%>
+                    <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
+                    <%} else {%>
+                    <div class="lesson-rating"><p class="negative-rating"><%=object.posRating%></p></div>
+                    <%}%>
+                    <div class="rate rated user-rated" id="rate-negative"><img src="/images/rating/neg-rate.png"></div>
+                    <%}%>
+                </div>
+            <%}%>
+        <%} else {%>
+            <div id="rating">
+                <div class="lesson-rating" style="width: 60px;"><p class="positive-rating" style="border-radius: 10px;"><%=object.posRating%></p></div>
+            </div>
+        <%}%>
     
         <div id="content" style="left: 0;">
-            <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username"><%=object.createdBy%></h2></div>
+            <div id="main-lesson-title" class="box" title="Lesson Title"><h1 contenteditable="false"><%=object.name%></h1><h2 id="username" style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=object.createdBy%>' "><%=object.createdBy%></h2></div>
             <%if(object.html != null){%>
                 <%=object.html%>
             <%}%>
@@ -212,8 +252,8 @@
                     <%}%>
                     <%for(Comment comment : object.comments){%>
                     <div class="comment">
-                        <div class="comment-user"><img src="/images/comments/user-comment.png"></div>
-                        <div class="comment-text"><p class="user"><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
+                        <div class="comment-user"><img style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=comment.username%>' " src="/images/comments/user-comment.png"></div>
+                            <div class="comment-text"><p style="cursor: pointer;" class="user" onclick="window.location = '/profile.jsp?username=<%=comment.username%>' "><%=comment.username%></p><p class="text"><%=comment.text%></p></div>
                     </div>
                     <%}%>
                 </div>
@@ -240,7 +280,7 @@
             <input type="text" id="class-price" placeholder="Class Price">
             <h4>Class Enrollment Limit:</h4>
             <input type="text" id="class-limit" placeholder="Class Limit">
-            <input type="button" onclick="createNewClass();" value="Create">
+            <input type="button" onclick="createNewClass('<%=user.getUsername()%>', $('#class-title').val(), $('#class-price').val(), $('#class-limit').val());" value="Create">
             <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
         </div>
 

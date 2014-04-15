@@ -20,7 +20,7 @@ public class Comment {
     
     private static final String query_getComments = 
         "SELECT created_by, comment_text FROM \"UBOARD\".u_comments WHERE lesson_id = ? "
-            + "ORDER BY created_date ASC";
+        + "AND class_id = ? ORDER BY created_date ASC";
     
     private static final String query_submitComment = 
         "INSERT INTO \"UBOARD\".u_comments (created_by, class_id, lesson_id, comment_text) "
@@ -43,6 +43,8 @@ public class Comment {
     /**
      * Retrieves all the comments for this particular lesson
      * @param con - The Database connection used
+     * @param classId - Class Id
+     * @param lessonId - Lesson Id
      * @return Comments - HashMap<Username, Comment Text>
      */
     public static Set<Comment> getComments(Connection con, int classId, int lessonId){
@@ -53,6 +55,7 @@ public class Comment {
             //values
             stm = con.prepareStatement(query_getComments);
             stm.setInt(1, lessonId);
+            stm.setInt(2, classId);
             ResultSet found = stm.executeQuery();
             
             //Check for the record to see if the user credentials match the 

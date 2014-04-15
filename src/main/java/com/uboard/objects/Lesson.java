@@ -39,8 +39,8 @@ public class Lesson {
         "UPDATE \"UBOARD\".u_lesson SET lesson_content = ? WHERE lesson_id = ?";
     
     private static final String query_updateRating = 
-        "UPDATE \"UBOARD\".u_lesson SET pos_rating = pos_rating + ? "
-        + "AND tot_rating = tot_rating + 1";
+        "UPDATE \"UBOARD\".u_lesson SET pos_rating = pos_rating + ?, "
+        + "tot_rating = tot_rating + 1 WHERE lesson_id = ?";
     
     private static final String query_rateLesson = 
         "INSERT INTO \"UBOARD\".u_rated (username, lesson_id, rating) "
@@ -48,6 +48,7 @@ public class Lesson {
     
     private static final String query_getRaters = 
         "SELECT username, rating FROM \"UBOARD\".u_rated WHERE lesson_id = ?";
+    
     
     /**
      * This constructor creates a new Lesson with the following information
@@ -68,7 +69,7 @@ public class Lesson {
             //ones in the Database
             if(found.next()){
                 this.lessonId           = lessonId;
-                this.classId            = classId;
+                this.classId            = found.getInt("class_id");
                 this.createdBy          = found.getString("created_by");
                 this.name               = found.getString("lesson_name");
                 this.posRating          = found.getInt("pos_rating");
@@ -88,6 +89,20 @@ public class Lesson {
                 System.out.println("Failed to close connections.");
             }
         }
+    }
+    
+    /**
+     * Creates a light Lesson Object
+     * @param lessonId - The Id of the lesson
+     * @param classId - The ID of the class
+     * @param name - The name of the lesson
+     * @param posRating - The positive rating for the lesson
+     */ 
+    public Lesson(int lessonId, int classId, String name, int posRating) {
+        this.lessonId           = lessonId;
+        this.classId            = classId;
+        this.name               = name;
+        this.posRating          = posRating;
     }
     
     
@@ -133,6 +148,8 @@ public class Lesson {
         // Returns 0 if the lessonID could not be created
         return 0;
     }
+    
+    
     
     /**
      * Saves the lesson to the database
@@ -203,9 +220,10 @@ public class Lesson {
      * @param con - The Database connection used
      * @return Raters - HashMap<Username, Rating>
      */
-    private static boolean addRaters(String username, int lessonId, int rating){
+    public static boolean rateLesson(String username, int lessonId, int rating){
         Connection con = MyDatabase.connect();
         PreparedStatement stm = null;
+        PreparedStatement stm2 = null;
         try {
             //Creates a prepared statement that takes care of the query and its
             //values - Query = (username, lessonId, rating)
@@ -216,6 +234,14 @@ public class Lesson {
             
             //Executes the query
             stm.executeUpdate();
+            
+            //Updates the lesson rating in order to keep lesson rating up to date.
+            stm2 = con.prepareStatement(query_updateRating);
+            stm2.setInt(1, rating);
+            stm2.setInt(2, lessonId);
+            
+            //Executes the query
+            stm2.executeUpdate();
             
             //Returns true unless the execute command hits an Exception
             return true;

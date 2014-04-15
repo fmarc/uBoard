@@ -11,6 +11,7 @@
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
 <%@page import="com.uboard.objects.Lesson"%>
+<%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
@@ -139,42 +140,42 @@
                     </div>
                <%}%>
                
-               <%if(request.getParameter("search") != null){
-                   for(Lesson lesson : util.searchContent(request.getParameter("search"))) {
-               %>
+               <%if(request.getParameter("search") != null){%>
                     <div id="search-content">
                         <div class="box-header">
                             <h1>SEARCH: <span id="search-keyword" style="font-style: italic; font-weight: normal; font-family: Arial;"><%=request.getParameter("search")%></span></h1>
                         </div>
                         <div class="box-content">
+                            <%for(Lesson lesson : util.searchContent(request.getParameter("search"))) {%>
                             <div class="lesson">
                                 <div class="lesson-rating">
                                     <p class="positive-rating"><%=lesson.posRating%></p>
                                 </div>
                                 <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
                             </div>
+                            <%}%>
                         </div>
                     </div>
-                <%  }
-                }%>
+                <%}%>
                
                 <div id="high-rated" class="box">
                     <div class="box-header">
                         <h1>HIGHEST RATED CONTENT</h1>
                     </div>
                     <div class="box-content">
+                        
+                        <%for(Lesson lesson: util.getTopRated()){%>
                         <div class="lesson">
                             <div class="lesson-rating">
-                                <p class="positive-rating">580</p>
+                                <%if(lesson.posRating >= 0){%>
+                                <p class="positive-rating"><%=lesson.posRating%></p>
+                                <%} else {%>
+                                <p class="negative-rating"><%=lesson.posRating%></p>
+                                <%}%>
                             </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - How To Bring The House Down!</a>
+                            <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
                         </div>
-                        <div class="lesson">
-                            <div class="lesson-rating">
-                                <p class="positive-rating">541</p>
-                            </div>
-                            <a class="content-title" href="lesson.jsp?lesson_id=2">LESSON - What are things I should do when bored?</a>
-                        </div>
+                        <%}%>
                     </div>
                 </div>
             </div>
@@ -198,7 +199,7 @@
                 <input type="text" id="class-price" placeholder="Class Price">
                 <h4>Class Enrollment Limit:</h4>
                 <input type="text" id="class-limit" placeholder="Class Limit">
-                <input type="button" onclick="createNewClass();" value="Create">
+                <input type="button" onclick="createNewClass('<%=user.getUsername()%>', $('#class-title').val(), $('#class-price').val(), $('#class-limit').val());" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
             <%}%>

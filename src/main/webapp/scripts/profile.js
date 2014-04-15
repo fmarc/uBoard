@@ -15,7 +15,7 @@ $(document).ready(function() {
 });
 
 
-function saveUserData(element){
+function saveUserData(username){
     if($('#edit-save').hasClass('edit-profile')){
         $('#edit-save p').html('Save');
         
@@ -31,20 +31,24 @@ function saveUserData(element){
         var paypal = $('#paypal-email').val();
         var about  = $('#about').val();
         
-        var json = {"name" : name, "paypal" : paypal, "about" : about};
-        
-        alert('Data sent: ' + JSON.stringify(json));
+        var json = {page: 'profile', method: 'saveProfile', name: name, paypal: paypal, about: about, username: username};
         
         $.ajax({
-            url: '',
+            type: 'POST',
+            url: '/controller',
             data: json, 
             dataType: 'json', 
             success: function(data) {
-                alert('Ajax success!');
-                changeSide();
+                if(data === 1) {
+                    alert('Profile saved successfully!');
+                    changeSide();
+                } else {
+                    alert('Profile was not saved successfully. Please try again.');
+                    changeSide();
+                }
             }, 
-            error: function(data) {
-                alert('Ajax error');
+            error: function() {
+                alert('There was an error in ther server. Please try again later.');
                 changeSide();
             }
         });

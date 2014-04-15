@@ -24,6 +24,9 @@ public class Utilities {
         "SELECT username, user_password, user_type FROM \"UBOARD\".u_user WHERE username = ? "
         +   "AND user_password = ?";
     
+    private static final String query_getUser = 
+        "SELECT user_type FROM \"UBOARD\".u_user WHERE username = ? ";
+    
     private static final String query_usernameExists  = 
         "SELECT username FROM \"UBOARD\".u_user WHERE username = ?";
     
@@ -38,7 +41,11 @@ public class Utilities {
         "SELECT * FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
     
     private static final String query_getTopRated =
-        "SELECT pos_rating FROM \"UBOARD\".u_lesson ORDER_BY pos_rating DESC ";
+        "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
+    
+    private static final String query_saveProfile = 
+        "UPDATE \"UBOARD\".u_user SET name = ?, about = ?, paypal_email = ? "
+        + "WHERE username = ? ";
     
     /**
      * Singleton Object, no constructor needed
@@ -97,6 +104,44 @@ public class Utilities {
         }
         
         return false;
+    }
+    
+    /**
+     * Gets the specified user from its username
+     * @param username
+     * @return 
+     */
+    public User getUser(String username) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            stm = con.prepareStatement(query_getUser);
+            stm.setString(1, username.toLowerCase());
+            ResultSet found = stm.executeQuery();
+            
+            //Check for all the records (in this case just one) to see if the
+            //user credentials match the ones in the Database
+            if(found.next()){
+                if(found.getInt("user_type") == 0) {
+                    return new Student(username.toLowerCase());
+                } else {
+                    return new Teacher(username.toLowerCase());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when finding the User while logging in:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        return null;
     }
     
     /**
@@ -254,7 +299,6 @@ public class Utilities {
             stm = con.prepareStatement(query_Search);
             stm.setString(1, search.toLowerCase());
             ResultSet found = stm.executeQuery();
-            
             while(found.next()) {
                 lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id")));
             }
@@ -269,27 +313,27 @@ public class Utilities {
                 System.out.println("Failes to close connections.");
             }
         }
-        
         return lessons;
     }
     
     
+    /**
+     * Looks for the highest rated lessons
+     * @return Set<Lesson> - A list of the first 15 highest rated lessons
+     */
     public Set<Lesson> getTopRated(){
-        int count = 0;
+
         Set<Lesson> lessons = new HashSet<Lesson>();
         Connection con = MyDatabase.connect();
         PreparedStatement stm = null;
+
         try {
-            //Creates a prepared statement that takes care of the query and its
-            //values
-            //Query = (username, email, name, user_password)
             stm = con.prepareStatement(query_getTopRated);
             ResultSet found = stm.executeQuery();
-            
+
             while(found.next()){
-                if(count > 14) break;
-                lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id")));
-                count++;
+                lessons.add(new Lesson(found.getInt("lesson_id"), found.getInt("class_id"),
+                        found.getString("lesson_name"), found.getInt("pos_rating")));
             }
         } catch (SQLException e) {
             System.out.println("\nThere was SQL error when retrieving topRated Lessons");
@@ -302,9 +346,48 @@ public class Utilities {
                 System.out.println("Failes to close connections.");
             }
         }
-        
+
         return lessons;
+
+    }
     
+    /**
+     * Saves the profile of the username provided
+     * @param name
+     * @param about
+     * @param paypal
+     * @param username
+     * @return 
+     */
+    public boolean saveProfile(String name, String about, String paypal, String username) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values - Query = (name, about, paypal, username)
+            stm = con.prepareStatement(query_saveProfile);
+            stm.setString(1, name);
+            stm.setString(2, about);
+            stm.setString(3, paypal);
+            stm.setString(4, username);
+            
+            //Executes the query
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when saving a Lesson:");
+            e.printStackTrace();
+            return false;
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        // Returns 0 if the profile could not be saved
+        return true;
     }
     
 }

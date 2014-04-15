@@ -202,9 +202,11 @@ function saveLessonData(lessonId) {
 /**
  * Rates the current lesson with the specified rating
  * @param {type} num - The rating (1 or -1) from the user
+ * @param lessonId - The lessons ID
+ * @param username - The user rating the lesson
  * @returns boolean - Indicates whether the process succeeded
  */
-function rate(num){
+function rate(username, lessonId, num){
     //Remove the click event on the rating so the user cannot rate the lesson
     //again
     $('.rate').prop('onclick', null);
@@ -216,8 +218,7 @@ function rate(num){
         positive = true;
     }
     
-    var json = {"rating" : num};
-    alert('Data sent: ' + JSON.stringify(json));
+    var json = {page: 'lesson', method: 'rate', username: username, lessonId: lessonId, rating: num};
     
     $.ajax({
         type: 'POST',
@@ -225,24 +226,20 @@ function rate(num){
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
-            $('#rating p').html(parseInt($('#rating p').html()) + num);
-            if(positive){
-                $('#rate-positive').addClass('user-rated');
+            if(data === 1){
+                $('#rating p').html(parseInt($('#rating p').html()) + num);
+                if(positive){
+                    $('#rate-positive').addClass('user-rated');
+                } else {
+                    $('#rate-negative').addClass('user-rated');
+                }
+                checkRating();
             } else {
-                $('#rate-negative').addClass('user-rated');
+                alert("There was an erro while saving your rate selection. Please try again.");
             }
-            checkRating();
         }, 
         error: function(data) {
-            alert('Ajax error');
-            $('#rating p').html(parseInt($('#rating p').html()) + num);
-            if(positive){
-                $('#rate-positive').addClass('user-rated');
-            } else {
-                $('#rate-negative').addClass('user-rated');
-            }
-            checkRating();
+            alert('There was an error in the server. Please try again later.');
         }
     });
     

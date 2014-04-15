@@ -7,6 +7,11 @@
 --%>
 
 <%@page import="com.uboard.objects.Utilities"%>
+<%@page import="com.uboard.objects.Class"%>
+<%@page import="com.uboard.objects.Lesson"%>
+<%@page import="com.uboard.objects.Assignment"%>
+<%@page import="com.uboard.objects.SubAssignment"%>
+<%@page import="com.uboard.objects.Comment"%>
 <%@page import="com.uboard.interfaces.User"%>
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
@@ -45,11 +50,59 @@
             
             <%
                 Utilities util = Utilities.getInstance();
-                User user = null;
+                User user           = null;
+                
+                Assignment object   = null;
+                SubAssignment submit = null;
+                Class classObj      = null;
+                String title        = "";
+                String submitUser   = "";
+                boolean isUser      = false;
+                boolean isOwner     = false; 
+                boolean isEnrolled  = false;
+                boolean subUser     = false;
                 
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
+                
+                if((title = request.getParameter("assignment_id")) != null){
+                    
+                    object = new Assignment(Integer.parseInt(title));
+                    
+                    if(object.classId == 0){
+                        %>Assignment not found<%
+                        return;
+                    }
+                    
+                    classObj = new Class(object.classId);
+                    
+                } else {
+                    response.sendRedirect("/");
+                    return;
+                }
+                
+                
+                if(user != null) {
+                    isEnrolled = user.isEnrolled(object.classId);
+                    isUser = true;
+                    
+                    if(user.getUsername().equals(object.createdBy)){
+                        isOwner = true;
+                    }
+                } else {
+                    response.sendRedirect("/class.jsp?class_id=" + object.classId);
+                }
+                
+                if((submitUser = request.getParameter("username")) != null) {
+                    subUser = true;
+                    submit = new SubAssignment(object.assignmentId, submitUser);
+                } else {
+                    String url = "/assignment.jsp?assignment_id=" + object.assignmentId + "&username=" + user.getUsername();
+                    if(!isOwner) {
+                        response.sendRedirect(url);
+                    }
+                }
             %>
 
             <div id="top-banner">
@@ -107,108 +160,76 @@
             
             <div id="content">
                 <div class="class-title">
-                    <h1>Everything You Need To Know About Pianos</h1>
+                    <h1><%=classObj.className%></h1>
                     <div id="class-banner">
                         <div id="teacher">
-                            <p id="teacher-name">mgonz108</p>
+                            <p id="teacher-name"><%=classObj.createdBy%></p>
                         </div>
                     </div>
                 </div>
-                <%if(user instanceof Teacher) {%>
+                <%if(subUser && !isOwner) {%>
                 <div id="assignment-content">
-                    <h2 id="assignment-title">Bring Down the House</h2>
-                    <h3 id="user"><%if(user != null){%>fmarc011<%}%></h3>
-                    <p id="assignment-desc">For this assignment, you must list all the different Pianos from what we've discussed in the course.</p>
-                    <%if(user == null){%>
-                    <textarea id="assignment" placeholder="Answer the assignment question above in here." ></textarea>
-                    <%}else {%>
-                    <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled >There are quite a variety of Pianos. 1) The Wooden Piano, 2) the Plastic Piano, 3) The Guitar Paino, and 4) The Rolling Piano.</textarea>
-                    <%}%>
-                    <%if(user != null){%>
-                    <input type="button" value="Submit" onclick="submitAssignment('mgonz108', '14527');">
+                    <h2 id="assignment-title"><%=object.assignName%></h2>
+                    <h3 id="user"><%=submit.submitBy%></h3>
+                    <p id="assignment-desc"><%=object.description%></p>
+                    <%if(submit.submission.length() > 5) {%>
+                        <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
+                    <%} else {%>
+                        <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." ></textarea>
+                        <input type="button" value="Submit" onclick="submitAssignment(<%=object.assignmentId%> ,'<%=user.getUsername()%>', $('#assignment').val());">
                     <%}%>
                     <div id="assignment-feedback">
                         <h2 id="feedback-title">Feedback: </h2>
-                        <%if(user == null){%>
-                        <textarea style="height: auto; min-height: 0px;" id="feedback" placeholder="Feed back will display here once given" disabled></textarea>
-                        <%} else {%>
-                        <textarea id="feedback" placeholder="Feed back will display here once given" ></textarea>
-                        <%}%>
+                        <textarea style="height: auto; min-height: 0px;" id="feedback" placeholder="Feed back will display here once given" disabled><%=submit.feedback.feedBack%></textarea>
                     </div>
-                    <%if(user != null){%>
-                    <input type="button" value="Submit" onclick="submitFeedback('mgonz108', '14527');">
+                </div>
+                <%} else if (subUser && isOwner){%>
+                <div id="assignment-content">
+                    <h2 id="assignment-title"><%=object.assignName%></h2>
+                    <h3 id="user"><%=submit.submitBy%></h3>
+                    <p id="assignment-desc"><%=object.description%></p>
+                    <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
+                    <div id="assignment-feedback">
+                        <h2 id="feedback-title">Feedback: </h2>
+                        <textarea id="feedback" placeholder="Feed back will display here once given" ><%=submit.feedback.feedBack%></textarea>
+                    </div>
+                    <%if(submit.feedback.feedBack.length() > 5) {%>
+                    <input type="button" value="Submit" onclick="submitFeedback(<%=object.assignmentId%>, '<%=submit.submitBy%>', $('#feedback').val());">
                     <%}%>
                 </div>
                 <%} else {%>
                 <div id="assignment-content">
                     <div class="assignment">
-                        <h3 class="assignment-title">Bring Down the House:</h3>
+                        <h3 class="assignment-title"><%=object.assignName%></h3>
+                        <%for(SubAssignment assign : object.submitted) {%>
                         <div class="user-assignments">
                             <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">fmarc011</a></h4>
+                                <h4 class="user"><a href="assignment.jsp?assignment_id=<%=object.assignmentId%>&username=<%=assign.submitBy%>"><%=assign.submitBy%></a></h4>
+                                <%if(assign.feedback.feedBack.isEmpty()){%>
                                 <p class="status"> - <span>Feedback Pending</span></p>
-                                <p class="assignment-text">There are quite a variety of Pianos. 1) The Wooden Piano, 2) the Plastic Piano, 3) The Guitar Paino, and 4) The Rolling Piano</p>
+                                <%} else {%>
+                                <p class="status"> - <span>Completed</span></p>
+                                <%}%>
+                                <p class="assignment-text"><%=assign.submission%></p>
                             </div>
                         </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">CoryG</a></h4>
-                                <p class="status"> - <span>Feedback Pending</span></p>
-                                <p class="assignment-text">There are currently 4 types of piano. But I forgot them... sorry</p>
-                            </div>
-                        </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">Ally123</a></h4>
-                                <p class="status"> - <span>Feedback Pending</span></p>
-                                <p class="assignment-text">There are different types of Pianos? I didn't even know.</p>
-                            </div>
-                        </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">Ianator</a></h4>
-                                <p class="status"> - <span>Feedback Pending</span></p>
-                                <p class="assignment-text">There are 3 types are Pianos. The wooden piano, the electric piano, and the Guitar Piano</p>
-                            </div>
-                        </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">LauraP</a></h4>
-                                <p class="status"> - <span>Feedback Pending</span></p>
-                                <p class="assignment-text">I believe the are a total of two types of Pianos. The wooden and the plastic piano.</p>
-                            </div>
-                        </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">JDoe</a></h4>
-                                <p class="status"> - <span>Assignment Not Yet Submitted</span></p>
-                                <p class="assignment-text"></p>
-                            </div>
-                        </div>
-                        <div class="user-assignments">
-                            <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?id=123">Learn1234</a></h4>
-                                <p class="status"> - <span>Assignment Not Yet Submitted</span></p>
-                                <p class="assignment-text"></p>
-                            </div>
-                        </div>
+                        <%}%>
                     </div>
-                    
                 </div>
                 <%}%>
-                
             </div>
                 
+            <%if(user != null){%>
             <div id="create-lesson-modal" class="box-modal">
                 <h2>Create New Lesson</h2>
                 <p>Please fill out the following information to create a new lesson.</p>
                 <h4>Title</h4>
                 <input type="text" id="lesson-title" placeholder="Lesson Title">
-                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="createNewLesson('<%=user.getUsername()%>', $('#lesson-title').val(), 0);" value="Create">
                 <input type="button" onclick="toggleModal('create-lesson-modal');" value="Cancel">
             </div>
 
-             <div id="create-class-modal" class="box-modal">
+            <div id="create-class-modal" class="box-modal">
                 <h2>Create New Class</h2>
                 <p>Please fill out the following information to create a new class.</p>
                 <h4>Title</h4>
@@ -217,9 +238,10 @@
                 <input type="text" id="class-price" placeholder="Class Price">
                 <h4>Class Enrollment Limit:</h4>
                 <input type="text" id="class-limit" placeholder="Class Limit">
-                <input type="button" onclick="createNewLesson();" value="Create">
+                <input type="button" onclick="createNewClass('<%=user.getUsername()%>', $('#class-title').val(), $('#class-price').val(), $('#class-limit').val());" value="Create">
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
+            <%}%>
 
             <div id="modal"></div>
     </body>
