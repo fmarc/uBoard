@@ -64,13 +64,13 @@
                     return;
                 }
                 
-                if(user != null && !object.isEnrolled(user.getUsername())){
-                    %>Sorry, you are not enrolled in this Class. You will not be able to see this stream.<%
-                    return;
-                }
-                
                 if(user != null && user.getUsername().equals(object.createdBy)){
                     isOwner = true;
+                }
+                
+                if(user != null && !object.isEnrolled(user.getUsername()) && !isOwner){
+                    %>Sorry, you are not enrolled in this Class. You will not be able to see this stream.<%
+                    return;
                 }
             %>
 
