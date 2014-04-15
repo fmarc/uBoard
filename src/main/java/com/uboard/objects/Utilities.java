@@ -47,7 +47,7 @@ public class Utilities {
             + "+ \"OR lower(class_name) LIKE '%' || ? OR lower(class_name) LIKE ? || '%' ";
     
     private static final String query_getTopRated =
-        "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
+        "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 AND class_id = 0 ORDER BY pos_rating DESC LIMIT 10";
     
     private static final String query_getTopRatedClasses =
         "SELECT * FROM \"UBOARD\".u_class WHERE class_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
