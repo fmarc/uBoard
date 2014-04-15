@@ -36,17 +36,6 @@
         <script src="scripts/class.js"></script>
     </head>
     <body>
-        
-            <!--
-                JSP IMPLEMENTATION PSEUDOCODE
-                
-                Is the user logged in? {
-                    -YES {
-                        Redirect the user to search location (with no parameters, showing recent lessons/classes and highest rated lessons/classes)
-                    }
-                }
-            -->
-            
             <%
                 Utilities util = Utilities.getInstance();
                 User user           = null;
@@ -85,8 +74,8 @@
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
-                        <form>
-                            <input type="text" id="content-search" val="" placeholder="Search">
+                        <form id="search-form" action="/home.jsp">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
                     </div>
@@ -164,7 +153,7 @@
                     </div>
                     <%}%>
                     
-                    <%if(isEnrolled){%>
+                    <%if(isEnrolled || isOwner){%>
                     <div class="tool">
                         <div id="class-stream" onclick="window.location = 'stream.jsp?class_id=<%=object.classId%>';">
                             <p id="stream">Stream Page</p>

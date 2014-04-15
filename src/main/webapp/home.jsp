@@ -11,6 +11,7 @@
 <%@page import="com.uboard.objects.Student"%>
 <%@page import="com.uboard.objects.Teacher"%>
 <%@page import="com.uboard.objects.Lesson"%>
+<%@page import="com.uboard.objects.Class"%>
 <%@page import="java.util.Set"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -31,16 +32,6 @@
         <script src="scripts/home.js"></script>
     </head>
     <body>
-            <!--
-                JSP IMPLEMENTATION PSEUDOCODE
-                
-                Is the user logged in? {
-                    -YES {
-                        Redirect the user to search location (with no parameters, showing recent lessons/classes and highest rated lessons/classes)
-                    }
-                }
-            -->
-            
             <%
                 Utilities util = Utilities.getInstance();
                 User user = null;
@@ -53,7 +44,7 @@
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
-                        <form id="search-form">
+                        <form id="search-form" action="/home.jsp">
                             <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
@@ -106,16 +97,6 @@
             <div id="content">
                 <%if(user == null && request.getParameter("search") == null) {%>
                     <div id="welcome-message" class="content-box">
-
-                        <p>Pages done or work in progress:</p>
-                        <a href='home.jsp'>Home</a>
-                        <a href='register.jsp'>Register</a>
-                        <a href='lesson.jsp'>Lesson</a>
-                        <a href='profile.jsp'>Profile</a>
-                        <a href='class.jsp'>Class</a>
-                        <a href='assignment.jsp'>Assignment</a>
-                        <a href='stream.jsp'>Stream</a>
-
                         <h1>U | BOARD - COMMUNITY LEARNING</h1>
                         <h2>A tool made for learning and teaching just about anything you can imagine.</h2>
                         <hr>
@@ -146,14 +127,35 @@
                             <h1>SEARCH: <span id="search-keyword" style="font-style: italic; font-weight: normal; font-family: Arial;"><%=request.getParameter("search")%></span></h1>
                         </div>
                         <div class="box-content">
-                            <%for(Lesson lesson : util.searchContent(request.getParameter("search"))) {%>
-                            <div class="lesson">
-                                <div class="lesson-rating">
+                            <%for(Lesson lesson : util.searchContent(request.getParameter("search"))) {
+                                if(lesson.lessonId != 0){%>
+                                <div class="lesson">
+                                    <div class="lesson-rating">
+                                    <%if(lesson.posRating >= 0){%>
                                     <p class="positive-rating"><%=lesson.posRating%></p>
+                                    <%} else {%>
+                                    <p class="negative-rating"><%=lesson.posRating%></p>
+                                    <%}%>
+                                    </div>
+                                    <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
                                 </div>
-                                <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
-                            </div>
-                            <%}%>
+                            <%  }
+                            }%>
+                            
+                            <%for(Class cls : util.searchContentClass(request.getParameter("search"))) {
+                                if(cls.classId != 0){%>
+                                <div class="lesson">
+                                    <div class="lesson-rating">
+                                    <%if(cls.posRating >= 0){%>
+                                    <p class="positive-rating"><%=cls.posRating%></p>
+                                    <%} else {%>
+                                    <p class="negative-rating"><%=cls.posRating%></p>
+                                    <%}%>
+                                    </div>
+                                    <a class="content-title" href="class.jsp?class_id=<%=cls.classId%>">CLASS - <%=cls.className%></a>
+                                </div>
+                            <%  }
+                            }%>
                         </div>
                     </div>
                 <%}%>
@@ -176,6 +178,20 @@
                             <a class="content-title" href="lesson.jsp?lesson_id=<%=lesson.lessonId%>">LESSON - <%=lesson.name%></a>
                         </div>
                         <%}%>
+                        
+                        <%for(Class cls : util.getTopRatedClasses()){%>
+                        <div class="lesson">
+                            <div class="lesson-rating">
+                                <%if(cls.posRating >= 0){%>
+                                <p class="positive-rating"><%=cls.posRating%></p>
+                                <%} else {%>
+                                <p class="negative-rating"><%=cls.posRating%></p>
+                                <%}%>
+                            </div>
+                            <a class="content-title" href="class.jsp?class_id=<%=cls.classId%>">CLASS - <%=cls.className%></a>
+                        </div>
+                        <%}%>
+                        
                     </div>
                 </div>
             </div>

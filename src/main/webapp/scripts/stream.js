@@ -31,24 +31,22 @@ function saveStream(classId) {
     var streamUrl = $('#stream-video').prop('data');
     var streamChannel = streamUrl.substring( streamUrl.indexOf('=') + 1, streamUrl.length );
     
-    alert(streamChannel);
-    
-    var json = {"class-id": classId ,"stream-name" : streamChannel};
-    alert('Data sent: ' + JSON.stringify(json));
+    var json = {page: 'stream', method: 'saveStream', classId: classId , streamName: streamChannel};
     
     $.ajax({
-        url: '',
+        type: 'POST',
+        url: '/controller',
         data: json, 
         dataType: 'json', 
         success: function(data) {
-            alert('Ajax success!');
-            toggleModal('save-confirm-modal');
+            if(data === 1) {
+                toggleModal('save-confirm-modal');
+            } else {
+                alert('There was an error while trying to save the stream. Please try again.');
+            }
         }, 
-        error: function(data) {
-            alert('Ajax error');
-            toggleModal('save-confirm-modal');
+        error: function() {
+            alert('There was an error in the server. Please try again later.');
         }
     });
-    
-    
 }

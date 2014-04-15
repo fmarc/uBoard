@@ -37,17 +37,6 @@
         <script src="scripts/assignment.js"></script>
     </head>
     <body>
-        
-            <!--
-                JSP IMPLEMENTATION PSEUDOCODE
-                
-                Is the user logged in? {
-                    -NO {
-                        Redirect the user to last page 
-                    }
-                }
-            -->
-            
             <%
                 Utilities util = Utilities.getInstance();
                 User user           = null;
@@ -65,6 +54,10 @@
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
+                
+                if(user == null) {
+                    response.sendRedirect("/");
+                }
                 
                 if((title = request.getParameter("assignment_id")) != null){
                     
@@ -108,8 +101,8 @@
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
-                        <form id="search-form">
-                            <input name="search" type="text" id="content-search" val="" placeholder="Search">
+                        <form id="search-form" action="/home.jsp">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
                     </div>

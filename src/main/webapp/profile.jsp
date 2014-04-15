@@ -67,10 +67,10 @@
         <div id="top-banner">
             <div id="top">
                 <div id="search-box">
-                    <form>
-                        <input type="text" id="content-search" val="" placeholder="Search">
-                        <img id="mag-glass" />
-                    </form>
+                    <form id="search-form" action="/home.jsp">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
+                            <img id="mag-glass" />
+                        </form>
                 </div>
 
                 <a class="logo" title="Take me to the Home Page!" href="/">

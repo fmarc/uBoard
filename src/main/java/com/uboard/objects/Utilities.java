@@ -1,5 +1,6 @@
 package com.uboard.objects;
 
+import com.uboard.objects.Class;
 import com.uboard.connections.MyDatabase;
 import com.uboard.interfaces.User;
 import java.sql.Connection;
@@ -40,8 +41,14 @@ public class Utilities {
     private static final String query_Search = 
         "SELECT * FROM \"UBOARD\".u_lesson WHERE class_id = 0 AND lower(lesson_name) LIKE '%' || ? || '%' ";
     
+    private static final String query_SearchClass = 
+        "SELECT * FROM \"UBOARD\".u_class WHERE lower(class_name) LIKE '%' || ? || '%' ";
+    
     private static final String query_getTopRated =
         "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
+    
+    private static final String query_getTopRatedClasses =
+        "SELECT * FROM \"UBOARD\".u_class WHERE class_id <> 0 ORDER BY pos_rating DESC LIMIT 10";
     
     private static final String query_saveProfile = 
         "UPDATE \"UBOARD\".u_user SET name = ?, about = ?, paypal_email = ? "
@@ -318,11 +325,45 @@ public class Utilities {
     
     
     /**
+     * This searches the lessons in the database based on the search criteria
+     * @param search - The search criteria the User enters
+     * @return Set<Lesson> - All the lessons that match the search criteria.
+     */
+    public Set<Class> searchContentClass(String search) {
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+        
+        Set<Class> classes = new HashSet<Class>(); 
+        try {
+            //Creates a prepared statement that takes care of the query and its
+            //values
+            //Query = (username, email, name, user_password)
+            stm = con.prepareStatement(query_SearchClass);
+            stm.setString(1, search.toLowerCase());
+            ResultSet found = stm.executeQuery();
+            while(found.next()) {
+                classes.add(new Class(con, found.getInt("class_id"), found.getString("class_name")));
+            }
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when registeringa new User:");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+        return classes;
+    }
+    
+    
+    /**
      * Looks for the highest rated lessons
      * @return Set<Lesson> - A list of the first 15 highest rated lessons
      */
     public Set<Lesson> getTopRated(){
-
         Set<Lesson> lessons = new HashSet<Lesson>();
         Connection con = MyDatabase.connect();
         PreparedStatement stm = null;
@@ -348,6 +389,38 @@ public class Utilities {
         }
 
         return lessons;
+
+    }
+    
+    /**
+     * Looks for the highest rated Classes
+     * @return Set<Lesson> - A list of the first 15 highest rated lessons
+     */
+    public Set<Class> getTopRatedClasses(){
+        Set<Class> classes = new HashSet<Class>();
+        Connection con = MyDatabase.connect();
+        PreparedStatement stm = null;
+
+        try {
+            stm = con.prepareStatement(query_getTopRatedClasses);
+            ResultSet found = stm.executeQuery();
+
+            while(found.next()){
+                classes.add(new Class(con, found.getInt("class_id"), found.getString("class_name")));
+            }
+        } catch (SQLException e) {
+            System.out.println("\nThere was SQL error when retrieving topRated Lessons");
+            e.printStackTrace();
+        } finally {
+            try{
+                con.close();
+                stm.close();
+            } catch(SQLException e) {
+                System.out.println("Failes to close connections.");
+            }
+        }
+
+        return classes;
 
     }
     

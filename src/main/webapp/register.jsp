@@ -33,18 +33,6 @@
         
     </head>
     <body>
-        <!--
-            /*
-                JSP IMPLEMENTATION PSEUDOCODE
-                
-                Is the user logged in? {
-                    -YES {
-                        Redirect the user to his profile page (using user's username as an argument)
-                    }
-                }
-           */
-        -->
-        
             <%
                 Utilities util = Utilities.getInstance();
                 User user = null;
@@ -68,8 +56,8 @@
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
-                        <form>
-                            <input type="text" id="content-search" val="" placeholder="Search">
+                        <form id="search-form" action="/home.jsp">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
                     </div>

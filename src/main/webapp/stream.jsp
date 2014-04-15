@@ -46,9 +46,13 @@
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
                 
+                if(user == null) {
+                    response.sendRedirect("/");
+                }
+                
                 if((title = request.getParameter("class_id")) != null){
                     
-                    object = new Class(object.classId);
+                    object = new Class(Integer.parseInt(title));
                     
                     if(object.classId == 0){
                         %>Assignment not found<%
@@ -60,6 +64,11 @@
                     return;
                 }
                 
+                if(user != null && !object.isEnrolled(user.getUsername())){
+                    %>Sorry, you are not enrolled in this Class. You will not be able to see this stream.<%
+                    return;
+                }
+                
                 if(user != null && user.getUsername().equals(object.createdBy)){
                     isOwner = true;
                 }
@@ -68,8 +77,8 @@
             <div id="top-banner">
                 <div id="top">
                     <div id="search-box">
-                        <form id="search-form">
-                            <input name="search" type="text" id="content-search" val="" placeholder="Search">
+                        <form id="search-form" action="/home.jsp">
+                            <input name="search" type="text" id="content-search" placeholder="Search">
                             <img id="mag-glass" />
                         </form>
                     </div>
@@ -153,7 +162,7 @@
                 <p>Please fill out the following information to change the stream channel.</p>
                 <h4>Channel Name:</h4>
                 <input type="text" id="stream-channel" placeholder="Stream Channel Name">
-                <input type="button" onclick="changeStream();" value="Create">
+                <input type="button" onclick="changeStream();" value="Change">
                 <input type="button" onclick="toggleModal('change-stream-modal');" value="Cancel">
             </div>
             
@@ -179,7 +188,7 @@
                 <input type="button" onclick="toggleModal('create-class-modal');" value="Cancel">
             </div>
 
-            <div id="save-confirm-modal" class="box-modal">
+            <div id="save-confirm-modal" class="box-modal" style="text-align: center;">
                 <h2>Stream Saved Successfully!</h2>
                 <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
