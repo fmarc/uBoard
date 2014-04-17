@@ -39,6 +39,8 @@
                 try {
                     user = util.getOnlineUser(session.getId());
                 } catch (Exception e){}
+                
+                if(user instanceof Student)
             %>
 
             <div id="top-banner">

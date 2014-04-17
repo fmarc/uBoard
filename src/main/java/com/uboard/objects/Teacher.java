@@ -108,6 +108,14 @@ public class Teacher implements User{
     public String getName() {
         return this.name;
     }
+    
+    /**
+     * Sets the paypal email
+     * @param pay 
+     */
+    public void setPaypal(String pay) {
+        this.paypalEmail = pay;
+    }
 
     public int getTotalRating(Connection con) {
         PreparedStatement stm = null;

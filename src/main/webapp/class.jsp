@@ -200,7 +200,7 @@
                     <div id="class-bottom">
                         <div id="description">
                             <h2>Class Description: </h2>
-                            <textarea disabled id="class-desc"><%=object.description%></textarea>
+                            <textarea disabled id="class-desc" maxlength="500"><%=object.description%></textarea>
                         </div>
                     </div>
                 </div>
@@ -302,7 +302,7 @@
                 <h2>Post New Comment</h2>
                 <p>Please fill out the following information to post a new comment.</p>
                 <h4>Text</h4>
-                <textarea id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
+                <textarea maxlength="2500" id="text-comment" placeholder="Comment Text" style="min-width: 96%; max-width: 96%; min-height: 500px; max-height: 500px;"></textarea>
                 <input type="button" onclick="postNewComment('<%=user.getUsername()%>', <%=object.classId%>, 0);" value="Create">
                 <input type="button" onclick="toggleModal('post-comment-modal');" value="Cancel">
             </div>
@@ -313,7 +313,7 @@
                 <h4>Title</h4>
                 <input type="text" id="assignment-title" placeholder="Assignment Title">
                 <h4>Description:</h4>
-                <textarea style="box-sizing: border-box; padding: 10px; max-width: 100%; min-width: 100%; min-height: 400px; max-height: 400px" id="assignment-description" placeholder="Assignment Description"></textarea>
+                <textarea maxlength="500" style="box-sizing: border-box; padding: 10px; max-width: 100%; min-width: 100%; min-height: 400px; max-height: 400px" id="assignment-description" placeholder="Assignment Description"></textarea>
                 <input type="button" onclick="createNewAssignment(<%=object.classId%>, '<%=user.getUsername()%>', $('#assignment-title').val(), $('#assignment-description').val());" value="Create">
                 <input type="button" onclick="toggleModal('create-assignment-modal');" value="Cancel">
             </div>

@@ -64,14 +64,13 @@
                     
                     isUser = true;
                     
-                    if(!user.isEnrolled(object.classId)){
-                        %>You are not enrolled in this Lesson's Class<%
-                        return;
-                    }
-                        
-                    
                     if(user.getUsername().equals(object.createdBy)){
                         isOwner = true;
+                    }
+                    
+                    if(!user.isEnrolled(object.classId) || !isOwner){
+                        %>You are not enrolled in this Lesson's Class<%
+                        return;
                     }
                 } else {
                     if(object.classId != 0) {
@@ -186,7 +185,7 @@
                 <input type="button" onclick="hideModal();" value="Cancel">
             </div>
             
-            <div id="save-confirm-modal" class="box-modal">
+            <div id="save-confirm-modal" class="box-modal" style="text-align: center;">
                 <h2>Lesson Saved Successfully!</h2>
                 <input type="button" onclick="toggleModal('save-confirm-modal');" value="Ok">
             </div>
@@ -196,7 +195,11 @@
             <%if(!object.raters.containsKey(user.getUsername())){%>
                 <div id="rating">
                     <div class="rate" id="rate-positive" onclick="rate('<%=user.getUsername()%>', <%=object.lessonId%>, 1);"><img src="/images/rating/pos-rate.png"></div>
+                    <%if(object.posRating > 0){%>
                     <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
+                    <%} else {%>
+                    <div class="lesson-rating"><p class="negative-rating"><%=object.posRating%></p></div>
+                    <%}%>
                     <div class="rate" id="rate-negative" onclick="rate('<%=user.getUsername()%>', <%=object.lessonId%>, -1);"><img src="/images/rating/neg-rate.png"></div>
                 </div>
             <%} else {%>

@@ -43,9 +43,6 @@ public class Student implements User{
         "SELECT A.* FROM \"UBOARD\".u_class A, \"UBOARD\".u_enrolled B "
         + "WHERE A.class_id = B.class_id AND B.username = ?";
     
-    private static final String query_promoteUser = 
-        "UPDATE \"UBOARD\".u_user SET user_type = 1 WHERE username = ? ";
-    
     /**
      * This constructor is to create a new Student object from the specified
      * parameter using the database to retrieve the information. 
@@ -106,6 +103,14 @@ public class Student implements User{
 
     public String getName() {
         return this.name;
+    }
+    
+    /**
+     * Sets the paypal email
+     * @param pay 
+     */
+    public void setPaypal(String pay) {
+        this.paypalEmail = pay;
     }
 
     
@@ -233,43 +238,6 @@ public class Student implements User{
             }
         }
         return lessons;
-    }
-    
-    
-    /**
-     * Promotes the current user if his rating is above a certain threshold
-     * @return 
-     */
-    public boolean promoteUser() {
-        if(this.posRating > 1000) {
-            Connection con = MyDatabase.connect();
-            PreparedStatement stm = null;
-
-            try {
-                //Creates a prepared statement that takes care of the query and its
-                //values - Query = (name, about, paypal, username)
-                stm = con.prepareStatement(query_promoteUser);
-                stm.setString(1, username);
-
-                //Executes the query
-                stm.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("\nThere was SQL error when Promoting User:");
-                e.printStackTrace();
-                return false;
-            } finally {
-                try{
-                    con.close();
-                    stm.close();
-                } catch(SQLException e) {
-                    System.out.println("Failes to close connections.");
-                }
-            }
-            // Returns 0 if the profile could not be saved
-            return true;
-        }
-        
-        return false;
     }
     
     /**

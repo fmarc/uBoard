@@ -6,6 +6,7 @@
 
 package com.uboard.connections;
 
+import com.uboard.interfaces.User;
 import com.uboard.objects.Assignment;
 import com.uboard.objects.Comment;
 import com.uboard.objects.Feedback;
@@ -153,12 +154,13 @@ public class Controller extends HttpServlet{
         } else if(page.equals("profile")){
             
             if(method.equals("saveProfile")) {
-                String name     = request.getParameter("name");
-                String about    = request.getParameter("about");
-                String paypal   = request.getParameter("paypal");
-                String username = request.getParameter("username");
+                String name      = request.getParameter("name");
+                String about     = request.getParameter("about");
+                String paypal    = request.getParameter("paypal");
+                String username  = request.getParameter("username");
+                User user        = utilities.getOnlineUser(sessionId);
                 
-                if(utilities.saveProfile(name, about, paypal, username)){
+                if(utilities.saveProfile(name, about, paypal, username, user)){
                     out.write("1");
                 } else {
                     out.write("0");

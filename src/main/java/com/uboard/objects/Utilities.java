@@ -43,8 +43,8 @@ public class Utilities {
             + "OR lower(lesson_name) LIKE '%' || ? OR lower(lesson_name) LIKE ? || '%' ";
     
     private static final String query_SearchClass = 
-        "SELECT * FROM \"UBOARD\".u_class WHERE lower(class_name) LIKE '%' || ? || '%' "
-            + "+ \"OR lower(class_name) LIKE '%' || ? OR lower(class_name) LIKE ? || '%' ";
+        "SELECT * FROM \"UBOARD\".u_class WHERE class_id <> 0 AND lower(class_name) LIKE '%' || ? || '%' "
+            + "OR lower(class_name) LIKE '%' || ? OR lower(class_name) LIKE ? || '%' ";
     
     private static final String query_getTopRated =
         "SELECT * FROM \"UBOARD\".u_lesson WHERE lesson_id <> 0 AND class_id = 0 ORDER BY pos_rating DESC LIMIT 10";
@@ -55,6 +55,9 @@ public class Utilities {
     private static final String query_saveProfile = 
         "UPDATE \"UBOARD\".u_user SET name = ?, about = ?, paypal_email = ? "
         + "WHERE username = ? ";
+    
+    private static final String query_promoteUser = 
+        "UPDATE \"UBOARD\".u_user SET user_type = 1 WHERE username = ? ";
     
     /**
      * Singleton Object, no constructor needed
@@ -439,7 +442,7 @@ public class Utilities {
      * @param username
      * @return 
      */
-    public boolean saveProfile(String name, String about, String paypal, String username) {
+    public boolean saveProfile(String name, String about, String paypal, String username, User user) {
         Connection con = MyDatabase.connect();
         PreparedStatement stm = null;
         
@@ -454,6 +457,9 @@ public class Utilities {
             
             //Executes the query
             stm.executeUpdate();
+            
+            user.setPaypal(paypal);
+            
         } catch (SQLException e) {
             System.out.println("\nThere was SQL error when saving a Lesson:");
             e.printStackTrace();
@@ -468,6 +474,45 @@ public class Utilities {
         }
         // Returns 0 if the profile could not be saved
         return true;
+    }
+    
+    /**
+     * Promotes the current user if his rating is above a certain threshold
+     * @return 
+     */
+    public boolean promoteUser(String sessionId) {
+        
+        Student user = (Student) Utilities.getInstance().getOnlineUser(sessionId);
+        
+        if(user.getPosRating() > 1000) {
+            Connection con = MyDatabase.connect();
+            PreparedStatement stm = null;
+
+            try {
+                //Creates a prepared statement that takes care of the query and its
+                //values - Query = (name, about, paypal, username)
+                stm = con.prepareStatement(query_promoteUser);
+                stm.setString(1, user.getUsername());
+
+                //Executes the query
+                stm.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("\nThere was SQL error when Promoting User:");
+                e.printStackTrace();
+                return false;
+            } finally {
+                try{
+                    con.close();
+                    stm.close();
+                } catch(SQLException e) {
+                    System.out.println("Failes to close connections.");
+                }
+            }
+            // Returns 0 if the profile could not be saved
+            return true;
+        }
+        
+        return false;
     }
     
 }

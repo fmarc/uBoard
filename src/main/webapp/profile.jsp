@@ -142,7 +142,7 @@
                         <p><%=profile.getEmail()%></p>
                     <%}%>
                     <h3>About:</h3>
-                    <textarea id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled><%=profile.getAboutSection()%></textarea>
+                    <textarea maxlength="500" id="about" class="edit-area" maxlength="500" placeholder="Tell others about yourself!" disabled><%=profile.getAboutSection()%></textarea>
                 </div>
             </div>
 

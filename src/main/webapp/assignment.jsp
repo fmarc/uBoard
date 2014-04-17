@@ -166,14 +166,14 @@
                     <h3 id="user"><%=submit.submitBy%></h3>
                     <p id="assignment-desc"><%=object.description%></p>
                     <%if(submit.submission.length() > 5) {%>
-                        <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
+                        <textarea maxlength="5000" style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
                     <%} else {%>
-                        <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." ></textarea>
+                        <textarea maxlength="5000" style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." ></textarea>
                         <input type="button" value="Submit" onclick="submitAssignment(<%=object.assignmentId%> ,'<%=user.getUsername()%>', $('#assignment').val());">
                     <%}%>
                     <div id="assignment-feedback">
                         <h2 id="feedback-title">Feedback: </h2>
-                        <textarea style="height: auto; min-height: 0px;" id="feedback" placeholder="Feed back will display here once given" disabled><%=submit.feedback.feedBack%></textarea>
+                        <textarea maxlength="1000" style="height: auto; min-height: 0px;" id="feedback" placeholder="Feed back will display here once given" disabled><%=submit.feedback.feedBack%></textarea>
                     </div>
                 </div>
                 <%} else if (subUser && isOwner){%>
@@ -181,12 +181,12 @@
                     <h2 id="assignment-title"><%=object.assignName%></h2>
                     <h3 id="user"><%=submit.submitBy%></h3>
                     <p id="assignment-desc"><%=object.description%></p>
-                    <textarea style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
+                    <textarea maxlength="5000" style="height: auto; min-height: 0px;" id="assignment" placeholder="Answer the assignment question above in here." disabled><%=submit.submission%></textarea>
                     <div id="assignment-feedback">
                         <h2 id="feedback-title">Feedback: </h2>
-                        <textarea id="feedback" placeholder="Feed back will display here once given" ><%=submit.feedback.feedBack%></textarea>
+                        <textarea maxlength="1000" id="feedback" placeholder="Feed back will display here once given" ><%=submit.feedback.feedBack%></textarea>
                     </div>
-                    <%if(submit.feedback.feedBack.length() > 5) {%>
+                    <%if(submit.feedback.feedBack.length() < 5) {%>
                     <input type="button" value="Submit" onclick="submitFeedback(<%=object.assignmentId%>, '<%=submit.submitBy%>', $('#feedback').val());">
                     <%}%>
                 </div>
@@ -194,16 +194,25 @@
                 <div id="assignment-content">
                     <div class="assignment">
                         <h3 class="assignment-title"><%=object.assignName%></h3>
-                        <%for(SubAssignment assign : object.submitted) {%>
+                        <p><%=object.description%></p>
+                        <%if(object.submitted.size() != 0) {%>
+                            <%for(SubAssignment assign : object.submitted) {%>
+                            <div class="user-assignments">
+                                <div class="user-assignment" >
+                                    <h4 class="user"><a href="assignment.jsp?assignment_id=<%=object.assignmentId%>&username=<%=assign.submitBy%>"><%=assign.submitBy%></a></h4>
+                                    <%if(assign.feedback.feedBack.isEmpty()){%>
+                                    <p class="status"> - <span>Feedback Pending</span></p>
+                                    <%} else {%>
+                                    <p class="status"> - <span>Completed</span></p>
+                                    <%}%>
+                                    <p class="assignment-text"><%=assign.submission%></p>
+                                </div>
+                            </div>
+                            <%}%>
+                        <%} else {%>
                         <div class="user-assignments">
                             <div class="user-assignment" >
-                                <h4 class="user"><a href="assignment.jsp?assignment_id=<%=object.assignmentId%>&username=<%=assign.submitBy%>"><%=assign.submitBy%></a></h4>
-                                <%if(assign.feedback.feedBack.isEmpty()){%>
-                                <p class="status"> - <span>Feedback Pending</span></p>
-                                <%} else {%>
-                                <p class="status"> - <span>Completed</span></p>
-                                <%}%>
-                                <p class="assignment-text"><%=assign.submission%></p>
+                                <h4 class="user">No assignments yet submitted.</h4>
                             </div>
                         </div>
                         <%}%>

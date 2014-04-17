@@ -46,6 +46,8 @@ public interface User {
     
     public int getPosRating();
     
+    public void setPaypal(String paypal);
+    
     public List<Class> getEnrollClasses();
     
     public List<Lesson> getCreateLesson();
