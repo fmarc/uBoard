@@ -69,7 +69,7 @@
                     }
                     
                     if(object.classId != 0) {
-                        if(!user.isEnrolled(object.classId) || !isOwner){
+                        if(!user.isEnrolled(object.classId) && !isOwner){
                             %>You are not enrolled in this Lesson's Class<%
                             return;
                         }
