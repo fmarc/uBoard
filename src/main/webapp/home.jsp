@@ -130,7 +130,7 @@
                         </div>
                         <div class="box-content">
                             <%for(Lesson lesson : util.searchContent(request.getParameter("search"))) {
-                                if(lesson.lessonId != 0){%>
+                                if(lesson.lessonId != 0 && lesson.classId == 0){%>
                                 <div class="lesson">
                                     <div class="lesson-rating">
                                     <%if(lesson.posRating >= 0){%>

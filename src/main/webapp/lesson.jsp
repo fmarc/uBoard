@@ -68,16 +68,21 @@
                         isOwner = true;
                     }
                     
-                    if(!user.isEnrolled(object.classId) || !isOwner){
-                        %>You are not enrolled in this Lesson's Class<%
-                        return;
+                    if(object.classId != 0) {
+                        if(!user.isEnrolled(object.classId) || !isOwner){
+                            %>You are not enrolled in this Lesson's Class<%
+                            return;
+                        }
                     }
+                    
                 } else {
                     if(object.classId != 0) {
                         %>You are not enrolled in this Lesson's Class<%
                         return;
                     }
                 }
+                
+                
             %>
             
             <div id="top-banner">
@@ -206,7 +211,7 @@
                 <div id="rating">
                     <% if(object.raters.get(user.getUsername()) > 0) {%>
                     <div class="rate rated user-rated" id="rate-positive"><img src="/images/rating/pos-rate.png"></div>
-                    <%if(object.posRating > 0) {%>
+                    <%if(object.posRating >= 0) {%>
                     <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
                     <%} else {%>
                     <div class="lesson-rating"><p class="negative-rating"><%=object.posRating%></p></div>
@@ -214,7 +219,7 @@
                     <div class="rate rated" id="rate-negative"><img src="/images/rating/neg-rate.png"></div>
                     <%} else {%>
                     <div class="rate rated" id="rate-positive"><img src="/images/rating/pos-rate.png"></div>
-                    <%if(object.posRating > 0) {%>
+                    <%if(object.posRating >= 0) {%>
                     <div class="lesson-rating"><p class="positive-rating"><%=object.posRating%></p></div>
                     <%} else {%>
                     <div class="lesson-rating"><p class="negative-rating"><%=object.posRating%></p></div>
@@ -225,7 +230,11 @@
             <%}%>
         <%} else {%>
             <div id="rating">
+                <%if(object.posRating >= 0) {%>
                 <div class="lesson-rating" style="width: 60px;"><p class="positive-rating" style="border-radius: 10px;"><%=object.posRating%></p></div>
+                <%} else {%>
+                <div class="lesson-rating" style="width: 60px;"><p class="negative-rating" style="border-radius: 10px;"><%=object.posRating%></p></div>
+                <%}%>
             </div>
         <%}%>
     
