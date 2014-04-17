@@ -199,6 +199,7 @@ public class Controller extends HttpServlet{
                 String username     = request.getParameter("username");
                 
                 if(Class.enroll(classId, username)) {
+                    utilities.getOnlineUser(sessionId).getEnrollClasses().add(new Class(classId));
                     out.write("1");
                 } else {
                     out.write("0");
